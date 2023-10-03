@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Supplier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_Supplier")
     private Long idSupplier;
 
     @NotNull
@@ -21,6 +22,7 @@ public class Supplier implements Serializable {
     private String address;
     @NotNull
     private Integer phone;
+
 
     //Constructores de la clase
 

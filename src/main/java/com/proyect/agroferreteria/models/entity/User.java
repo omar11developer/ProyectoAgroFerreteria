@@ -12,12 +12,14 @@ import java.io.Serializable;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_User")
     private Long idUser;
 
     @NotNull
     private String roles;
     @NotNull
     @NotEmpty
+    @Column(name = "user_Name")
     private String userName;
 
     @NotNull
