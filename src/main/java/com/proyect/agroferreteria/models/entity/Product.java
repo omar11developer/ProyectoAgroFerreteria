@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 //Creando la entidad Producto
 @Entity
 @Table(name = "products")
@@ -26,8 +29,17 @@ public class Product implements Serializable {
 
     private Double stock;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_Order_Details")
+    private List<OrderDetails> orderDetails;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TypeProduct typeProduct;
+
     public Product() {
+        this.orderDetails = new ArrayList<OrderDetails>();
     }
+
     //getter y setter de la clase
     public Long getIdProduct() {
         return idProduct;

@@ -1,23 +1,24 @@
 package com.proyect.agroferreteria.models.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Date;
 //Creando entidad Order
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_Order")
     private Long idOrder;
     @Temporal(TemporalType.DATE)
-    @Column(name = "create_date_order")
-    private Date createDateOrder;
+    @Column(name = "create_at")
+    private Date createAtOrder;
 
-    @NotNull
+    @NotEmpty
     private Integer units;
 
     //Contructor de la clase Order
@@ -34,12 +35,12 @@ public class Order implements Serializable {
         this.idOrder = idOrder;
     }
 
-    public Date getCreateDateOrder() {
-        return createDateOrder;
+    public Date getCreateAtOrder() {
+        return createAtOrder;
     }
 
-    public void setCreateDateOrder(Date createDateOrder) {
-        this.createDateOrder = createDateOrder;
+    public void setCreateAtOrder(Date createAtOrder) {
+        this.createAtOrder = createAtOrder;
     }
 
     public Integer getUnits() {

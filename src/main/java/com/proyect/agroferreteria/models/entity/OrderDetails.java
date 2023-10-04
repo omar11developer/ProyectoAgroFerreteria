@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.List;
+
 //Creando la Entidad orderDetails
 @Entity
 @Table(name = "order_Details")
@@ -16,6 +18,13 @@ public class OrderDetails implements Serializable {
     @NotNull
     @Column(name = "cost_Product")
     private Double costProduct;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Supplier supplier;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Order order;
+
     //Contructor de la clase
     public OrderDetails() {
     }
@@ -35,6 +44,23 @@ public class OrderDetails implements Serializable {
     public void setCostProduct(Double costProduct) {
         this.costProduct = costProduct;
     }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     public static long getSerializableUID(){
         return serializableUID;
     }

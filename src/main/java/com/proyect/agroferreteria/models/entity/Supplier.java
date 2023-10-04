@@ -24,6 +24,7 @@ public class Supplier implements Serializable {
     private Integer phone;
 
 
+
     //Constructores de la clase
 
     public Supplier() {
@@ -57,6 +58,8 @@ public class Supplier implements Serializable {
     public String getAddress() {
         return address;
     }
+
+
 
     public void setAddress(String address) {
         this.address = address;
