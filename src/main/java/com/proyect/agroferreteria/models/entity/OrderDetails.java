@@ -1,9 +1,11 @@
 package com.proyect.agroferreteria.models.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 //Creando la Entidad orderDetails
@@ -22,8 +24,13 @@ public class OrderDetails implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Supplier supplier;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Order order;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "create_at")
+    private Date createAtOrder;
+
+
+    @NotEmpty
+    private Integer units;
 
     //Contructor de la clase
     public OrderDetails() {
@@ -53,13 +60,6 @@ public class OrderDetails implements Serializable {
         this.supplier = supplier;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 
     public static long getSerializableUID(){
         return serializableUID;

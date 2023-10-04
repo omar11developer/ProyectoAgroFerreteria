@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 //Creando la entidad Producto
@@ -20,27 +21,31 @@ public class Product implements Serializable {
     @NotNull
     private String name;
 
+    @NotNull
+    @Column(name = "unit_price")
+    private Double unitPrice;
+
+    @NotNull
+    @Column(name = "sale_price")
+    private Double salePrice;
+
     @Column(name = "unit_Weight")
     private String unitWeight;
 
     @NotNull
-    @Column(name = "sale_Price")
-    private Double salePrice;
+    public Integer stock;
 
-    private Double stock;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Order_Details")
-    private List<OrderDetails> orderDetails;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "create_at")
+    private Date createAtOrder;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private TypeProduct typeProduct;
 
-    public Product() {
-        this.orderDetails = new ArrayList<OrderDetails>();
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Supplier supplier;
 
-    //getter y setter de la clase
+
     public Long getIdProduct() {
         return idProduct;
     }
@@ -57,12 +62,12 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public String getUnitWeight() {
-        return unitWeight;
+    public Double getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setUnitWeight(String unitWeight) {
-        this.unitWeight = unitWeight;
+    public void setUnitPrice(Double unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     public Double getSalePrice() {
@@ -73,13 +78,46 @@ public class Product implements Serializable {
         this.salePrice = salePrice;
     }
 
-    public Double getStock() {
+    public String getUnitWeight() {
+        return unitWeight;
+    }
+
+    public void setUnitWeight(String unitWeight) {
+        this.unitWeight = unitWeight;
+    }
+
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(Double stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
+
+    public Date getCreateAtOrder() {
+        return createAtOrder;
+    }
+
+    public void setCreateAtOrder(Date createAtOrder) {
+        this.createAtOrder = createAtOrder;
+    }
+
+    public TypeProduct getTypeProduct() {
+        return typeProduct;
+    }
+
+    public void setTypeProduct(TypeProduct typeProduct) {
+        this.typeProduct = typeProduct;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
     //Serializaciond e la clase
     public static long getSerializacionUID(){
         return serializacionUID;

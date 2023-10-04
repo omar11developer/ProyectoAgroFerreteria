@@ -4,14 +4,15 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 //Creando la clase provedor
 @Entity
-@Table(name = "supplier")
+@Table(name = "suppliers")
 public class Supplier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_Supplier")
     private Long idSupplier;
 
     @NotNull
@@ -22,14 +23,12 @@ public class Supplier implements Serializable {
     private String address;
     @NotNull
     private Integer phone;
-
-
-
-    //Constructores de la clase
+    @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Product> products;
 
     public Supplier() {
+        products= new ArrayList<Product>();
     }
-    //Metodos getter and setter de la clase
 
     public Long getIdSupplier() {
         return idSupplier;
@@ -60,7 +59,6 @@ public class Supplier implements Serializable {
     }
 
 
-
     public void setAddress(String address) {
         this.address = address;
     }
@@ -72,6 +70,15 @@ public class Supplier implements Serializable {
     public void setPhone(Integer phone) {
         this.phone = phone;
     }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
     //Serializacion de la clase proveedor
     public static long getSerialversionuid(){
         return serialVersionUID;
