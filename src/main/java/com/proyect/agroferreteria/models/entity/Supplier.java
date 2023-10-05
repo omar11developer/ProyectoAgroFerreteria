@@ -13,6 +13,7 @@ import java.util.List;
 public class Supplier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_Supplier")
     private Long idSupplier;
 
     @NotNull
@@ -24,10 +25,10 @@ public class Supplier implements Serializable {
     @NotNull
     private Integer phone;
     @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Product> products;
+    private List<Inventories> inventories;
 
     public Supplier() {
-        products= new ArrayList<Product>();
+        inventories= new ArrayList<Inventories>();
     }
 
     public Long getIdSupplier() {
@@ -71,12 +72,12 @@ public class Supplier implements Serializable {
         this.phone = phone;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<Inventories> getInventories() {
+        return inventories;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setInventories(List<Inventories> inventories) {
+        this.inventories = inventories;
     }
 
     //Serializacion de la clase proveedor

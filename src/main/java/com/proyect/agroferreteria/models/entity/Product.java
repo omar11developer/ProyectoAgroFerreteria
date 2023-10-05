@@ -25,9 +25,6 @@ public class Product implements Serializable {
     @Column(name = "unit_price")
     private Double unitPrice;
 
-    @NotNull
-    @Column(name = "sale_price")
-    private Double salePrice;
 
     @Column(name = "unit_Weight")
     private String unitWeight;
@@ -35,16 +32,18 @@ public class Product implements Serializable {
     @NotNull
     public Integer stock;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "create_at")
-    private Date createAtOrder;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Inventories> inventories;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_Type_Product")
     private TypeProduct typeProduct;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Supplier supplier;
 
+    public Product() {
+        inventories= new ArrayList<Inventories>();
+    }
 
     public Long getIdProduct() {
         return idProduct;
@@ -70,14 +69,6 @@ public class Product implements Serializable {
         this.unitPrice = unitPrice;
     }
 
-    public Double getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(Double salePrice) {
-        this.salePrice = salePrice;
-    }
-
     public String getUnitWeight() {
         return unitWeight;
     }
@@ -94,13 +85,6 @@ public class Product implements Serializable {
         this.stock = stock;
     }
 
-    public Date getCreateAtOrder() {
-        return createAtOrder;
-    }
-
-    public void setCreateAtOrder(Date createAtOrder) {
-        this.createAtOrder = createAtOrder;
-    }
 
     public TypeProduct getTypeProduct() {
         return typeProduct;
@@ -110,12 +94,12 @@ public class Product implements Serializable {
         this.typeProduct = typeProduct;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public List<Inventories> getInventories() {
+        return inventories;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
+    public void setInventories(List<Inventories> inventories) {
+        this.inventories = inventories;
     }
 
     //Serializaciond e la clase

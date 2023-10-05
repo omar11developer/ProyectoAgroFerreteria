@@ -13,6 +13,7 @@ import java.util.List;
 public class TypeProduct implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_Type_Product")
     private Long idTypeProduct;
 
     @NotNull
