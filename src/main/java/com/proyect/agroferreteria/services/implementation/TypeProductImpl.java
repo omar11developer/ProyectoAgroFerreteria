@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TypeProductImplService implements ITypeProductService {
+public class TypeProductImpl implements ITypeProductService {
     @Autowired
     private ITypeProduct typeProductRepository;
     @Override
