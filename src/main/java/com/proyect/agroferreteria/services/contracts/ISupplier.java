@@ -9,7 +9,7 @@ public interface ISupplier {
     public List<Supplier> findAll();
     public void save(Supplier supplier);
 
-    public Supplier findOne(Long id);
+    public Supplier findById(Long id);
 
     public void delete(Long id);
 }

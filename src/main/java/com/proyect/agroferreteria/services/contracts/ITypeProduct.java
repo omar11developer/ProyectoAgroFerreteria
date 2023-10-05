@@ -9,7 +9,7 @@ public interface ITypeProduct {
     public List<TypeProduct> findAll();
     public void save(TypeProduct typeProduct);
 
-    public TypeProduct findOne(Long id);
+    public TypeProduct findById(Long id);
 
     public void delete(Long id);
 
