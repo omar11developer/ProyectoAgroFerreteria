@@ -26,6 +26,7 @@ public class Bill implements Serializable {
     private String paymentMethod;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_Client")
     private Client client;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
