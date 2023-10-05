@@ -1,3 +1,6 @@
+/*Tabla de usuario*/
+insert into Users(roles,user_Name,password) value ('admin','omar','pass123')
+
 /*Tabla de proveedores*/
 insert into suppliers(name,city,address,phone) values('Industria Galva','San Salvador','Avenida Juan Pablo',23013234);
 insert into suppliers(name,city,address,phone) values('Industria Contrucion','Santa Ana','Avenida Bulev',2334554);

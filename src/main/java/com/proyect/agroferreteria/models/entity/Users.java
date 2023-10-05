@@ -1,7 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
@@ -9,7 +8,7 @@ import java.io.Serializable;
 //Creando la entidad de la tabla usuario
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class Users implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_User")
@@ -18,16 +17,14 @@ public class User implements Serializable {
     @NotNull
     private String roles;
     @NotNull
-    @NotEmpty
     @Column(name = "user_Name")
     private String userName;
 
     @NotNull
-    @NotEmpty
     private String password;
 
     //Constructores de la entidad
-    public User() {
+    public Users() {
     }
 
     public Long getIdUser() {

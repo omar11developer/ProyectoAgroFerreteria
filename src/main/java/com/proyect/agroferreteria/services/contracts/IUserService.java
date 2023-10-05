@@ -1,13 +1,13 @@
 package com.proyect.agroferreteria.services.contracts;
 
-import com.proyect.agroferreteria.models.entity.User;
+import com.proyect.agroferreteria.models.entity.Users;
 
 import java.util.List;
 
 public interface IUserService {
-    public List<User> finAll();
-    public void save(User user);
-    public User findOneId(Long id);
+    public List<Users> finAll();
+    public void save(Users users);
+    public Users findOneId(Long id);
 
     public void delete(Long id);
 }

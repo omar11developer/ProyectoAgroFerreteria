@@ -1,6 +1,6 @@
 package com.proyect.agroferreteria.services.implementation;
 
-import com.proyect.agroferreteria.models.entity.User;
+import com.proyect.agroferreteria.models.entity.Users;
 import com.proyect.agroferreteria.repository.IUser;
 import com.proyect.agroferreteria.services.contracts.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +15,19 @@ public class UserImpl implements IUserService {
 
 
     @Override
-    public List<User> finAll() {
-        return (List<User>) userRepository.findAll();
+    public List<Users> finAll() {
+        return (List<Users>) userRepository.findAll();
     }
 
     @Override
-    public void save(User user) {
-        if(user != null){
-            userRepository.save(user);
+    public void save(Users users) {
+        if(users != null){
+            userRepository.save(users);
         }
     }
 
     @Override
-    public User findOneId(Long id) {
+    public Users findOneId(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
