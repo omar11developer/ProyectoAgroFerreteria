@@ -5,7 +5,7 @@ import com.proyect.agroferreteria.models.entity.Users;
 import java.util.List;
 
 public interface IUserService {
-    public List<Users> finAll();
+    public List<Users> findAll();
     public void save(Users users);
     public Users findOneId(Long id);
 
