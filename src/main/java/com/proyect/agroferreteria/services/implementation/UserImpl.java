@@ -5,6 +5,7 @@ import com.proyect.agroferreteria.repository.IUser;
 import com.proyect.agroferreteria.services.contracts.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,11 +16,13 @@ public class UserImpl implements IUserService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<Users> findAll() {
         return (List<Users>) userRepository.findAll();
     }
 
     @Override
+    @Transactional
     public void save(Users users) {
         if(users != null){
             userRepository.save(users);
@@ -27,6 +30,7 @@ public class UserImpl implements IUserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Users findOneId(Long id) {
         return userRepository.findById(id).orElse(null);
     }

@@ -5,6 +5,7 @@ import com.proyect.agroferreteria.repository.IInventories;
 import com.proyect.agroferreteria.services.contracts.IInventoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,16 +15,19 @@ public class InventoriesImpl implements IInventoriesService {
     private IInventories inventoriesRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Inventories> findAll() {
         return (List<Inventories>) inventoriesRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Inventories findById(Long id) {
         return inventoriesRepository.findById(id).orElse(null);
     }
 
     @Override
+    @Transactional
     public void save(Inventories inventories) {
         if(inventories != null){
             inventoriesRepository.save(inventories);
@@ -31,6 +35,7 @@ public class InventoriesImpl implements IInventoriesService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         if(id > 0){
             inventoriesRepository.deleteById(id);

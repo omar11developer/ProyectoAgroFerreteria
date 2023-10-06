@@ -5,6 +5,7 @@ import com.proyect.agroferreteria.repository.IClient;
 import com.proyect.agroferreteria.services.contracts.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,11 +15,13 @@ public class ClientImpl implements IClientService {
     private IClient clientRespository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Client> findAll() {
         return (List<Client>) clientRespository.findAll();
     }
 
     @Override
+    @Transactional
     public void save(Client client) {
         if (client != null){
             clientRespository.save(client);
@@ -26,11 +29,13 @@ public class ClientImpl implements IClientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Client findById(Long id) {
         return clientRespository.findById(id).orElse(null);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         if(id > 0){
             clientRespository.deleteById(id);
