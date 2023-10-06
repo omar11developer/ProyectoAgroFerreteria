@@ -18,6 +18,7 @@ public class Bill implements Serializable {
 
     private String description;
     private String observation;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "create_At")
     private Date creatAt;
@@ -32,6 +33,10 @@ public class Bill implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_Item_Bill")
     private List<ItemBill> itemBills;
+    @PrePersist
+    public void prePersist(){
+        creatAt =new Date();
+    }
 
     public Bill() {
         this.itemBills = new ArrayList<ItemBill>();

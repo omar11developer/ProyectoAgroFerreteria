@@ -31,12 +31,26 @@ public class Inventories implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_Product")
     private Product product;
-
+/*@OneToMany(mappedBy = "inventories",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+private List<ItemBill>itemBillList;
 
 
     public Inventories() {
-
+        itemBillList=new ArrayList<ItemBill>();
     }
+
+    public List<ItemBill> getItemBillList() {
+        return itemBillList;
+    }
+
+    public void setItemBillList(List<ItemBill> itemBillList) {
+        this.itemBillList = itemBillList;
+    }*/
+@PrePersist
+public void prePersist(){
+    createAtOrder =new Date();
+}
+
 
     public Long getId_Inventory() {
         return id_Inventory;
