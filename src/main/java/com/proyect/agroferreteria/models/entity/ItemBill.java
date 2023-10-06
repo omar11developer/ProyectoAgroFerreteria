@@ -16,8 +16,8 @@ public class ItemBill implements Serializable {
     private Integer cantidad;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_Product")
-    private Product product;
+    @JoinColumn(name = "id_Inventories")
+    private Inventories inventories;
 
     public Long getIdItemBill() {
         return idItemBill;
@@ -35,13 +35,14 @@ public class ItemBill implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public Product getProduct() {
-        return product;
+    public Inventories getInventories() {
+        return inventories;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setInventories(Inventories inventories) {
+        this.inventories = inventories;
     }
+
     public static long getSerializableUID(){
         return serializableUID;
     }
