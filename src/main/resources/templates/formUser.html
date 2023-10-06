@@ -10,30 +10,30 @@
 <body>
 
 <div class="d-flex justify-content-center">
-<div class="container mt-5 w-25">
-    <div class="shadow-sm p-3 mb-5 bg-white rounded">
-        <h3 th:text="${titulo}"></h3>
-        <form>
-            <img class="img-fluid" th:src="@{/images/logo.jpg}" alt="logo">
-            <div class="form-row">
-                <div class="col">
-                    <label for="formUserName">Ingrese el usuario</label>
-                    <input type="text" class="form-control" id="formUserName" placeholder="UserName">
+    <div class="container mt-5 w-25">
+        <div class="shadow-sm p-3 mb-5 bg-white rounded">
+            <h3 th:text="${encabezado}"></h3>
+            <form>
+                <img class="img-fluid" th:src="@{/images/logo.jpg}" alt="logo">
+                <div class="form-row">
+                    <div class="col">
+                        <label for="formUserName">Ingrese el usuario</label>
+                        <input type="text" class="form-control" id="formUserName" placeholder="UserName">
+                    </div>
+                    <div class="col">
+                        <label for="formRol">Ingrese el rol</label>
+                        <input type="text" class="form-control" id="formRol" placeholder=" admin">
+                    </div>
                 </div>
-                <div class="col">
-                    <label for="formRol">Ingrese el rol</label>
-                    <input type="text" class="form-control" id="formRol" placeholder=" admin">
+                <div class="form-group">
+                    <label for="formPassword">Ingrese la contraseña</label>
+                    <input type="text" class="form-control" id="formPassword" placeholder="password">
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="formPassword">Ingrese la contraseña</label>
-                <input type="text" class="form-control" id="formPassword" placeholder="password">
-            </div>
-            <button type="submit" class="btn btn-primary">Ingresar</button>
-        </form>
-    </div>
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+            </form>
+        </div>
 
-</div>
+    </div>
 
 </div>
 
