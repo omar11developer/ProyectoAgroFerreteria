@@ -39,6 +39,8 @@ public class UserImpl implements IUserService {
     public void delete(Long id) {
         if(id > 0){
             userRepository.deleteById(id);
+        }else {
+            userRepository.deleteById(null);
         }
     }
 }
