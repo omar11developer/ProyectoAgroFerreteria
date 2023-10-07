@@ -1,5 +1,12 @@
-/*Tabla de usuario*/
-insert into Users(roles,user_Name,password) value ('admin','omar','pass123')
+/*Tabla Rol*/
+insert into rols(id_rol,name) values (1,"ADMIN");
+
+/*Tabla usuario*/
+insert into users(user_Name,password) values ("omar","pass123");
+
+/*Tabla usario roles*/
+insert into user_rols(id_User,id_rol) values (1,1);
+
 
 /*Tabla de proveedores*/
 insert into suppliers(name,city,address,phone) values('Industria Galva','San Salvador','Avenida Juan Pablo',23013234);

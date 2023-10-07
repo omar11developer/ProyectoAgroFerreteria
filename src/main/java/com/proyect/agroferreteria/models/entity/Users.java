@@ -1,27 +1,34 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 //Creando la entidad de la tabla usuario
 @Entity
 @Table(name = "users")
-public class Users implements Serializable {
+public class Users  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_User")
     private Long idUser;
 
+
     @NotNull
-    private String roles;
-    @NotNull
-    @Column(name = "user_Name")
+    @JoinColumn(name = "user_Name")
     private String userName;
 
     @NotNull
+    @JoinColumn(name = "id_users_rol")
     private String password;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "users")
+    @JsonIgnore
+    private List<UserRols> usersRoles = new ArrayList<>();
 
     //Constructores de la entidad
     public Users() {
@@ -36,13 +43,6 @@ public class Users implements Serializable {
         this.idUser = idUser;
     }
 
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
 
     public String getUserName() {
         return userName;
@@ -59,9 +59,12 @@ public class Users implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    //Serializando la clase User
-    public static long getSerialVersionUID(){
-        return serialVersionUID;
+
+    public List<UserRols> getUsersRoles() {
+        return usersRoles;
     }
-    private static final long serialVersionUID = 1L;
+
+    public void setUsersRoles(List<UserRols> usersRoles) {
+        this.usersRoles = usersRoles;
+    }
 }

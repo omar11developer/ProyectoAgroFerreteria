@@ -19,6 +19,7 @@ public class TypeProduct implements Serializable {
     @NotNull
     private String name;
 
+
     @OneToMany(mappedBy = "typeProduct", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
 
