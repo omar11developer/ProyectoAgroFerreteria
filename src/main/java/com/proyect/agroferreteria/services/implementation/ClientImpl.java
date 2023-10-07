@@ -1,7 +1,7 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Client;
-import com.proyect.agroferreteria.repository.IClient;
+import com.proyect.agroferreteria.repository.IClientRepository;
 import com.proyect.agroferreteria.services.contracts.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class ClientImpl implements IClientService {
     @Autowired
-    private IClient clientRespository;
+    private IClientRepository clientRespository;
 
     @Override
     @Transactional(readOnly = true)

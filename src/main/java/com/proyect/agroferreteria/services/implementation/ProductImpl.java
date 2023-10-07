@@ -1,9 +1,8 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Product;
-import com.proyect.agroferreteria.repository.IProduct;
+import com.proyect.agroferreteria.repository.IProductRepository;
 import com.proyect.agroferreteria.services.contracts.IProductService;
-import jakarta.transaction.TransactionScoped;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +12,7 @@ import java.util.List;
 @Service
 public class ProductImpl implements IProductService {
     @Autowired
-    private IProduct productRepository;
+    private IProductRepository productRepository;
     @Override
     @Transactional(readOnly = true)
     public List<Product> findAll() {

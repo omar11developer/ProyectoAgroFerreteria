@@ -1,7 +1,7 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Users;
-import com.proyect.agroferreteria.repository.IUser;
+import com.proyect.agroferreteria.repository.IUserRepository;
 import com.proyect.agroferreteria.services.contracts.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class UserImpl implements IUserService {
     @Autowired
-    private IUser userRepository;
+    private IUserRepository userRepository;
 
 
     @Override

@@ -1,7 +1,7 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.TypeProduct;
-import com.proyect.agroferreteria.repository.ITypeProduct;
+import com.proyect.agroferreteria.repository.ITypeProductRepository;
 import com.proyect.agroferreteria.services.contracts.ITypeProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class TypeProductImpl implements ITypeProductService {
     @Autowired
-    private ITypeProduct typeProductRepository;
+    private ITypeProductRepository typeProductRepository;
     @Override
     @Transactional(readOnly = true)
     public List<TypeProduct> findAll() {

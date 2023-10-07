@@ -1,7 +1,7 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Bill;
-import com.proyect.agroferreteria.repository.IBill;
+import com.proyect.agroferreteria.repository.IBillRepository;
 import com.proyect.agroferreteria.services.contracts.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class BillImpl implements IBillService {
     @Autowired
-    private IBill billRepository;
+    private IBillRepository billRepository;
 
     @Override
     @Transactional(readOnly = true)

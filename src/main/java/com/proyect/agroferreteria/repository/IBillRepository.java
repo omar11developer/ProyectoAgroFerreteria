@@ -3,5 +3,5 @@ package com.proyect.agroferreteria.repository;
 import com.proyect.agroferreteria.models.entity.Bill;
 import org.springframework.data.repository.CrudRepository;
 
-public interface IBill extends CrudRepository<Bill, Long> {
+public interface IBillRepository extends CrudRepository<Bill, Long> {
 }

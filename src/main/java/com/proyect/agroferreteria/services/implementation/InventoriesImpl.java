@@ -1,7 +1,7 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Inventories;
-import com.proyect.agroferreteria.repository.IInventories;
+import com.proyect.agroferreteria.repository.IInventoriesRepository;
 import com.proyect.agroferreteria.services.contracts.IInventoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class InventoriesImpl implements IInventoriesService {
     @Autowired
-    private IInventories inventoriesRepository;
+    private IInventoriesRepository inventoriesRepository;
 
     @Override
     @Transactional(readOnly = true)
