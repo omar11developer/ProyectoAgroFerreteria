@@ -3,7 +3,9 @@ package com.proyect.agroferreteria.models.entity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "rols")
@@ -15,7 +17,7 @@ public class Rols {
     private String nameRol;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rol")
-    private List<UserRols> usersRoles = new ArrayList<>();
+    private Set<UserRols> usersRoles = new HashSet<>();
 
 
     public Rols() {
@@ -37,11 +39,11 @@ public class Rols {
         this.nameRol = nameRol;
     }
 
-    public List<UserRols> getUsersRoles() {
+    public Set<UserRols> getUsersRoles() {
         return usersRoles;
     }
 
-    public void setUsersRoles(List<UserRols> usersRoles) {
+    public void setUsersRoles(Set<UserRols> usersRoles) {
         this.usersRoles = usersRoles;
     }
 }

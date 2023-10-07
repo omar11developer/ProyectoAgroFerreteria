@@ -1,46 +1,55 @@
 package com.proyect.agroferreteria.services.implementation;
 
+import com.proyect.agroferreteria.models.entity.UserRols;
 import com.proyect.agroferreteria.models.entity.Users;
-import com.proyect.agroferreteria.repository.IUserRepository;
+import com.proyect.agroferreteria.repository.IUsersRepository;
+import com.proyect.agroferreteria.repository.RolRepository;
 import com.proyect.agroferreteria.services.contracts.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserImpl implements IUserService {
     @Autowired
-    private IUserRepository userRepository;
+    private IUsersRepository userRepository;
+
+    @Autowired
+    private RolRepository rolRepository;
 
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Users> findAll() {
-        return (List<Users>) userRepository.findAll();
+    public List<Users> AllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    @Transactional
-    public void save(Users users) {
-        if(users != null){
-            userRepository.save(users);
+    public Users saveUser(Users user, Set<UserRols> userRols) throws Exception {
+        Users userLocal = userRepository.findByUserName(user.getUserName());
+        if(userLocal != null){
+            throw new Exception("El Usuario ya existe");
+        }else{
+            for (UserRols userRol:userRols){
+                rolRepository.save(userRol.getRol());
+            }
+            user.getUsersRoles().addAll(userRols);
+            userLocal = userRepository.save(user);
         }
+        return userLocal;
+
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Users findOneId(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public Users getByUserName(String username) {
+        return userRepository.findByUserName(username);
     }
 
     @Override
-    public void delete(Long id) {
-        if(id > 0){
-            userRepository.deleteById(id);
-        }else {
-            userRepository.deleteById(null);
-        }
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
+
 }

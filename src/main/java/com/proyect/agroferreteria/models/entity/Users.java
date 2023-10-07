@@ -6,7 +6,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 //Creando la entidad de la tabla usuario
 @Entity
@@ -19,7 +21,6 @@ public class Users  {
 
 
     @NotNull
-    @JoinColumn(name = "user_Name")
     private String userName;
 
     @NotNull
@@ -28,7 +29,7 @@ public class Users  {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "users")
     @JsonIgnore
-    private List<UserRols> usersRoles = new ArrayList<>();
+    private Set<UserRols> usersRoles = new HashSet<>();
 
     //Constructores de la entidad
     public Users() {
@@ -60,11 +61,11 @@ public class Users  {
         this.password = password;
     }
 
-    public List<UserRols> getUsersRoles() {
+    public Set<UserRols> getUsersRoles() {
         return usersRoles;
     }
 
-    public void setUsersRoles(List<UserRols> usersRoles) {
+    public void setUsersRoles(Set<UserRols> usersRoles) {
         this.usersRoles = usersRoles;
     }
 }
