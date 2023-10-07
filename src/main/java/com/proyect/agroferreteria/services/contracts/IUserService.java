@@ -10,7 +10,7 @@ public interface IUserService {
 
     public List<Users> AllUsers();
 
-    public Users saveUser(Users users, Set<UserRols> userRols) throws Exception;
+    public Users saveUser(Users users, List<UserRols> userRols) throws Exception;
 
     public Users getByUserName(String username);
 

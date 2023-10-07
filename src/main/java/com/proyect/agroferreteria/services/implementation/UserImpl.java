@@ -27,7 +27,7 @@ public class UserImpl implements IUserService {
     }
 
     @Override
-    public Users saveUser(Users user, Set<UserRols> userRols) throws Exception {
+    public Users saveUser(Users user, List<UserRols> userRols) throws Exception {
         Users userLocal = userRepository.findByUserName(user.getUserName());
         if(userLocal != null){
             throw new Exception("El Usuario ya existe");

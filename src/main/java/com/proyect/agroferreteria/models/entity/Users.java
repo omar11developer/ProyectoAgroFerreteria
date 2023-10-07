@@ -29,7 +29,7 @@ public class Users  {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "users")
     @JsonIgnore
-    private Set<UserRols> usersRoles = new HashSet<>();
+    private List<UserRols> usersRoles = new ArrayList<>();
 
     //Constructores de la entidad
     public Users() {
@@ -61,11 +61,11 @@ public class Users  {
         this.password = password;
     }
 
-    public Set<UserRols> getUsersRoles() {
+    public List<UserRols> getUsersRoles() {
         return usersRoles;
     }
 
-    public void setUsersRoles(Set<UserRols> usersRoles) {
+    public void setUsersRoles(List<UserRols> usersRoles) {
         this.usersRoles = usersRoles;
     }
 }

@@ -18,7 +18,7 @@ public class userController {
 
    @PostMapping("/")
     public Users saveUser(@RequestBody Users user) throws Exception{
-       Set<UserRols> rols = new HashSet<>();
+       List<UserRols> rols = new ArrayList<>();
        Rols rol = new Rols();
        rol.setRolId(2L);
        rol.setNameRol("employe");

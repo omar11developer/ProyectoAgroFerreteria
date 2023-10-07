@@ -17,7 +17,7 @@ public class Rols {
     private String nameRol;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rol")
-    private Set<UserRols> usersRoles = new HashSet<>();
+    private List<UserRols> usersRoles = new ArrayList<>();
 
 
     public Rols() {
@@ -39,11 +39,11 @@ public class Rols {
         this.nameRol = nameRol;
     }
 
-    public Set<UserRols> getUsersRoles() {
+    public List<UserRols> getUsersRoles() {
         return usersRoles;
     }
 
-    public void setUsersRoles(Set<UserRols> usersRoles) {
+    public void setUsersRoles(List<UserRols> usersRoles) {
         this.usersRoles = usersRoles;
     }
 }
