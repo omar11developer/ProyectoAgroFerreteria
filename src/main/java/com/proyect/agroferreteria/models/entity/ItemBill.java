@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,7 +16,8 @@ public class ItemBill implements Serializable {
     @NotNull
     private Integer cantidad;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @JoinColumn(name = "id_Inventories")
     private Inventories inventories;
 

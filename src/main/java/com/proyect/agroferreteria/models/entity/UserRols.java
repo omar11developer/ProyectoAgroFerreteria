@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +11,8 @@ public class UserRols {
     @Column(name = "id_users_rol")
     private Long usuarioRolId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @JoinColumn(name = "id_User")
     private Users users;
 

@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -36,7 +37,8 @@ public class Product implements Serializable {
     private List<Inventories> inventories;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @JoinColumn(name = "id_Type_Product")
     private TypeProduct typeProduct;
 

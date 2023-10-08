@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -24,11 +25,13 @@ public class Inventories implements Serializable {
     private Double salePrice;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @JoinColumn(name = "id_Supplier")
     private Supplier supplier;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @JoinColumn(name = "id_Product")
     private Product product;
 /*@OneToMany(mappedBy = "inventories",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
