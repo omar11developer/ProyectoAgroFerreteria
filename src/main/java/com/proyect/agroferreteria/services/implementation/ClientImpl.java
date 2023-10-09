@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class ClientImpl implements IClientService {
 
+    private final IClientRepository clienteRepository;
+
     @Autowired
-    private IClientRepository clienteRepository;
+    public ClientImpl(IClientRepository clientRepository) {
+        this.clienteRepository = clientRepository;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -37,6 +41,23 @@ public class ClientImpl implements IClientService {
     @Transactional
     public void delete(Long id) {
         clienteRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsByIdentification(String identification) {
+        return clienteRepository.existsByIdentification(identification);
+    }
+    @Override
+    public boolean existsByEmail(String email) {
+        if (!isValidEmail(email)) {
+            return false; // El formato del correo electrónico no es válido
+        }
+        return clienteRepository.existsByEmail(email);
+    }
+
+    private boolean isValidEmail(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        return email.matches(regex);
     }
 
 }

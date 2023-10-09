@@ -14,4 +14,8 @@ public interface IClientService {
 
     public void delete(Long id);
 
+    boolean existsByIdentification(String identification);
+
+    boolean existsByEmail(String email);
 }
+

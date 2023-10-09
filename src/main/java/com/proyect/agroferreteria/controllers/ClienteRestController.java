@@ -47,33 +47,54 @@ public class ClienteRestController {
     }
 
 
-    @PostMapping("/clientes")//crea un cliente
+    @PostMapping("/clientes") // crea un cliente
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> create(@Valid @RequestBody Client cliente, BindingResult result) {
         Client clienteNew = null;
         Map<String, Object> response = new HashMap<>();
 
-        if (result.hasErrors()){
-
-            List<String>errors=result.getFieldErrors()
+        if (result.hasErrors()) {
+            List<String> errors = result.getFieldErrors()
                     .stream()
-                    .map(error->"El campo '"+error.getField()+"'"+error.getDefaultMessage())
+                    .map(error -> "El campo '" + error.getField() + "'" + error.getDefaultMessage())
                     .collect(Collectors.toList());
 
-            response.put("errors",errors);
+            response.put("errors", errors);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
+
+        // Validar el formato del correo electrónico
+        if (clienteService.existsByEmail(cliente.getEmail())) {
+            response.put("Mensaje", "Error: Este correo ya existe en la base de datos.");
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+
         try {
+            // Validar si ya existe un cliente con la misma identificación
+            if (clienteService.existsByIdentification(cliente.getIdentification())) {
+                response.put("Mensaje", "Error: Ya existe un cliente con esta identificación.");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+            }
+
             clienteNew = clienteService.save(cliente);
         } catch (DataAccessException e) {
             response.put("Mensaje", "Error al realizar el insert en la base de datos");
             response.put("Error!", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        response.put("Mensaje", "El cliente ha sido creado con exito!");
+
+        response.put("Mensaje", "El cliente ha sido creado con éxito!");
         response.put("cliente", clienteNew);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
+
+    private boolean isValidEmail(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        return email.matches(regex);
+    }
+
+
+
 
     @PutMapping("/clientes/{id}")//sirve para actualizar
     public ResponseEntity<?> update(@Valid @RequestBody Client client, BindingResult result ,@PathVariable Long id) {

@@ -2,7 +2,9 @@ package com.proyect.agroferreteria.models.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 
@@ -13,17 +15,22 @@ public class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_Client")
     private Long idClient;
-    @NotNull
+    @NotEmpty(message = "no puede quedar vacio")
+    @Size(min = 3,max = 50,message = " debe contener al menos 3 letras")
+    @Column(nullable = false)
     private String name;
-    @NotNull
+    @NotEmpty(message = "no puede quedar vacio")
     private String lastName;
-    @NotNull
+    @NotEmpty(message = "no puede quedar vacio y debe ser un único")
+    @Column(nullable = false,unique = true)
     private String identification;
-
+@NotEmpty(message = "es requerido")
     private String adress;
-    @Email
+    @NotEmpty(message = "puede quedar vacio y debe ser un único")
+    @Email(message = "Por favor ingresa un correo valido!")
+    @Column(nullable = false, unique = true)
     private String email;
-    @NotNull
+    @NotEmpty(message = "El numero teléfonico es importante, por favor ingresalo")
     private String phone;
 
     public Client() {
