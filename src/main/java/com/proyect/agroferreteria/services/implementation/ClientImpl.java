@@ -11,34 +11,32 @@ import java.util.List;
 
 @Service
 public class ClientImpl implements IClientService {
+
     @Autowired
-    private IClientRepository clientRespository;
+    private IClientRepository clienteRepository;
 
     @Override
     @Transactional(readOnly = true)
     public List<Client> findAll() {
-        return (List<Client>) clientRespository.findAll();
-    }
-
-    @Override
-    @Transactional
-    public void save(Client client) {
-        if (client != null){
-            clientRespository.save(client);
-        }
+        return (List<Client>) clienteRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Client findById(Long id) {
-        return clientRespository.findById(id).orElse(null);
+        return clienteRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public Client save(Client cliente) {
+        return clienteRepository.save(cliente);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        if(id > 0){
-            clientRespository.deleteById(id);
-        }
+        clienteRepository.deleteById(id);
     }
+
 }

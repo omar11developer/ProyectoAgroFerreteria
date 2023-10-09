@@ -5,18 +5,27 @@ import com.proyect.agroferreteria.models.entity.UserRols;
 import com.proyect.agroferreteria.models.entity.Users;
 import com.proyect.agroferreteria.services.contracts.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/roll")
 public class userController {
     @Autowired
     private IUserService userService;
+    @GetMapping("/users")
+    public List<Users> getUserName(){
+        return userService.AllUsers();
+    }
 
-   @PostMapping("/")
+    @GetMapping("/{username}")
+    public Users getUsersName(@PathVariable("username") String username)
+    {return userService.getByUserName(username);}
+
+   @PostMapping("/users")
     public Users saveUser(@RequestBody Users user) throws Exception{
        List<UserRols> rols = new ArrayList<>();
        Rols rol = new Rols();
@@ -30,19 +39,9 @@ public class userController {
        return userService.saveUser(user,rols);
 
    }
-
-   @GetMapping("/")
-    public List<Users> getUserName(){
-       return userService.AllUsers();
-   }
-   @GetMapping("/{username}")
-   public Users getUsersName(@PathVariable("username") String username){
-       return userService.getByUserName(username);
-   }
    @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId){
-       userService.deleteUser(userId);
-   }
+    public void deleteUser(@PathVariable("userId") Long userId)
+   {userService.deleteUser(userId);}
 
 
 }
