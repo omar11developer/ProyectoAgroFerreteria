@@ -27,7 +27,7 @@ public class userController {
 
    @PostMapping("/users")
     public Users saveUser(@RequestBody Users user) throws Exception{
-       List<UserRols> rols = new ArrayList<>();
+       List<UserRols> Usersrols = new ArrayList<>();
        Rols rol = new Rols();
        rol.setRolId(2L);
        rol.setNameRol("employe");
@@ -35,8 +35,8 @@ public class userController {
        UserRols userRol = new UserRols();
        userRol.setUsers(user);
        userRol.setRol(rol);
-
-       return userService.saveUser(user,rols);
+        Usersrols.add(userRol);
+       return userService.saveUser(user,Usersrols);
 
    }
    @DeleteMapping("/{userId}")
