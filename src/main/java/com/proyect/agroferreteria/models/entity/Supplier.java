@@ -1,11 +1,13 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 //Creando la clase provedor
 @Entity
@@ -24,11 +26,14 @@ public class Supplier implements Serializable {
     private String address;
     @NotNull
     private Integer phone;
-    @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Inventories> inventories;
+    @OneToMany(
+            mappedBy = "supplier",
+            fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"suppliers"})
+    private Set<Inventories> inventories;
 
     public Supplier() {
-        inventories= new ArrayList<Inventories>();
+
     }
 
     public Long getIdSupplier() {
@@ -72,11 +77,11 @@ public class Supplier implements Serializable {
         this.phone = phone;
     }
 
-    public List<Inventories> getInventories() {
+    public Set<Inventories> getInventories() {
         return inventories;
     }
 
-    public void setInventories(List<Inventories> inventories) {
+    public void setInventories(Set<Inventories> inventories) {
         this.inventories = inventories;
     }
 

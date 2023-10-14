@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 //Creando la entidad Producto
 @Entity
@@ -33,18 +35,28 @@ public class Product implements Serializable {
     @NotNull
     public Integer stock;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Inventories> inventories;
+    @OneToMany(
+            mappedBy = "product", fetch = FetchType.LAZY
+    )
+    @JsonIgnoreProperties({"product"})
+    private Set<Inventories> inventories;
 
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @ManyToOne(
+            optional = true,
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
     @JoinColumn(name = "id_Type_Product")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
     private TypeProduct typeProduct;
 
 
     public Product() {
-        inventories= new ArrayList<Inventories>();
+
     }
 
     public Long getIdProduct() {
@@ -96,11 +108,11 @@ public class Product implements Serializable {
         this.typeProduct = typeProduct;
     }
 
-    public List<Inventories> getInventories() {
+    public Set<Inventories> getInventories() {
         return inventories;
     }
 
-    public void setInventories(List<Inventories> inventories) {
+    public void setInventories(Set<Inventories> inventories) {
         this.inventories = inventories;
     }
 

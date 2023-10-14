@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "bills")
@@ -31,22 +32,30 @@ public class Bill implements Serializable {
     @Size(min = 10, max = 50)
     private String paymentMethod;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @ManyToOne(
+            fetch = FetchType.LAZY,optional = true,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "bills"})
     @JoinColumn(name = "id_Client")
-
     private Client client;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Item_Bill")
-    private List<ItemBill> itemBills;
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "bill"
+    )
+    @JsonIgnoreProperties({"bills"})
+    private Set<ItemBill> itemBills;
     @PrePersist
     public void prePersist(){
         creatAt =new Date();
     }
 
     public Bill() {
-        this.itemBills = new ArrayList<ItemBill>();
+
     }
 
     public Long getIdBill() {
@@ -93,11 +102,11 @@ public class Bill implements Serializable {
         this.client = client;
     }
 
-    public List<ItemBill> getItemBills() {
+    public Set<ItemBill> getItemBills() {
         return itemBills;
     }
 
-    public void setItemBills(List<ItemBill> itemBills) {
+    public void setItemBills(Set<ItemBill> itemBills) {
         this.itemBills = itemBills;
     }
 

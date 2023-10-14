@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "clients")
@@ -32,6 +34,13 @@ public class Client implements Serializable {
     private String email;
     @NotEmpty(message = "El numero teléfonico es importante, por favor ingresalo")
     private String phone;
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "client"
+    )
+    @JsonIgnoreProperties({"clients"})
+    private Set<Bill> bill;
 
     public Client() {
     }
@@ -86,6 +95,14 @@ public class Client implements Serializable {
 
     public String getPhone() {
         return phone;
+    }
+
+    public Set<Bill> getBill() {
+        return bill;
+    }
+
+    public void setBill(Set<Bill> bill) {
+        this.bill = bill;
     }
 
     public void setPhone(String phone) {

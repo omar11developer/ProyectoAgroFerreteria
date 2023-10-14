@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -16,10 +17,28 @@ public class ItemBill implements Serializable {
     @NotNull
     private Integer cantidad;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @ManyToOne(
+            fetch = FetchType.LAZY,optional = true,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST
+            }
+    )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
     @JoinColumn(name = "id_Inventories")
     private Inventories inventories;
+
+    @ManyToOne(
+            fetch = FetchType.LAZY, optional = true,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST
+            }
+    )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
+    @JoinColumn(name = "itemBills")
+    private Bill bill;
+
 
     public Long getIdItemBill() {
         return idItemBill;
@@ -43,6 +62,14 @@ public class ItemBill implements Serializable {
 
     public void setInventories(Inventories inventories) {
         this.inventories = inventories;
+    }
+
+    public Bill getBill() {
+        return bill;
+    }
+
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 
     public static long getSerializableUID(){

@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Inventories")
@@ -25,30 +27,37 @@ public class Inventories implements Serializable {
     private Double salePrice;
 
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @ManyToOne(
+            optional = true,
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
     @JoinColumn(name = "id_Supplier")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "Inventories"})
     private Supplier supplier;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = true,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
     @JoinColumn(name = "id_Product")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "Inventories"})
     private Product product;
-/*@OneToMany(mappedBy = "inventories",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-private List<ItemBill>itemBillList;
 
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "inventories"
+    )
+    @JsonIgnoreProperties({"Inventories"})
+    private Set<ItemBill> itemBill;
 
-    public Inventories() {
-        itemBillList=new ArrayList<ItemBill>();
-    }
-
-    public List<ItemBill> getItemBillList() {
-        return itemBillList;
-    }
-
-    public void setItemBillList(List<ItemBill> itemBillList) {
-        this.itemBillList = itemBillList;
-    }*/
 @PrePersist
 public void prePersist(){
     createAtOrder =new Date();
@@ -93,6 +102,14 @@ public void prePersist(){
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Set<ItemBill> getItemBill() {
+        return itemBill;
+    }
+
+    public void setItemBill(Set<ItemBill> itemBill) {
+        this.itemBill = itemBill;
     }
 
     public static long getSerializableUID(){

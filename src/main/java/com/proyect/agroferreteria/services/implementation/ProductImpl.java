@@ -40,4 +40,9 @@ public class ProductImpl implements IProductService {
             productRepository.deleteById(id);
         }
     }
+
+    @Override
+    public List<Product> findProductByTypeProduct(String nameTypeProduct) {
+        return null;
+    }
 }
