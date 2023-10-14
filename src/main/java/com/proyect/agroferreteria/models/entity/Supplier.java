@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 //Creando la clase provedor
@@ -34,6 +35,13 @@ public class Supplier implements Serializable {
 
     public Supplier() {
 
+    }
+
+    public Supplier(String name, String city, String address, Integer phone) {
+        this.name = name;
+        this.city = city;
+        this.address = address;
+        this.phone = phone;
     }
 
     public Long getIdSupplier() {
@@ -90,4 +98,28 @@ public class Supplier implements Serializable {
         return serialVersionUID;
     }
     private static final long serialVersionUID=1L;
+
+    @Override
+    public String toString() {
+        return "Supplier{" +
+                "idSupplier=" + idSupplier +
+                ", name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", phone=" + phone +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Supplier supplier = (Supplier) o;
+        return Objects.equals(idSupplier, supplier.idSupplier) && Objects.equals(name, supplier.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idSupplier, name);
+    }
 }

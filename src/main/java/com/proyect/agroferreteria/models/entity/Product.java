@@ -6,10 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 //Creando la entidad Producto
 @Entity
@@ -33,7 +30,7 @@ public class Product implements Serializable {
     private String unitWeight;
 
     @NotNull
-    public Integer stock;
+    private Integer stock;
 
     @OneToMany(
             mappedBy = "product", fetch = FetchType.LAZY
@@ -57,6 +54,13 @@ public class Product implements Serializable {
 
     public Product() {
 
+    }
+
+    public Product(String name, Double unitPrice, String unitWeight, Integer stock) {
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.unitWeight = unitWeight;
+        this.stock = stock;
     }
 
     public Long getIdProduct() {
@@ -121,4 +125,28 @@ public class Product implements Serializable {
         return serializacionUID;
     }
     private static final long serializacionUID= 1L;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "idProduct=" + idProduct +
+                ", name='" + name + '\'' +
+                ", unitPrice=" + unitPrice +
+                ", unitWeight='" + unitWeight + '\'' +
+                ", stock=" + stock +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(idProduct, product.idProduct);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idProduct);
+    }
 }

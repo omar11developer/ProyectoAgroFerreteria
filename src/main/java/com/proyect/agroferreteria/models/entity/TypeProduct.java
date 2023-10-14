@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 //Creando la clase Tipos de producto
@@ -33,6 +34,12 @@ public class TypeProduct implements Serializable {
 
     }
     //Getter y Setter de la clase
+
+
+    public TypeProduct(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
@@ -65,4 +72,24 @@ public class TypeProduct implements Serializable {
     }
     private static final long serializableUID=1L;
 
+    @Override
+    public String toString() {
+        return "TypeProduct{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TypeProduct that = (TypeProduct) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }

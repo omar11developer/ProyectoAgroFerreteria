@@ -58,6 +58,13 @@ public class Bill implements Serializable {
 
     }
 
+    public Bill(Long idBill, String description, String observation, String paymentMethod) {
+        this.idBill = idBill;
+        this.description = description;
+        this.observation = observation;
+        this.paymentMethod = paymentMethod;
+    }
+
     public Long getIdBill() {
         return idBill;
     }
@@ -112,5 +119,16 @@ public class Bill implements Serializable {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "idBill=" + idBill +
+                ", description='" + description + '\'' +
+                ", observation='" + observation + '\'' +
+                ", creatAt=" + creatAt +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                '}';
     }
 }

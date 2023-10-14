@@ -6,10 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "Inventories")
@@ -58,8 +55,17 @@ public class Inventories implements Serializable {
     @JsonIgnoreProperties({"Inventories"})
     private Set<ItemBill> itemBill;
 
-@PrePersist
-public void prePersist(){
+
+    public Inventories() {
+    }
+
+    public Inventories(Long id_Inventory, Double salePrice) {
+        this.id_Inventory = id_Inventory;
+        this.salePrice = salePrice;
+    }
+
+    @PrePersist
+    public void prePersist(){
     createAtOrder =new Date();
 }
 
@@ -116,4 +122,26 @@ public void prePersist(){
         return serializableUID;
     }
     private static final long serializableUID=1L;
+
+    @Override
+    public String toString() {
+        return "Inventories{" +
+                "id_Inventory=" + id_Inventory +
+                ", createAtOrder=" + createAtOrder +
+                ", salePrice=" + salePrice +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Inventories that = (Inventories) o;
+        return Objects.equals(id_Inventory, that.id_Inventory);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_Inventory);
+    }
 }
