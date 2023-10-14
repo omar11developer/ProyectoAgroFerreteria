@@ -23,21 +23,10 @@ public class TypeProductImpl implements ITypeProductService {
 
     @Override
     @Transactional
-    public TypeProduct save(TypeProduct typeProduct, List<Product> products) throws Exception {
-        TypeProduct typeProductLocal = typeProductRepository.findByName(typeProduct.getName());
-        if(typeProductLocal != null){
-            throw new Exception("El tipo de producto ya existe");
+    public TypeProduct save(TypeProduct typeProduct) {
 
-        }else {
-            for (Product product:products){
-                typeProductRepository.save(product.getTypeProduct());
-            }
-            typeProduct.getProducts().addAll(products);
-            typeProductLocal = typeProductRepository.save(typeProduct);
-        }
-        return typeProductLocal;
+        return typeProductRepository.save(typeProduct);
     }
-
 
 
     @Override
@@ -48,10 +37,10 @@ public class TypeProductImpl implements ITypeProductService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
-        if(id > 0){
+    public void deleteById(Long id) {
+
             typeProductRepository.deleteById(id);
-        }
+
     }
 
     @Override

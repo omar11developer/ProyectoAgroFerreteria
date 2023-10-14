@@ -31,7 +31,7 @@ public class TypeProductoController {
         return typeProductService.findAll();
     }
 
-    @GetMapping("TypeProductos/{id}")
+    @GetMapping("/TypeProductos/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id){
         TypeProduct typeProduct = null;
         Map<String, Object> response = new HashMap<>();
@@ -49,6 +49,66 @@ public class TypeProductoController {
         return new ResponseEntity<TypeProduct>(typeProduct, HttpStatus.OK);
     }
 
+    @PostMapping("/TypeProductos")
+    public ResponseEntity<?> saveTypeProduct(@RequestBody TypeProduct typeProduct) {
+        TypeProduct typeProductLocal = typeProductService.getByName(typeProduct.getName());
+        Map<String, Object> response = new HashMap<>();
+        if(typeProductLocal != null){
+            response.put("Mensaje: ", "El tipo de producto ya existe");
+            return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
+        }
+        try {
+            typeProductLocal = typeProductService.save(typeProduct);
+        } catch (DataAccessException e){
+            response.put("Mensaje: ", "Error al guardar tipo de producto");
+            response.put("Error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
+        return new ResponseEntity<TypeProduct>(typeProduct, HttpStatus.CREATED);
+
+    }
+    @PutMapping("/TypeProductos/{id}")
+    public ResponseEntity<?> editTypeProduct(@RequestBody TypeProduct typeProduct, @PathVariable Long id){
+        TypeProduct productActual = typeProductService.findById(id);
+        TypeProduct typeProductUpdate =null;
+        Map<String, Object> response = new HashMap<>();
+
+        if(productActual == null){
+            response.put("Mensaje: ", "El tipo de producto que desea editar no existe");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            productActual.setName(typeProduct.getName());
+            typeProductUpdate = typeProductService.save(productActual);
+        }catch (DataAccessException e){
+            response.put("Mensaje: ", "Error al actualizar tipo de producto");
+            response.put("Error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("Mensaje: ", "El cliente ha sido actualizado con exito!");
+        response.put("typeProduct: ", typeProductUpdate);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+    @DeleteMapping("/TypeProductos/{id}")
+    public ResponseEntity<?> deleteTypeProduct(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        TypeProduct typeProduct = typeProductService.findById(id);
+        if(typeProduct == null){
+            response.put("Mensaje: ", "El tipo de producto no existe");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+        try{
+            typeProductService.deleteById(id);
+            response.put("Mensaje: ", "cliente eliminado con exito");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (DataAccessException e){
+            response.put("Mensaje: ", "Error al eliminar el tipo de producto");
+            response.put("Error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
 }

@@ -20,7 +20,7 @@ public class TypeProduct implements Serializable {
     @NotNull
     private String name;
 
-
+    /*
     @OneToMany(
             mappedBy = "typeProduct",
             fetch = FetchType.LAZY
@@ -28,7 +28,7 @@ public class TypeProduct implements Serializable {
     @JsonIgnoreProperties({"type_Products"})
     @JsonIgnore
     private Set<Product> products = new HashSet<>();
-
+    */
     public TypeProduct() {
 
     }
@@ -57,13 +57,7 @@ public class TypeProduct implements Serializable {
         this.name = name;
     }
 
-    public Set<Product> getProducts() {
-        return products;
-    }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
 
     //Serializable de la clase
     public static long getSerializableUID(){

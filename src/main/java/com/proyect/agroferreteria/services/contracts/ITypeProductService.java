@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface ITypeProductService {
     public List<TypeProduct> findAll();
-    public TypeProduct save(TypeProduct typeProduct, List<Product> products) throws  Exception;
+    public TypeProduct save(TypeProduct typeProduct) ;
 
     public TypeProduct findById(Long id);
 
-    public void delete(Long id);
+    public void deleteById(Long id);
 
     public TypeProduct getByName(String name);
 
