@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.services.implementation;
 
+import com.proyect.agroferreteria.models.entity.Product;
 import com.proyect.agroferreteria.models.entity.TypeProduct;
 import com.proyect.agroferreteria.repository.ITypeProductRepository;
 import com.proyect.agroferreteria.services.contracts.ITypeProductService;
@@ -22,11 +23,22 @@ public class TypeProductImpl implements ITypeProductService {
 
     @Override
     @Transactional
-    public void save(TypeProduct typeProduct) {
-        if(typeProduct != null){
-            typeProductRepository.save(typeProduct);
+    public TypeProduct save(TypeProduct typeProduct, List<Product> products) throws Exception {
+        TypeProduct typeProductLocal = typeProductRepository.findByName(typeProduct.getName());
+        if(typeProductLocal != null){
+            throw new Exception("El tipo de producto ya existe");
+
+        }else {
+            for (Product product:products){
+                typeProductRepository.save(product.getTypeProduct());
+            }
+            typeProduct.getProducts().addAll(products);
+            typeProductLocal = typeProductRepository.save(typeProduct);
         }
+        return typeProductLocal;
     }
+
+
 
     @Override
     @Transactional(readOnly = true)
@@ -40,5 +52,10 @@ public class TypeProductImpl implements ITypeProductService {
         if(id > 0){
             typeProductRepository.deleteById(id);
         }
+    }
+
+    @Override
+    public TypeProduct getByName(String name) {
+        return typeProductRepository.findByName(name);
     }
 }

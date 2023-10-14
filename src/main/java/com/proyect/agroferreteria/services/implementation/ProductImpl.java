@@ -42,7 +42,14 @@ public class ProductImpl implements IProductService {
     }
 
     @Override
-    public List<Product> findProductByTypeProduct(String nameTypeProduct) {
-        return null;
+    public Product findByName(String name) {
+
+        return productRepository.findByName(name);
     }
+
+    @Override
+    public List<Product> getProductByTypeProduct(String typeProduct) {
+        return (List<Product>) productRepository.buscarProductoPorTyipoDeProducto(typeProduct);
+    }
+
 }

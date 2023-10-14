@@ -11,6 +11,7 @@ public interface IProductService {
     public Product findById(Long id);
 
     public void delete(Long id);
+    public Product findByName(String name);
 
-    public List<Product> findProductByTypeProduct(String nameTypeProduct);
+    public List<Product> getProductByTypeProduct(String typeProduct);
 }

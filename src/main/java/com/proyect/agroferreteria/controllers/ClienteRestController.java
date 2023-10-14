@@ -97,7 +97,8 @@ public class ClienteRestController {
 
 
     @PutMapping("/clientes/{id}")//sirve para actualizar
-    public ResponseEntity<?> update(@Valid @RequestBody Client client, BindingResult result ,@PathVariable Long id) {
+    public ResponseEntity<?> update(@Valid @RequestBody Client client, BindingResult result ,
+                                    @PathVariable Long id) {
 
         Client clienteActual = clienteService.findById(id);
         Client clienteUpdate = null;

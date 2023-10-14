@@ -1,14 +1,12 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 //Creando la clase Tipos de producto
 @Entity
@@ -27,8 +25,9 @@ public class TypeProduct implements Serializable {
             mappedBy = "typeProduct",
             fetch = FetchType.LAZY
     )
-    @JsonIgnoreProperties({"typeProduct"})
-    private Set<Product> products;
+    @JsonIgnoreProperties({"type_Products"})
+    @JsonIgnore
+    private Set<Product> products = new HashSet<>();
 
     public TypeProduct() {
 
