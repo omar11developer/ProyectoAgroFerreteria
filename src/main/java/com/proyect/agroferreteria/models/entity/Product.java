@@ -36,21 +36,21 @@ public class Product implements Serializable {
     @OneToMany(
             mappedBy = "product", fetch = FetchType.LAZY
     )
-    @JsonIgnoreProperties({"product"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
     @JsonIgnore
-    private Set<Inventories> inventories;
+    private Set<Inventories> inventories = new HashSet<>();
 
 
     @ManyToOne(
             optional = true,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             }
     )
     @JoinColumn(name = "id_Type_Product")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
+    // @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
     @JsonIgnore
     private TypeProduct typeProduct;
 

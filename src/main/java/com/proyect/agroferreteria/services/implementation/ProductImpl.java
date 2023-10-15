@@ -1,13 +1,17 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Product;
+import com.proyect.agroferreteria.models.entity.TypeProduct;
 import com.proyect.agroferreteria.repository.IProductRepository;
 import com.proyect.agroferreteria.services.contracts.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductImpl implements IProductService {
@@ -20,12 +24,12 @@ public class ProductImpl implements IProductService {
     }
 
     @Override
-    @Transactional
     public void save(Product product) {
-        if(product != null){
-            productRepository.save(product);
-        }
+
+        productRepository.save(product);
     }
+
+
 
     @Override
     @Transactional(readOnly = true)
@@ -50,6 +54,16 @@ public class ProductImpl implements IProductService {
     @Override
     public List<Product> getProductByTypeProduct(String typeProduct) {
         return (List<Product>) productRepository.buscarProductoPorTyipoDeProducto(typeProduct);
+    }
+
+    @Override
+    public List<Product> buscarProductoPorNombre(String name) {
+        return (List<Product>) productRepository.buscarProductoPorNombre(name);
+    }
+
+    @Override
+    public List<Product> obtenerProductosBajosEnStock() {
+        return (List<Product>) productRepository.obtenerProductosBajosEnStock();
     }
 
 }

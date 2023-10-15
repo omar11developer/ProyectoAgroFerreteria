@@ -11,4 +11,10 @@ public interface IProductRepository extends CrudRepository<Product, Long> {
     @Query("select p from Product p join fetch p.typeProduct t where upper(t.name) = upper(?1)")
     Iterable<Product> buscarProductoPorTyipoDeProducto(String typeProduct);
 
+    @Query("select p from Product  p where p.name like %?1%")
+    Iterable<Product> buscarProductoPorNombre(String name);
+
+    @Query("select p from Product p where p.stock < 10")
+    Iterable<Product> obtenerProductosBajosEnStock();
+
 }
