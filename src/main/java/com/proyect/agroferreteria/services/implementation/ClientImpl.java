@@ -1,8 +1,8 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Client;
-import com.proyect.agroferreteria.repository.IClientRepository;
-import com.proyect.agroferreteria.services.contracts.IClientService;
+import com.proyect.agroferreteria.repository.ClientRepository;
+import com.proyect.agroferreteria.services.contracts.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ClientImpl implements IClientService {
+public class ClientImpl implements ClientService {
 
-    private final IClientRepository clienteRepository;
+    private final ClientRepository clienteRepository;
 
     @Autowired
-    public ClientImpl(IClientRepository clientRepository) {
+    public ClientImpl(ClientRepository clientRepository) {
         this.clienteRepository = clientRepository;
     }
 

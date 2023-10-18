@@ -4,7 +4,7 @@ import com.proyect.agroferreteria.models.entity.Supplier;
 
 import java.util.List;
 
-public interface ISupplierService {
+public interface SupplierService {
     public List<Supplier> findAll();
     public void save(Supplier supplier);
 

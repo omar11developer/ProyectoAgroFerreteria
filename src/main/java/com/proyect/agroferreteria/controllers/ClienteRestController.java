@@ -1,7 +1,7 @@
 package com.proyect.agroferreteria.controllers;
 
 import com.proyect.agroferreteria.models.entity.Client;
-import com.proyect.agroferreteria.services.contracts.IClientService;
+import com.proyect.agroferreteria.services.contracts.ClientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/ferreteria")
 public class ClienteRestController {
     @Autowired
-    private IClientService clienteService;
+    private ClientService clienteService;
 
     @GetMapping("/clientes")
     public List<Client> index() {

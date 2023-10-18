@@ -1,28 +1,23 @@
 package com.proyect.agroferreteria.controllers;
 
-import com.proyect.agroferreteria.models.entity.Product;
 import com.proyect.agroferreteria.models.entity.TypeProduct;
-import com.proyect.agroferreteria.services.contracts.IProductService;
-import com.proyect.agroferreteria.services.contracts.ITypeProductService;
-import jakarta.validation.Valid;
+import com.proyect.agroferreteria.services.contracts.TypeProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/agroferreteria")
 public class TypeProductoController {
 
     @Autowired
-    private ITypeProductService typeProductService;
+    private TypeProductService typeProductService;
 
 
 

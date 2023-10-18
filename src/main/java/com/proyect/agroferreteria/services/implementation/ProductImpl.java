@@ -1,22 +1,18 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Product;
-import com.proyect.agroferreteria.models.entity.TypeProduct;
-import com.proyect.agroferreteria.repository.IProductRepository;
-import com.proyect.agroferreteria.services.contracts.IProductService;
+import com.proyect.agroferreteria.repository.ProductRepository;
+import com.proyect.agroferreteria.services.contracts.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
-public class ProductImpl implements IProductService {
+public class ProductImpl implements ProductService {
     @Autowired
-    private IProductRepository productRepository;
+    private ProductRepository productRepository;
     @Override
     @Transactional(readOnly = true)
     public List<Product> findAll() {

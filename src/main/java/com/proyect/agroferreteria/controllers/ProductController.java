@@ -2,15 +2,14 @@ package com.proyect.agroferreteria.controllers;
 
 import com.proyect.agroferreteria.models.entity.Product;
 import com.proyect.agroferreteria.models.entity.TypeProduct;
-import com.proyect.agroferreteria.services.contracts.IProductService;
-import com.proyect.agroferreteria.services.contracts.ITypeProductService;
+import com.proyect.agroferreteria.services.contracts.ProductService;
+import com.proyect.agroferreteria.services.contracts.TypeProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,9 +20,9 @@ import java.util.Map;
 @RequestMapping("/agroferreteria")
 public class ProductController {
     @Autowired
-    private IProductService productService;
+    private ProductService productService;
     @Autowired
-    private ITypeProductService typeProductService;
+    private TypeProductService typeProductService;
 
     @GetMapping("/productos")
     public ResponseEntity<?> getProducts(){
