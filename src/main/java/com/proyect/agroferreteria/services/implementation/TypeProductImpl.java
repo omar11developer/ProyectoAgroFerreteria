@@ -11,39 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class TypeProductImpl implements TypeProductService {
-    @Autowired
-    private TypeProductRepository typeProductRepository;
-    @Override
-    @Transactional(readOnly = true)
-    public List<TypeProduct> findAll() {
-        return (List<TypeProduct>) typeProductRepository.findAll();
-    }
+public class TypeProductImpl {
 
-    @Override
-    @Transactional
-    public TypeProduct save(TypeProduct typeProduct) {
-
-        return typeProductRepository.save(typeProduct);
-    }
-
-
-    @Override
-    @Transactional(readOnly = true)
-    public TypeProduct findById(Long id) {
-        return typeProductRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    @Transactional
-    public void deleteById(Long id) {
-
-            typeProductRepository.deleteById(id);
-
-    }
-
-    @Override
-    public TypeProduct getByName(String name) {
-        return typeProductRepository.findByName(name);
-    }
 }
