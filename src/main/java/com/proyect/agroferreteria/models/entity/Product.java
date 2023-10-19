@@ -51,7 +51,7 @@ public class Product implements Serializable {
     )
     @JoinColumn(name = "id_Type_Product")
     // @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
-    @JsonIgnore
+    //@JsonIgnore
     private TypeProduct typeProduct;
 
 

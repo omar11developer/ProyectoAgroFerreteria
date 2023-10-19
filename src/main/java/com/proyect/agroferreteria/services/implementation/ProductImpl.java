@@ -2,7 +2,7 @@ package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Product;
 import com.proyect.agroferreteria.repository.ProductRepository;
-import com.proyect.agroferreteria.services.contracts.ProductService;
+import com.proyect.agroferreteria.services.contracts.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,56 +10,33 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ProductImpl implements ProductService {
-    @Autowired
-    private ProductRepository productRepository;
-    @Override
-    @Transactional(readOnly = true)
-    public List<Product> findAll() {
-        return (List<Product>) productRepository.findAll();
-    }
+public class ProductImpl extends GenericoImpl<Product,ProductRepository> implements ProductDAO{
 
-    @Override
-    public void save(Product product) {
-
-        productRepository.save(product);
+    public ProductImpl(ProductRepository repository) {
+        super(repository);
     }
 
 
+    @Override
+    public boolean existeByNameProduct(String name) {
+        return repository.existsByNameProduct(name);
+    }
 
     @Override
     @Transactional(readOnly = true)
-    public Product findById(Long id) {
-        return productRepository.findById(id).orElse(null);
+    public Iterable<Product> getProductByTypeProduct(String typeProduct) {
+        return  repository.buscarProductoPorTyipoDeProducto(typeProduct);
     }
 
     @Override
-    @Transactional
-    public void delete(Long id) {
-        if(id > 0){
-            productRepository.deleteById(id);
-        }
+    @Transactional(readOnly = true)
+    public Iterable<Product> buscarProductosPorNombre(String name) {
+        return repository.buscarProductoPorNombre(name);
     }
 
     @Override
-    public Product findByName(String name) {
-
-        return productRepository.findByName(name);
+    @Transactional(readOnly = true)
+    public Iterable<Product> obtenerProductosBajosEnStock() {
+        return repository.obtenerProductosBajosEnStock();
     }
-
-    @Override
-    public List<Product> getProductByTypeProduct(String typeProduct) {
-        return (List<Product>) productRepository.buscarProductoPorTyipoDeProducto(typeProduct);
-    }
-
-    @Override
-    public List<Product> buscarProductoPorNombre(String name) {
-        return (List<Product>) productRepository.buscarProductoPorNombre(name);
-    }
-
-    @Override
-    public List<Product> obtenerProductosBajosEnStock() {
-        return (List<Product>) productRepository.obtenerProductosBajosEnStock();
-    }
-
 }
