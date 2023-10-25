@@ -1,11 +1,12 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 //Creando la clase Tipos de producto
 @Entity
@@ -14,27 +15,38 @@ public class TypeProduct implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_Type_Product")
-    private Long idTypeProduct;
+    private Long id;
 
     @NotNull
     private String name;
 
-
-    @OneToMany(mappedBy = "typeProduct", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Product> products;
-
+    /*
+    @OneToMany(
+            mappedBy = "typeProduct",
+            fetch = FetchType.LAZY
+    )
+    @JsonIgnoreProperties({"type_Products"})
+    @JsonIgnore
+    private Set<Product> products = new HashSet<>();
+    */
     public TypeProduct() {
-    products = new ArrayList<Product>();
+
     }
     //Getter y Setter de la clase
-    public Long getIdTypeProduct() {
-        return idTypeProduct;
+
+
+    public TypeProduct(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
     }
 
 
 
-    public void setIdTypeProduct(Long idTypeProduct) {
-        this.idTypeProduct = idTypeProduct;
+    public void setId(Long idTypeProduct) {
+        this.id = idTypeProduct;
     }
 
     public String getName() {
@@ -45,13 +57,7 @@ public class TypeProduct implements Serializable {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
 
     //Serializable de la clase
     public static long getSerializableUID(){
@@ -59,4 +65,24 @@ public class TypeProduct implements Serializable {
     }
     private static final long serializableUID=1L;
 
+    @Override
+    public String toString() {
+        return "TypeProduct{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TypeProduct that = (TypeProduct) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }

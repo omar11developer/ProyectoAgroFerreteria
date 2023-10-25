@@ -4,7 +4,7 @@ import com.proyect.agroferreteria.models.entity.Bill;
 
 import java.util.List;
 
-public interface IBillService {
+public interface BillService {
     public List<Bill> findAll();
     public void save(Bill bill);
     public Bill findById(Long id);

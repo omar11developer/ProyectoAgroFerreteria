@@ -4,9 +4,8 @@ import com.proyect.agroferreteria.models.entity.UserRols;
 import com.proyect.agroferreteria.models.entity.Users;
 
 import java.util.List;
-import java.util.Set;
 
-public interface IUserService {
+public interface UserService {
 
     public List<Users> AllUsers();
 

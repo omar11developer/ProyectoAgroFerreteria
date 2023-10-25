@@ -1,8 +1,8 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Inventories;
-import com.proyect.agroferreteria.repository.IInventoriesRepository;
-import com.proyect.agroferreteria.services.contracts.IInventoriesService;
+import com.proyect.agroferreteria.repository.InventoriesRepository;
+import com.proyect.agroferreteria.services.contracts.InventoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class InventoriesImpl implements IInventoriesService {
+public class InventoriesImpl implements InventoriesService {
     @Autowired
-    private IInventoriesRepository inventoriesRepository;
+    private InventoriesRepository inventoriesRepository;
 
     @Override
     @Transactional(readOnly = true)

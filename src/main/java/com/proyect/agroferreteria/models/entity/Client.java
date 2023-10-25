@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "clients")
@@ -33,7 +36,23 @@ public class Client implements Serializable {
     @NotEmpty(message = "El numero teléfonico es importante, por favor ingresalo")
     private String phone;
 
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "client"
+    )
+    @JsonIgnoreProperties({"clients"})
+    private Set<Bill> bill;
+
     public Client() {
+    }
+
+    public Client(String name, String lastName, String identification, String adress, String email, String phone) {
+        this.name = name;
+        this.lastName = lastName;
+        this.identification = identification;
+        this.adress = adress;
+        this.email = email;
+        this.phone = phone;
     }
 
     public Long getIdClient() {
@@ -88,6 +107,14 @@ public class Client implements Serializable {
         return phone;
     }
 
+    public Set<Bill> getBill() {
+        return bill;
+    }
+
+    public void setBill(Set<Bill> bill) {
+        this.bill = bill;
+    }
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
@@ -95,4 +122,30 @@ public class Client implements Serializable {
         return serializableUID;
     }
     private static final long serializableUID=1L;
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "idClient=" + idClient +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", identification='" + identification + '\'' +
+                ", adress='" + adress + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return Objects.equals(idClient, client.idClient) && Objects.equals(name, client.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idClient, name);
+    }
 }

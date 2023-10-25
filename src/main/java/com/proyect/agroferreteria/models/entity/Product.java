@@ -1,13 +1,13 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 //Creando la entidad Producto
 @Entity
@@ -31,20 +31,39 @@ public class Product implements Serializable {
     private String unitWeight;
 
     @NotNull
-    public Integer stock;
+    private Integer stock;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Inventories> inventories;
+    @OneToMany(
+            mappedBy = "product", fetch = FetchType.LAZY
+    )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
+    @JsonIgnore
+    private Set<Inventories> inventories = new HashSet<>();
 
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @ManyToOne(
+            optional = true,
+            fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
     @JoinColumn(name = "id_Type_Product")
+    // @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
+    //@JsonIgnore
     private TypeProduct typeProduct;
 
 
     public Product() {
-        inventories= new ArrayList<Inventories>();
+
+    }
+
+    public Product(String name, Double unitPrice, String unitWeight, Integer stock) {
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.unitWeight = unitWeight;
+        this.stock = stock;
     }
 
     public Long getIdProduct() {
@@ -96,11 +115,11 @@ public class Product implements Serializable {
         this.typeProduct = typeProduct;
     }
 
-    public List<Inventories> getInventories() {
+    public Set<Inventories> getInventories() {
         return inventories;
     }
 
-    public void setInventories(List<Inventories> inventories) {
+    public void setInventories(Set<Inventories> inventories) {
         this.inventories = inventories;
     }
 
@@ -109,4 +128,28 @@ public class Product implements Serializable {
         return serializacionUID;
     }
     private static final long serializacionUID= 1L;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "idProduct=" + idProduct +
+                ", name='" + name + '\'' +
+                ", unitPrice=" + unitPrice +
+                ", unitWeight='" + unitWeight + '\'' +
+                ", stock=" + stock +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(idProduct, product.idProduct);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idProduct);
+    }
 }

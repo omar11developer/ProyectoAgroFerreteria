@@ -4,7 +4,7 @@ import com.proyect.agroferreteria.models.entity.Client;
 
 import java.util.List;
 
-public interface IClientService {
+public interface ClientService {
 
     public List<Client> findAll();
 

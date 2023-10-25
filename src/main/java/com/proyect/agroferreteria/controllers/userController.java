@@ -3,10 +3,8 @@ package com.proyect.agroferreteria.controllers;
 import com.proyect.agroferreteria.models.entity.Rols;
 import com.proyect.agroferreteria.models.entity.UserRols;
 import com.proyect.agroferreteria.models.entity.Users;
-import com.proyect.agroferreteria.services.contracts.IUserService;
+import com.proyect.agroferreteria.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -15,7 +13,7 @@ import java.util.*;
 @RequestMapping("/login")
 public class userController {
     @Autowired
-    private IUserService userService;
+    private UserService userService;
     @GetMapping("/users")
     public List<Users> getUserName(){
         return userService.AllUsers();

@@ -1,10 +1,12 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "item_Bills")
@@ -16,10 +18,35 @@ public class ItemBill implements Serializable {
     @NotNull
     private Integer cantidad;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @ManyToOne(
+            fetch = FetchType.LAZY,optional = true,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST
+            }
+    )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
     @JoinColumn(name = "id_Inventories")
     private Inventories inventories;
+
+    @ManyToOne(
+            fetch = FetchType.LAZY, optional = true,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST
+            }
+    )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
+    @JoinColumn(name = "itemBills")
+    private Bill bill;
+
+    public ItemBill() {
+    }
+
+    public ItemBill(Long idItemBill, Integer cantidad) {
+        this.idItemBill = idItemBill;
+        this.cantidad = cantidad;
+    }
 
     public Long getIdItemBill() {
         return idItemBill;
@@ -45,8 +72,37 @@ public class ItemBill implements Serializable {
         this.inventories = inventories;
     }
 
+    public Bill getBill() {
+        return bill;
+    }
+
+    public void setBill(Bill bill) {
+        this.bill = bill;
+    }
+
     public static long getSerializableUID(){
         return serializableUID;
     }
     private static final long serializableUID=1L;
+
+    @Override
+    public String toString() {
+        return "ItemBill{" +
+                "idItemBill=" + idItemBill +
+                ", cantidad=" + cantidad +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemBill itemBill = (ItemBill) o;
+        return Objects.equals(idItemBill, itemBill.idItemBill);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idItemBill);
+    }
 }

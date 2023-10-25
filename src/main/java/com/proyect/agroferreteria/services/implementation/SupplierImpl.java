@@ -1,8 +1,8 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Supplier;
-import com.proyect.agroferreteria.repository.ISupplierRepository;
-import com.proyect.agroferreteria.services.contracts.ISupplierService;
+import com.proyect.agroferreteria.repository.SupplierRepository;
+import com.proyect.agroferreteria.services.contracts.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class SupplierImpl implements ISupplierService {
+public class SupplierImpl implements SupplierService {
     @Autowired
-    private ISupplierRepository supplierRepository;
+    private SupplierRepository supplierRepository;
     @Override
     @Transactional(readOnly = true)
     public List<Supplier> findAll() {
