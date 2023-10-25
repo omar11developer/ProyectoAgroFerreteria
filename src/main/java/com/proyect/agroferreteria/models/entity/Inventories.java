@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -33,7 +34,7 @@ public class Inventories implements Serializable {
             }
     )
     @JoinColumn(name = "id_Supplier")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "Inventories"})
+    @JsonIgnore
     private Supplier supplier;
 
     @ManyToOne(
@@ -45,14 +46,13 @@ public class Inventories implements Serializable {
             }
     )
     @JoinColumn(name = "id_Product")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "Inventories"})
     private Product product;
 
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "inventories"
     )
-    @JsonIgnoreProperties({"Inventories"})
+    @JsonIgnore
     private Set<ItemBill> itemBill;
 
 

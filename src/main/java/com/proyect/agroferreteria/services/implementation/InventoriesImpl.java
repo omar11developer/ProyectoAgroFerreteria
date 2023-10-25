@@ -1,44 +1,30 @@
 package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Inventories;
+import com.proyect.agroferreteria.models.entity.TypeProduct;
 import com.proyect.agroferreteria.repository.InventoriesRepository;
-import com.proyect.agroferreteria.services.contracts.InventoriesService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.proyect.agroferreteria.services.contracts.InventoriesDAO;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 @Service
-public class InventoriesImpl implements InventoriesService {
-    @Autowired
-    private InventoriesRepository inventoriesRepository;
+public class InventoriesImpl extends GenericoImpl<Inventories,InventoriesRepository> implements InventoriesDAO {
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Inventories> findAll() {
-        return (List<Inventories>) inventoriesRepository.findAll();
+    public InventoriesImpl(InventoriesRepository repository) {
+        super(repository);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Inventories findById(Long id) {
-        return inventoriesRepository.findById(id).orElse(null);
+    public Iterable<Inventories> obtenerTodosLosProductos() {
+        return repository.obtenrTodosLosProductos();
     }
 
-    @Override
-    @Transactional
-    public void save(Inventories inventories) {
-        if(inventories != null){
-            inventoriesRepository.save(inventories);
-        }
-    }
 
-    @Override
-    @Transactional
-    public void delete(Long id) {
-        if(id > 0){
-            inventoriesRepository.deleteById(id);
-        }
-    }
 }

@@ -36,7 +36,6 @@ public class Product implements Serializable {
     @OneToMany(
             mappedBy = "product", fetch = FetchType.LAZY
     )
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
     @JsonIgnore
     private Set<Inventories> inventories = new HashSet<>();
 
