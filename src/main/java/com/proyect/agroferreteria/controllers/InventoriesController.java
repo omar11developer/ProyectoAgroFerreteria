@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,20 +23,17 @@ public class InventoriesController extends GenericoController<Inventories, Inven
         super(service);
         nombreEntidad="Inventario";
     }
-
     @GetMapping("/all")
-    public ResponseEntity<?> obtenerTodoElInventario(){
+    public ResponseEntity<?> obtnerInventarios(){
         Map<String, Object> response = new HashMap<>();
-        Iterable<Inventories> inventories = new ArrayList<>();
-        try{
-            inventories= service.obtenerTodosLosProductos();
+        try {
+            Iterable<Inventories> inventories = new ArrayList<>();
+            inventories = service.obtnerInventarioConProductos();
             if (inventories != null){
-
                 return new ResponseEntity<>(inventories, HttpStatus.OK);
-
             }else {
                 response.put("Mensaje: ", "No existe ningun producto en el inventario");
-                return  new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
         }catch (DataAccessException e){
             response.put("Mensaje: ", "Error al obtener los productos");
@@ -43,4 +41,5 @@ public class InventoriesController extends GenericoController<Inventories, Inven
             return  new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

@@ -34,7 +34,6 @@ public class Inventories implements Serializable {
             }
     )
     @JoinColumn(name = "id_Supplier")
-    @JsonIgnore
     private Supplier supplier;
 
     @ManyToOne(

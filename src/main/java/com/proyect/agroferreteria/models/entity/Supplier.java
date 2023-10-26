@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -30,7 +31,8 @@ public class Supplier implements Serializable {
     @OneToMany(
             mappedBy = "supplier",
             fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"suppliers"})
+    //@JsonIgnoreProperties({"suppliers"})
+    @JsonIgnore
     private Set<Inventories> inventories;
 
     public Supplier() {

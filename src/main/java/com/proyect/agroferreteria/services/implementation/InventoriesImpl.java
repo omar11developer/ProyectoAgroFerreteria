@@ -21,10 +21,9 @@ public class InventoriesImpl extends GenericoImpl<Inventories,InventoriesReposit
         super(repository);
     }
 
+
     @Override
-    public Iterable<Inventories> obtenerTodosLosProductos() {
-        return repository.obtenrTodosLosProductos();
+    public Iterable<Inventories> obtnerInventarioConProductos() {
+        return repository.obtnerInventarioConProductos();
     }
-
-
 }
