@@ -4,12 +4,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "item_Bills")
+@Data
+@AllArgsConstructor
+@ToString
+@NoArgsConstructor
 public class ItemBill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,69 +48,12 @@ public class ItemBill implements Serializable {
     @JoinColumn(name = "itemBills")
     private Bill bill;
 
-    public ItemBill() {
-    }
 
     public ItemBill(Long idItemBill, Integer cantidad) {
         this.idItemBill = idItemBill;
         this.cantidad = cantidad;
     }
 
-    public Long getIdItemBill() {
-        return idItemBill;
-    }
 
-    public void setIdItemBill(Long idItemBill) {
-        this.idItemBill = idItemBill;
-    }
 
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Inventories getInventories() {
-        return inventories;
-    }
-
-    public void setInventories(Inventories inventories) {
-        this.inventories = inventories;
-    }
-
-    public Bill getBill() {
-        return bill;
-    }
-
-    public void setBill(Bill bill) {
-        this.bill = bill;
-    }
-
-    public static long getSerializableUID(){
-        return serializableUID;
-    }
-    private static final long serializableUID=1L;
-
-    @Override
-    public String toString() {
-        return "ItemBill{" +
-                "idItemBill=" + idItemBill +
-                ", cantidad=" + cantidad +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItemBill itemBill = (ItemBill) o;
-        return Objects.equals(idItemBill, itemBill.idItemBill);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idItemBill);
-    }
 }

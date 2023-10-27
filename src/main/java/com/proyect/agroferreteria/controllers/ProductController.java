@@ -35,7 +35,6 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
     public ResponseEntity<?> getProductByTypeProduct(@PathVariable String typeProduct){
         Iterable<Product> products = new ArrayList<>();
         Map<String, Object> response = new HashMap<>();
-
         try{
             TypeProduct typeProductSearch = typeProductDAO.getByName(typeProduct);
             if (typeProductSearch != null){
@@ -51,7 +50,6 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
             response.put("Error: " , e.getMessage());
             return  new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
     @GetMapping("/stocklower")
     public ResponseEntity<?> getProductsLowerStock(){

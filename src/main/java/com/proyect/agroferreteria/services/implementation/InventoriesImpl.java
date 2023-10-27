@@ -8,11 +8,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class InventoriesImpl extends GenericoImpl<Inventories,InventoriesRepository> implements InventoriesDAO {
@@ -23,7 +21,15 @@ public class InventoriesImpl extends GenericoImpl<Inventories,InventoriesReposit
 
 
     @Override
+    @Transactional(readOnly = true)
     public Iterable<Inventories> obtnerInventarioConProductos() {
         return repository.obtnerInventarioConProductos();
     }
+
+    @Override
+    public Optional<Inventories> obtnerInventarioById(Long id) {
+        return repository.obtnerInventarioById(id);
+    }
+
+
 }

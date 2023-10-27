@@ -6,6 +6,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,6 +17,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "clients")
+@Data
+@AllArgsConstructor
+@ToString
+@NoArgsConstructor
 public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,8 +51,7 @@ public class Client implements Serializable {
     @JsonIgnoreProperties({"clients"})
     private Set<Bill> bill;
 
-    public Client() {
-    }
+
 
     public Client(String name, String lastName, String identification, String adress, String email, String phone) {
         this.name = name;
@@ -55,86 +62,7 @@ public class Client implements Serializable {
         this.phone = phone;
     }
 
-    public Long getIdClient() {
-        return idClient;
-    }
 
-    public void setIdClient(Long idClient) {
-        this.idClient = idClient;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getIdentification() {
-        return identification;
-    }
-
-    public void setIdentification(String identification) {
-        this.identification = identification;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Set<Bill> getBill() {
-        return bill;
-    }
-
-    public void setBill(Set<Bill> bill) {
-        this.bill = bill;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    public static long getSerializableUID(){
-        return serializableUID;
-    }
-    private static final long serializableUID=1L;
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "idClient=" + idClient +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", identification='" + identification + '\'' +
-                ", adress='" + adress + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {

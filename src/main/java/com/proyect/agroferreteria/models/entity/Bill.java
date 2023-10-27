@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.Length;
 
 import java.io.Serializable;
@@ -15,6 +19,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "bills")
+@Data
+@AllArgsConstructor
+@ToString
+@NoArgsConstructor
 public class Bill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,9 +62,7 @@ public class Bill implements Serializable {
         creatAt =new Date();
     }
 
-    public Bill() {
 
-    }
 
     public Bill(Long idBill, String description, String observation, String paymentMethod) {
         this.idBill = idBill;
@@ -65,70 +71,5 @@ public class Bill implements Serializable {
         this.paymentMethod = paymentMethod;
     }
 
-    public Long getIdBill() {
-        return idBill;
-    }
 
-    public void setIdBill(Long idBill) {
-        this.idBill = idBill;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getObservation() {
-        return observation;
-    }
-
-    public void setObservation(String observation) {
-        this.observation = observation;
-    }
-
-    public Date getCreatAt() {
-        return creatAt;
-    }
-
-    public void setCreatAt(Date creatAt) {
-        this.creatAt = creatAt;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Set<ItemBill> getItemBills() {
-        return itemBills;
-    }
-
-    public void setItemBills(Set<ItemBill> itemBills) {
-        this.itemBills = itemBills;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    @Override
-    public String toString() {
-        return "Bill{" +
-                "idBill=" + idBill +
-                ", description='" + description + '\'' +
-                ", observation='" + observation + '\'' +
-                ", creatAt=" + creatAt +
-                ", paymentMethod='" + paymentMethod + '\'' +
-                '}';
-    }
 }

@@ -3,6 +3,10 @@ package com.proyect.agroferreteria.models.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,6 +17,10 @@ import java.util.Set;
 //Creando la entidad de la tabla usuario
 @Entity
 @Table(name = "users")
+@Data
+@AllArgsConstructor
+@ToString
+@NoArgsConstructor
 public class Users  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,41 +39,6 @@ public class Users  {
     @JsonIgnore
     private List<UserRols> usersRoles = new ArrayList<>();
 
-    //Constructores de la entidad
-    public Users() {
-    }
-
-    public Long getIdUser() {
-        return idUser;
-    }
-
-    // Metodos GETTER Y SETTER de la clase User
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
-    }
 
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<UserRols> getUsersRoles() {
-        return usersRoles;
-    }
-
-    public void setUsersRoles(List<UserRols> usersRoles) {
-        this.usersRoles = usersRoles;
-    }
 }

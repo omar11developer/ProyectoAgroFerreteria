@@ -1,6 +1,10 @@
 package com.proyect.agroferreteria.models.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,6 +13,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "rols")
+@Data
+@AllArgsConstructor
+@ToString
+@NoArgsConstructor
 public class Rols {
     @Id
     @Column(name = "id_rol")
@@ -20,30 +28,4 @@ public class Rols {
     private List<UserRols> usersRoles = new ArrayList<>();
 
 
-    public Rols() {
-    }
-
-    public Long getRolId() {
-        return rolId;
-    }
-
-    public void setRolId(Long rolId) {
-        this.rolId = rolId;
-    }
-
-    public String getNameRol() {
-        return nameRol;
-    }
-
-    public void setNameRol(String nameRol) {
-        this.nameRol = nameRol;
-    }
-
-    public List<UserRols> getUsersRoles() {
-        return usersRoles;
-    }
-
-    public void setUsersRoles(List<UserRols> usersRoles) {
-        this.usersRoles = usersRoles;
-    }
 }

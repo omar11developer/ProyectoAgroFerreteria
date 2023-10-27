@@ -5,12 +5,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "Inventories")
+@Data
+@AllArgsConstructor
+@ToString
+@NoArgsConstructor
 public class Inventories implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,8 +63,6 @@ public class Inventories implements Serializable {
     private Set<ItemBill> itemBill;
 
 
-    public Inventories() {
-    }
 
     public Inventories(Long id_Inventory, Double salePrice) {
         this.id_Inventory = id_Inventory;
@@ -69,78 +75,4 @@ public class Inventories implements Serializable {
 }
 
 
-    public Long getId_Inventory() {
-        return id_Inventory;
-    }
-
-    public void setId_Inventory(Long id_Inventory) {
-        this.id_Inventory = id_Inventory;
-    }
-
-    public Date getCreateAtOrder() {
-        return createAtOrder;
-    }
-
-    public void setCreateAtOrder(Date createAtOrder) {
-        this.createAtOrder = createAtOrder;
-    }
-
-    public Double getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(Double salePrice) {
-        this.salePrice = salePrice;
-    }
-
-    public Supplier getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Set<ItemBill> getItemBill() {
-        return itemBill;
-    }
-
-    public void setItemBill(Set<ItemBill> itemBill) {
-        this.itemBill = itemBill;
-    }
-
-    public static long getSerializableUID(){
-        return serializableUID;
-    }
-    private static final long serializableUID=1L;
-
-    @Override
-    public String toString() {
-        return "Inventories{" +
-                "id_Inventory=" + id_Inventory +
-                ", createAtOrder=" + createAtOrder +
-                ", salePrice=" + salePrice +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Inventories that = (Inventories) o;
-        return Objects.equals(id_Inventory, that.id_Inventory);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id_Inventory);
-    }
 }

@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.*;
@@ -12,6 +16,10 @@ import java.util.*;
 //Creando la entidad Producto
 @Entity
 @Table(name = "products")
+@Data
+@AllArgsConstructor
+@ToString
+@NoArgsConstructor
 public class Product implements Serializable {
 
     @Id
@@ -54,9 +62,7 @@ public class Product implements Serializable {
     private TypeProduct typeProduct;
 
 
-    public Product() {
 
-    }
 
     public Product(String name, Double unitPrice, String unitWeight, Integer stock) {
         this.name = name;
@@ -65,90 +71,5 @@ public class Product implements Serializable {
         this.stock = stock;
     }
 
-    public Long getIdProduct() {
-        return idProduct;
-    }
 
-    public void setIdProduct(Long idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(Double unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public String getUnitWeight() {
-        return unitWeight;
-    }
-
-    public void setUnitWeight(String unitWeight) {
-        this.unitWeight = unitWeight;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-
-    public TypeProduct getTypeProduct() {
-        return typeProduct;
-    }
-
-    public void setTypeProduct(TypeProduct typeProduct) {
-        this.typeProduct = typeProduct;
-    }
-
-    public Set<Inventories> getInventories() {
-        return inventories;
-    }
-
-    public void setInventories(Set<Inventories> inventories) {
-        this.inventories = inventories;
-    }
-
-    //Serializaciond e la clase
-    public static long getSerializacionUID(){
-        return serializacionUID;
-    }
-    private static final long serializacionUID= 1L;
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "idProduct=" + idProduct +
-                ", name='" + name + '\'' +
-                ", unitPrice=" + unitPrice +
-                ", unitWeight='" + unitWeight + '\'' +
-                ", stock=" + stock +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(idProduct, product.idProduct);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idProduct);
-    }
 }

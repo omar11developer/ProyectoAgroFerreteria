@@ -2,9 +2,17 @@ package com.proyect.agroferreteria.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "user_rols")
+@Data
+@AllArgsConstructor
+@ToString
+@NoArgsConstructor
 public class UserRols {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,30 +28,4 @@ public class UserRols {
     @JoinColumn(name = "id_rol")
     private Rols rol;
 
-    public UserRols() {
-    }
-
-    public Long getUsuarioRolId() {
-        return usuarioRolId;
-    }
-
-    public void setUsuarioRolId(Long usuarioRolId) {
-        this.usuarioRolId = usuarioRolId;
-    }
-
-    public Users getUsers() {
-        return users;
-    }
-
-    public void setUsers(Users users) {
-        this.users = users;
-    }
-
-    public Rols getRol() {
-        return rol;
-    }
-
-    public void setRol(Rols rol) {
-        this.rol = rol;
-    }
 }
