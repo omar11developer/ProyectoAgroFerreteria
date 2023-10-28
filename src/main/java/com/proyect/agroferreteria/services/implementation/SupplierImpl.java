@@ -10,34 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class SupplierImpl implements SupplierDAO {
-    @Autowired
-    private SupplierRepository supplierRepository;
+public class SupplierImpl extends GenericoImpl<Supplier, SupplierRepository> implements SupplierDAO {
+
+    public SupplierImpl(SupplierRepository repository) {
+        super(repository);
+    }
+
+
     @Override
-    @Transactional(readOnly = true)
-    public List<Supplier> findAll() {
-        return (List<Supplier>) supplierRepository.findAll();
+    public Iterable<Supplier> searchByNameLikeIgnoreCase(String name) {
+        return repository.searchByNameLikeIgnoreCase(name);
     }
 
     @Override
-    @Transactional
-    public void save(Supplier supplier) {
-        if(supplier != null){
-            supplierRepository.save(supplier);
-        }
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Supplier findById(Long id) {
-        return supplierRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    @Transactional
-    public void delete(Long id) {
-        if(id > 0){
-            supplierRepository.deleteById(id);
-        }
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
     }
 }

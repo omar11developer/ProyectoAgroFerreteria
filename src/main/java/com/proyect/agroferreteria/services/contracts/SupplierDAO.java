@@ -4,11 +4,7 @@ import com.proyect.agroferreteria.models.entity.Supplier;
 
 import java.util.List;
 
-public interface SupplierDAO {
-    public List<Supplier> findAll();
-    public void save(Supplier supplier);
-
-    public Supplier findById(Long id);
-
-    public void delete(Long id);
+public interface SupplierDAO extends GenericoDAO<Supplier> {
+    Iterable<Supplier> searchByNameLikeIgnoreCase(String name);
+    boolean existsByName(String name);
 }
