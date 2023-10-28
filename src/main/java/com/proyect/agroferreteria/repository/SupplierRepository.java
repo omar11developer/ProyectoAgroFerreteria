@@ -13,4 +13,6 @@ public interface SupplierRepository extends CrudRepository<Supplier, Long> {
     Iterable<Supplier> searchByNameLikeIgnoreCase(String name);
 
     boolean existsByName(String name);
+
+    Supplier findByName(String name);
 }

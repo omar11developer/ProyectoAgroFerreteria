@@ -39,4 +39,9 @@ public class ProductImpl extends GenericoImpl<Product,ProductRepository> impleme
     public Iterable<Product> obtenerProductosBajosEnStock() {
         return repository.obtenerProductosBajosEnStock();
     }
+
+    @Override
+    public Product findByName(String name) {
+        return repository.findByName(name);
+    }
 }

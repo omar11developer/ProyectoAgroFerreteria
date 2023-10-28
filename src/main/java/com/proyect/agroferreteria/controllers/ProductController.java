@@ -88,7 +88,7 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
     }
     @PostMapping
     public ResponseEntity<?> saveProduct(@RequestBody Product product){
-        Product productNew = null;
+
         TypeProduct typeProduct = typeProductDAO.getByName(product.getTypeProduct().getName());
         Map<String, Object> response = new HashMap<>();
         try {

@@ -7,4 +7,6 @@ import java.util.List;
 public interface SupplierDAO extends GenericoDAO<Supplier> {
     Iterable<Supplier> searchByNameLikeIgnoreCase(String name);
     boolean existsByName(String name);
+
+    Supplier findByName(String name);
 }

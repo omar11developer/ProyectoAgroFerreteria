@@ -12,4 +12,6 @@ public interface ProductDAO extends GenericoDAO<Product> {
 
     public Iterable<Product> obtenerProductosBajosEnStock();
 
+    Product findByName(String name);
+
 }

@@ -8,4 +8,6 @@ public interface InventoriesDAO extends GenericoDAO<Inventories> {
 
     Iterable<Inventories> obtnerInventarioConProductos();
     Optional<Inventories> obtnerInventarioById(Long id);
+
+    void deleteInvetario(Long id);
 }

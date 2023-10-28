@@ -26,4 +26,9 @@ public class SupplierImpl extends GenericoImpl<Supplier, SupplierRepository> imp
     public boolean existsByName(String name) {
         return repository.existsByName(name);
     }
+
+    @Override
+    public Supplier findByName(String name) {
+        return repository.findByName(name);
+    }
 }

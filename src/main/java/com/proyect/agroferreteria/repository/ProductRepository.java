@@ -20,4 +20,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     @Query("select p from Product p where p.stock < 10")
     Iterable<Product> obtenerProductosBajosEnStock();
 
+    Product findByName(String name);
+
 }

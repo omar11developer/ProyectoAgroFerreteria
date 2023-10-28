@@ -27,8 +27,14 @@ public class InventoriesImpl extends GenericoImpl<Inventories,InventoriesReposit
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Inventories> obtnerInventarioById(Long id) {
         return repository.obtnerInventarioById(id);
+    }
+
+    @Override
+    public void deleteInvetario(Long id) {
+        repository.deleteById(id);
     }
 
 
