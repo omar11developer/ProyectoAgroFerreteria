@@ -33,16 +33,9 @@ public class Inventories implements Serializable {
     private Double salePrice;
 
 
-    @ManyToOne(
-            optional = true,
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
-    @JoinColumn(name = "id_Supplier")
-    private Supplier supplier;
+
+    @NotNull
+    private Integer stock;
 
     @ManyToOne(
             fetch = FetchType.LAZY,
@@ -62,11 +55,10 @@ public class Inventories implements Serializable {
     @JsonIgnore
     private Set<ItemBill> itemBill;
 
-
-
-    public Inventories(Long id_Inventory, Double salePrice) {
-        this.id_Inventory = id_Inventory;
+    public Inventories(Date createAtOrder, Double salePrice, Integer stock) {
+        this.createAtOrder = createAtOrder;
         this.salePrice = salePrice;
+        this.stock = stock;
     }
 
     @PrePersist

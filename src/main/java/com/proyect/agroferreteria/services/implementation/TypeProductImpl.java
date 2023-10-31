@@ -1,6 +1,6 @@
 package com.proyect.agroferreteria.services.implementation;
 
-import com.proyect.agroferreteria.models.entity.TypeProduct;
+import com.proyect.agroferreteria.models.entity.Category;
 import com.proyect.agroferreteria.repository.TypeProductRepository;
 import com.proyect.agroferreteria.services.contracts.TypeProductDAO;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class TypeProductImpl extends GenericoImpl<TypeProduct, TypeProductRepository> implements TypeProductDAO {
+public class TypeProductImpl extends GenericoImpl<Category, TypeProductRepository> implements TypeProductDAO {
     @Autowired
     public TypeProductImpl(TypeProductRepository repository) {
         super(repository);
@@ -17,7 +17,7 @@ public class TypeProductImpl extends GenericoImpl<TypeProduct, TypeProductReposi
 
     @Override
     @Transactional(readOnly = true)
-    public TypeProduct getByName(String name) {
+    public Category getByName(String name) {
         return repository.findByName(name);
     }
 

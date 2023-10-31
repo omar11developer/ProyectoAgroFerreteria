@@ -39,9 +39,8 @@ public class Supplier implements Serializable {
     @OneToMany(
             mappedBy = "supplier",
             fetch = FetchType.LAZY)
-    //@JsonIgnoreProperties({"suppliers"})
-    @JsonIgnore
-    private Set<Inventories> inventories;
+    @JsonIgnoreProperties({"hibernateLazyInitializer","suppliers"})
+    private Set<Product> products;
 
 
     public Supplier(String name, String city, String address, Integer phone) {

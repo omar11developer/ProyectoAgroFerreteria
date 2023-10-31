@@ -1,19 +1,18 @@
 package com.proyect.agroferreteria.controllers;
 
 import com.proyect.agroferreteria.models.entity.Product;
-import com.proyect.agroferreteria.models.entity.TypeProduct;
+import com.proyect.agroferreteria.models.entity.Supplier;
+import com.proyect.agroferreteria.models.entity.Category;
 import com.proyect.agroferreteria.services.contracts.ProductDAO;
+import com.proyect.agroferreteria.services.contracts.SupplierDAO;
 import com.proyect.agroferreteria.services.contracts.TypeProductDAO;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -21,11 +20,12 @@ import java.util.stream.Collectors;
 public class ProductController extends GenericoController<Product, ProductDAO> {
 
 
-
+    private final SupplierDAO supplierDAO;
     private final TypeProductDAO typeProductDAO;
     @Autowired
-    public ProductController(ProductDAO service, TypeProductDAO typeProductDAO) {
+    public ProductController(ProductDAO service, SupplierDAO supplierDAO, TypeProductDAO typeProductDAO) {
         super(service);
+        this.supplierDAO = supplierDAO;
         this.typeProductDAO = typeProductDAO;
         nombreEntidad = "productos";
     }
@@ -36,8 +36,8 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
         Iterable<Product> products = new ArrayList<>();
         Map<String, Object> response = new HashMap<>();
         try{
-            TypeProduct typeProductSearch = typeProductDAO.getByName(typeProduct);
-            if (typeProductSearch != null){
+            Category categorySearch = typeProductDAO.getByName(typeProduct);
+            if (categorySearch != null){
                 products = service.getProductByTypeProduct(typeProduct);
                 return new ResponseEntity<>(products, HttpStatus.OK);
 
@@ -50,23 +50,6 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
             response.put("Error: " , e.getMessage());
             return  new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-    @GetMapping("/stocklower")
-    public ResponseEntity<?> getProductsLowerStock(){
-        Map<String, Object> response = new HashMap<>();
-        List<Product> products = new ArrayList<>();
-        try {
-            products= (List<Product>) service.obtenerProductosBajosEnStock();
-            if(products.isEmpty()){
-                response.put("Mensaje","No se encontraron productos con stock menores a 10");
-                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-            }
-        }catch (DataAccessException e){
-            response.put("Mensaje: ", "Error al obtener los productos");
-            response.put("Error: " , e.getMessage());
-            return  new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>(products, HttpStatus.OK);
     }
     @GetMapping("/search/{name}")
     public ResponseEntity<?> findByNameProduct(@PathVariable String name){
@@ -89,17 +72,22 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
     @PostMapping
     public ResponseEntity<?> saveProduct(@RequestBody Product product){
 
-        TypeProduct typeProduct = typeProductDAO.getByName(product.getTypeProduct().getName());
+        Category category = typeProductDAO.getByName(product.getCategory().getName());
+        Supplier supplier= supplierDAO.findByName(product.getSupplier().getName());
         Map<String, Object> response = new HashMap<>();
         try {
             if(service.existeByNameProduct(product.getName())){
                 response.put("Mensaje", "El producto ya existe");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            }else if( typeProduct == null){
+            }else if( category == null){
                 response.put("Mensaje", "La categoria del producto no existe");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }else if (supplier == null){
+                response.put("Mensaje", "El proovedor del producto no existe");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }else {
-                product.setTypeProduct(typeProduct);
+                product.setCategory(category);
+                product.setSupplier(supplier);
                 service.save(product);
                 return new ResponseEntity<Product>(product, HttpStatus.CREATED);
             }
@@ -122,13 +110,13 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
                 productUpdate = productActual.get();
                 productUpdate.setName(product.getName());
                 productUpdate.setUnitWeight(productUpdate.getUnitWeight());
-                productUpdate.setStock(productUpdate.getStock());
-                TypeProduct typeProductName = typeProductDAO.getByName(product.getTypeProduct().getName());
-                if(typeProductName != null){
+                Category categoryName = typeProductDAO.getByName(product.getCategory().getName());
+                Supplier supplier = supplierDAO.findByName(product.getSupplier().getName());
+                if(categoryName != null && supplier != null){
                     service.save(productUpdate);
                     return new ResponseEntity<Product>(productUpdate, HttpStatus.OK);
                 }else{
-                    response.put("Mensaje: ", "No se puede editar el producto porque el tipo de producto no es correcto");
+                    response.put("Mensaje: ", "No se puede editar el producto porque el tipo de producto o el proveedor no es correcto");
                     return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                 }
             }

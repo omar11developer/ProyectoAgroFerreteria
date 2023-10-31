@@ -2,7 +2,6 @@ package com.proyect.agroferreteria.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_Product")
+    @Column(name = "id_product")
     private Long idProduct;
 
     @NotNull
@@ -38,8 +37,6 @@ public class Product implements Serializable {
     @Column(name = "unit_Weight")
     private String unitWeight;
 
-    @NotNull
-    private Integer stock;
 
     @OneToMany(
             mappedBy = "product", fetch = FetchType.LAZY
@@ -50,25 +47,35 @@ public class Product implements Serializable {
 
     @ManyToOne(
             optional = true,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             }
     )
-    @JoinColumn(name = "id_Type_Product")
-    // @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
+    @JoinColumn(name = "id_category")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
     //@JsonIgnore
-    private TypeProduct typeProduct;
+    private Category category;
+
+    @ManyToOne(
+            optional = true,
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
+    @JoinColumn(name = "id_Supplier")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
+    private Supplier supplier;
 
 
-
-
-    public Product(String name, Double unitPrice, String unitWeight, Integer stock) {
+    public Product(String name, Double unitPrice, String unitWeight) {
         this.name = name;
         this.unitPrice = unitPrice;
         this.unitWeight = unitWeight;
-        this.stock = stock;
+
     }
 
 

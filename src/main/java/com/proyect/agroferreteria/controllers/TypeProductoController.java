@@ -1,6 +1,6 @@
 package com.proyect.agroferreteria.controllers;
 
-import com.proyect.agroferreteria.models.entity.TypeProduct;
+import com.proyect.agroferreteria.models.entity.Category;
 import com.proyect.agroferreteria.services.contracts.TypeProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -9,13 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/agroferreteria/tiposdeproducto")
-public class TypeProductoController extends GenericoController<TypeProduct, TypeProductDAO> {
+public class TypeProductoController extends GenericoController<Category, TypeProductDAO> {
 
     @Autowired
     public TypeProductoController(TypeProductDAO service) {
@@ -23,17 +22,17 @@ public class TypeProductoController extends GenericoController<TypeProduct, Type
         nombreEntidad = "Tipo de producto";
     }
     @PostMapping
-    public ResponseEntity<?> saveTypeProduct(@RequestBody TypeProduct typeProduct) {
-        TypeProduct typeProductLocal = service.getByName(typeProduct.getName());
+    public ResponseEntity<?> saveTypeProduct(@RequestBody Category category) {
+        Category categoryLocal = service.getByName(category.getName());
         Map<String, Object> response = new HashMap<>();
 
         try {
-            if(typeProductLocal != null){
+            if(categoryLocal != null){
                 response.put("Mensaje: ", "El tipo de producto ya existe");
                 return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
             }else{
-                typeProductLocal = service.save(typeProduct);
-                return new ResponseEntity<TypeProduct>(typeProduct, HttpStatus.CREATED);
+                categoryLocal = service.save(category);
+                return new ResponseEntity<Category>(category, HttpStatus.CREATED);
             }
         } catch (DataAccessException e){
             response.put("Mensaje: ", "Error al guardar tipo de producto");
@@ -43,21 +42,21 @@ public class TypeProductoController extends GenericoController<TypeProduct, Type
 
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> editTypeProduct(@RequestBody TypeProduct typeProduct, @PathVariable Long id){
+    public ResponseEntity<?> editTypeProduct(@RequestBody Category category, @PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
-        Optional<TypeProduct> productActual = service.findById(id);
-        TypeProduct typeProductUpdate =null;
+        Optional<Category> productActual = service.findById(id);
+        Category categoryUpdate =null;
         try {
 
             if(!productActual.isPresent()){
                 response.put("Mensaje: ", "El tipo de producto que desea editar no existe");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }else{
-                typeProductUpdate = productActual.get();
-                typeProductUpdate.setName(typeProduct.getName());
-                service.save(typeProductUpdate);
+                categoryUpdate = productActual.get();
+                categoryUpdate.setName(category.getName());
+                service.save(categoryUpdate);
                 response.put("Mensaje: ", "El cliente ha sido actualizado con exito!");
-                response.put("typeProduct: ", typeProductUpdate);
+                response.put("typeProduct: ", categoryUpdate);
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
         }catch (DataAccessException e){

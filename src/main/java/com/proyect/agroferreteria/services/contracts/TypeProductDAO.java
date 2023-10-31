@@ -1,11 +1,11 @@
 package com.proyect.agroferreteria.services.contracts;
 
-import com.proyect.agroferreteria.models.entity.TypeProduct;
+import com.proyect.agroferreteria.models.entity.Category;
 
-public interface TypeProductDAO extends GenericoDAO<TypeProduct> {
+public interface TypeProductDAO extends GenericoDAO<Category> {
 
 
-    public TypeProduct getByName(String name);
+    public Category getByName(String name);
     boolean existeTypeProductName(String name);
 
 }

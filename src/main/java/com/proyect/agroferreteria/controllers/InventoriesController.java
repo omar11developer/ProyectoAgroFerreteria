@@ -25,10 +25,8 @@ public class InventoriesController {
     @Autowired
     private InventoriesDAO service;
 
-    @Autowired
-    private ProductDAO productDAO;
-    @Autowired
-    private SupplierDAO supplierDAO;
+
+/*
 
     @GetMapping("/")
     public ResponseEntity<?> obtnerInventarios(){
@@ -65,30 +63,8 @@ public class InventoriesController {
             return  new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping
-    public ResponseEntity<?> saveInvetario(@RequestBody Inventories inventories){
+*/
 
-        boolean productActual = productDAO.existeByNameProduct(inventories.getProduct().getName());
-        boolean supplierActual = supplierDAO.existsByName(inventories.getSupplier().getName());
-        Map<String, Object> response = new HashMap<>();
-        try{
-            if(!productActual || !supplierActual){
-                response.put("Mensaje: ", "El producto o el proveedor no existen");
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            }else{
-                Product producto = productDAO.findByName(inventories.getProduct().getName());
-                Supplier supplier = supplierDAO.findByName(inventories.getSupplier().getName());
-                inventories.setProduct(producto);
-                inventories.setSupplier(supplier);
-                service.save(inventories);
-                return new ResponseEntity<>(inventories, HttpStatus.CREATED);
-            }
-        }catch (DataAccessException e){
-            response.put("Mensaje: ", "Error al guardar el inventario");
-            response.put("Error: " , e.getMessage());
-            return  new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 /*
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteInvetorie(@PathVariable Long id){
