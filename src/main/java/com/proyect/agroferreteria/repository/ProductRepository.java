@@ -16,7 +16,8 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     @Query("select p from Product  p where p.name like %?1%")
     Iterable<Product> buscarProductoPorNombre(String name);
-
+    @Query("select p from Product p join fetch p.supplier s where upper(s.name) = upper(?1)")
+    Iterable<Product> getProductsBySupplierIgnoreCase(String supplier);
 
     Product findByName(String name);
 

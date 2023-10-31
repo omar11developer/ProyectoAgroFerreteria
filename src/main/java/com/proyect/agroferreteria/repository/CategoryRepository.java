@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 
-public interface TypeProductRepository extends CrudRepository<Category, Long> {
+public interface CategoryRepository extends CrudRepository<Category, Long> {
     public Category findByName(String name);
 
     @Query("Select case when count(t) > 0 then true else false end from Category  t where t.name = :name")

@@ -10,7 +10,7 @@ public interface ProductDAO extends GenericoDAO<Product> {
 
     public Iterable<Product> buscarProductosPorNombre(String name);
 
-
+    public Iterable<Product> findByProductBySupplier(String supplier);
 
     Product findByName(String name);
 

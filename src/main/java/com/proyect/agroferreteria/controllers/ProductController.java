@@ -5,7 +5,7 @@ import com.proyect.agroferreteria.models.entity.Supplier;
 import com.proyect.agroferreteria.models.entity.Category;
 import com.proyect.agroferreteria.services.contracts.ProductDAO;
 import com.proyect.agroferreteria.services.contracts.SupplierDAO;
-import com.proyect.agroferreteria.services.contracts.TypeProductDAO;
+import com.proyect.agroferreteria.services.contracts.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -21,22 +21,22 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
 
 
     private final SupplierDAO supplierDAO;
-    private final TypeProductDAO typeProductDAO;
+    private final CategoryDAO categoryDAO;
     @Autowired
-    public ProductController(ProductDAO service, SupplierDAO supplierDAO, TypeProductDAO typeProductDAO) {
+    public ProductController(ProductDAO service, SupplierDAO supplierDAO, CategoryDAO categoryDAO) {
         super(service);
         this.supplierDAO = supplierDAO;
-        this.typeProductDAO = typeProductDAO;
+        this.categoryDAO = categoryDAO;
         nombreEntidad = "productos";
     }
 
 
-    @GetMapping("/TypeProduct/{typeProduct}")
+    @GetMapping("/searchByCategory/{typeProduct}")
     public ResponseEntity<?> getProductByTypeProduct(@PathVariable String typeProduct){
         Iterable<Product> products = new ArrayList<>();
         Map<String, Object> response = new HashMap<>();
         try{
-            Category categorySearch = typeProductDAO.getByName(typeProduct);
+            Category categorySearch = categoryDAO.getByName(typeProduct);
             if (categorySearch != null){
                 products = service.getProductByTypeProduct(typeProduct);
                 return new ResponseEntity<>(products, HttpStatus.OK);
@@ -44,6 +44,25 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
             }else {
                 response.put("Mensaje: ", "Esta categoria no tiene productos");
                 return  new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+        }catch (DataAccessException e){
+            response.put("Mensaje: ", "Error al obtener los productos");
+            response.put("Error: " , e.getMessage());
+            return  new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/searchByProveedor/{supplier}")
+    public ResponseEntity<?> findProductBySupplier(@PathVariable String supplier){
+        Iterable<Product> products = new ArrayList<>();
+        Map<String, Object> response = new HashMap<>();
+        try{
+            Supplier supplierSearch = supplierDAO.findByName(supplier);
+            if(supplierSearch != null){
+                products = service.findByProductBySupplier(supplier);
+                return new ResponseEntity<>(products, HttpStatus.OK);
+            }else{
+                response.put("Mensaje: ", "No se han encontrado productos con este proveedor");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
         }catch (DataAccessException e){
             response.put("Mensaje: ", "Error al obtener los productos");
@@ -72,7 +91,7 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
     @PostMapping
     public ResponseEntity<?> saveProduct(@RequestBody Product product){
 
-        Category category = typeProductDAO.getByName(product.getCategory().getName());
+        Category category = categoryDAO.getByName(product.getCategory().getName());
         Supplier supplier= supplierDAO.findByName(product.getSupplier().getName());
         Map<String, Object> response = new HashMap<>();
         try {
@@ -110,7 +129,7 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
                 productUpdate = productActual.get();
                 productUpdate.setName(product.getName());
                 productUpdate.setUnitWeight(productUpdate.getUnitWeight());
-                Category categoryName = typeProductDAO.getByName(product.getCategory().getName());
+                Category categoryName = categoryDAO.getByName(product.getCategory().getName());
                 Supplier supplier = supplierDAO.findByName(product.getSupplier().getName());
                 if(categoryName != null && supplier != null){
                     service.save(productUpdate);

@@ -34,6 +34,12 @@ public class ProductImpl extends GenericoImpl<Product,ProductRepository> impleme
         return repository.buscarProductoPorNombre(name);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Iterable<Product> findByProductBySupplier(String supplier) {
+        return repository.getProductsBySupplierIgnoreCase(supplier);
+    }
+
 
     @Override
     public Product findByName(String name) {

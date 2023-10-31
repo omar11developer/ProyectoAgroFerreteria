@@ -1,23 +1,8 @@
 package com.proyect.agroferreteria.controllers;
 
-import com.proyect.agroferreteria.models.entity.Inventories;
-import com.proyect.agroferreteria.models.entity.Product;
-import com.proyect.agroferreteria.models.entity.Supplier;
 import com.proyect.agroferreteria.services.contracts.InventoriesDAO;
-import com.proyect.agroferreteria.services.contracts.ProductDAO;
-import com.proyect.agroferreteria.services.contracts.SupplierDAO;
-import com.proyect.agroferreteria.services.contracts.TypeProductDAO;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/agroferreteria/inventario")

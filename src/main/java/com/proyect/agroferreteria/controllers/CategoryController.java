@@ -1,7 +1,7 @@
 package com.proyect.agroferreteria.controllers;
 
 import com.proyect.agroferreteria.models.entity.Category;
-import com.proyect.agroferreteria.services.contracts.TypeProductDAO;
+import com.proyect.agroferreteria.services.contracts.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -14,10 +14,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/agroferreteria/tiposdeproducto")
-public class TypeProductoController extends GenericoController<Category, TypeProductDAO> {
+public class CategoryController extends GenericoController<Category, CategoryDAO> {
 
     @Autowired
-    public TypeProductoController(TypeProductDAO service) {
+    public CategoryController(CategoryDAO service) {
         super(service);
         nombreEntidad = "Tipo de producto";
     }
