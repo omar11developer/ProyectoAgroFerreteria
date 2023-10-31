@@ -46,6 +46,7 @@ public class Inventories implements Serializable {
             }
     )
     @JoinColumn(name = "id_Product")
+    @JsonIgnoreProperties({"hibernateLazyInitializer","Inventories"})
     private Product product;
 
     @OneToMany(

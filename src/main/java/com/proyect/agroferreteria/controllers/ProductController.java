@@ -132,6 +132,8 @@ public class ProductController extends GenericoController<Product, ProductDAO> {
                 Category categoryName = categoryDAO.getByName(product.getCategory().getName());
                 Supplier supplier = supplierDAO.findByName(product.getSupplier().getName());
                 if(categoryName != null && supplier != null){
+                    productUpdate.setCategory(categoryName);
+                    productUpdate.setSupplier(supplier);
                     service.save(productUpdate);
                     return new ResponseEntity<Product>(productUpdate, HttpStatus.OK);
                 }else{
