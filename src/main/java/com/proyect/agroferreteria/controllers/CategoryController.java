@@ -3,6 +3,7 @@ package com.proyect.agroferreteria.controllers;
 import com.proyect.agroferreteria.models.entity.Category;
 import com.proyect.agroferreteria.services.contracts.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
+@Deprecated
 @RestController
 @RequestMapping("/agroferreteria/tiposdeproducto")
+@ConditionalOnProperty(prefix = "app", name = "controller.enable-dto", havingValue = "false")
 public class CategoryController extends GenericoController<Category, CategoryDAO> {
 
     @Autowired

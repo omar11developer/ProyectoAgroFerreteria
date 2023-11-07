@@ -3,6 +3,7 @@ package com.proyect.agroferreteria.controllers;
 import com.proyect.agroferreteria.models.entity.Supplier;
 import com.proyect.agroferreteria.services.contracts.SupplierDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+@Deprecated
+@ConditionalOnProperty(prefix = "app", name = "controller.enable-dto", havingValue = "false")
 @RestController
 @RequestMapping("/agroferreteria/proveedores")
 public class SupplierController extends GenericoController<Supplier, SupplierDAO>{

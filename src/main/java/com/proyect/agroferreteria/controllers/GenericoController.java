@@ -2,6 +2,7 @@ package com.proyect.agroferreteria.controllers;
 
 import com.proyect.agroferreteria.exeption.BadRequestException;
 import com.proyect.agroferreteria.services.contracts.GenericoDAO;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-
+@Deprecated
+@ConditionalOnProperty(prefix = "app", name = "controller.enable-dto", havingValue = "false")
 public class GenericoController <E, S extends GenericoDAO<E>> {
     protected final S service;
     protected String nombreEntidad;
@@ -23,16 +25,13 @@ public class GenericoController <E, S extends GenericoDAO<E>> {
         List<E> listar = new ArrayList<>();
         try{
             listar= (List<E>) service.findAll();
-            if(listar.isEmpty()){
-                response.put("Mensaje: ", "No se han encontrado ".concat(nombreEntidad));
-                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-            }
+                return new ResponseEntity<>(listar, HttpStatus.OK);
+
 
         } catch (DataAccessException e){
             response.put("Mensaje: ", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(listar, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerPorId(@PathVariable Long id){

@@ -7,6 +7,7 @@ import com.proyect.agroferreteria.services.contracts.ProductDAO;
 import com.proyect.agroferreteria.services.contracts.SupplierDAO;
 import com.proyect.agroferreteria.services.contracts.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-
+@Deprecated
+@ConditionalOnProperty(prefix = "app", name = "controller.enable-dto", havingValue = "false")
 @RestController
 @RequestMapping("/agroferreteria/productos")
 public class ProductController extends GenericoController<Product, ProductDAO> {

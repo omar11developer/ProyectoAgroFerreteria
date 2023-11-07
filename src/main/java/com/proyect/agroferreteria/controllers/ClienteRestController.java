@@ -4,6 +4,7 @@ import com.proyect.agroferreteria.models.entity.Client;
 import com.proyect.agroferreteria.services.contracts.ClientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -15,9 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+@Deprecated
 @RestController
 @RequestMapping("/ferreteria")
+@ConditionalOnProperty(prefix = "app", name = "controller.enable-dto", havingValue = "false")
 public class ClienteRestController {
     @Autowired
     private ClientService clienteService;
