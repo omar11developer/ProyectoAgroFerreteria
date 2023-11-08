@@ -36,7 +36,7 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         if(catogories.isEmpty()){
             mensaje.put("success", Boolean.FALSE);
             mensaje.put("mensaje", String.format("No se encontro %ss cargadas", nombreEntidad));
-            return ResponseEntity.badRequest().body(mensaje);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
         }
         List<CategoryDTO> categoryDTOS = catogories
                 .stream()
