@@ -6,8 +6,10 @@ import com.proyect.agroferreteria.models.mapper.mapstruct.ProductoMapper;
 import com.proyect.agroferreteria.services.contracts.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,8 +45,37 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         response.put("data", productoDTOS);
         return ResponseEntity.ok(response);
     }
-
-
+    @GetMapping("/searchByCategory/{categoria}")
+    public ResponseEntity<?> buscarProductoPorCategoria(@PathVariable String categoria){
+        Map<String, Object> response = new HashMap<>();
+        List<Product> products = (List<Product>) service.getProductByTypeProduct(categoria);
+        if(products.isEmpty()){
+            response.put("success", Boolean.FALSE);
+            response.put("messagge", String.format("No se econtro un %s con la categoria %s", nombreEntidad, categoria));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        List<ProductoDTO> productoDTOS = products
+                .stream()
+                .map(mapper::mapProducto)
+                .collect(Collectors.toList());
+        response.put("success", Boolean.TRUE);
+        response.put("data", productoDTOS);
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/searchByProveedor/{proveedor}")
+    public ResponseEntity<?> buscarProductosPorProveedor(@PathVariable String proveedor){
+        Map<String, Object> response = new HashMap<>();
+        List<Product> products = (List<Product>) service.findByProductBySupplier(proveedor);
+        if(products.isEmpty()){
+            response.put("success", Boolean.FALSE);
+            response.put("messagge", String.format("No se encontro un %s con el proveedor %s", nombreEntidad, proveedor));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        List<ProductoDTO> productoDTOS = products.stream().map(mapper::mapProducto).collect(Collectors.toList());
+        response.put("success", Boolean.TRUE);
+        response.put("data", productoDTOS);
+        return ResponseEntity.ok(response);
+    }
 
 
 }

@@ -12,7 +12,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     boolean existsByNameProduct(@Param("name") String name);
 
     @Query("select p from Product p join fetch p.category t where upper(t.name) = upper(?1)")
-    Iterable<Product> buscarProductoPorTyipoDeProducto(String typeProduct);
+    Iterable<Product> buscarProductoPorTyipoDeProducto(String category);
 
     @Query("select p from Product  p where p.name like %?1%")
     Iterable<Product> buscarProductoPorNombre(String name);

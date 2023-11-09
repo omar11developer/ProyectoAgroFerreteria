@@ -97,7 +97,7 @@ public class SupplierDtoController extends GenericoDtoController<Supplier, Suppl
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> editarProveedor(@Valid @RequestBody Supplier supplier, @PathVariable Long id, BindingResult result){
         Map<String, Object> response = new HashMap<>();
         Optional<Supplier> supplierLocal = super.obtenerPorId(id);
@@ -119,6 +119,24 @@ public class SupplierDtoController extends GenericoDtoController<Supplier, Suppl
         Supplier save = super.altaEntidad(supplierUpdate);
         SupplierDTO dto = mapper.mapSupplier(save);
         response.put("success", Boolean.TRUE);
+        response.put("data", dto);
+        return ResponseEntity.ok(response);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        Optional<Supplier> supplierLocal = super.obtenerPorId(id);
+
+        if(supplierLocal.isEmpty()){
+            response.put("success", Boolean.FALSE);
+            response.put("messagge", String.format("El %s que deseas eliminar con el id %d no existe", nombreEntidad, id));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        Supplier supplier = supplierLocal.get();
+        super.eliminarPorId(id);
+        SupplierDTO dto = mapper.mapSupplier(supplier);
+        response.put("success", Boolean.TRUE);
+        response.put("messagge", "Eliminado con éxito");
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }

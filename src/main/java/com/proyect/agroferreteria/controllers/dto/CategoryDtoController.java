@@ -125,7 +125,23 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         response.put("data", dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        Optional<Category> category = super.obtenerPorId(id);
+        if(category.isEmpty()){
+            response.put("success", Boolean.FALSE);
+            response.put("messagge", String.format("No se encontro una %s con el Id %d", nombreEntidad, id));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        super.eliminarPorId(id);
+        Category categoryEliminado = category.get();
+        CategoryDTO dto = mapper.mapCategory(categoryEliminado);
+        response.put("success", Boolean.TRUE);
+        response.put("messagge", String.format("%s eliminada con exito", nombreEntidad));
+        response.put("data", dto);
+        return ResponseEntity.ok(response);
+    }
 
 
 }
