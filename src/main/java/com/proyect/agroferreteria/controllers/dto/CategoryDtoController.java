@@ -134,9 +134,9 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
             response.put("messagge", String.format("No se encontro una %s con el Id %d", nombreEntidad, id));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
+        Category categoryEliminar = category.get();
         super.eliminarPorId(id);
-        Category categoryEliminado = category.get();
-        CategoryDTO dto = mapper.mapCategory(categoryEliminado);
+        CategoryDTO dto = mapper.mapCategory(categoryEliminar);
         response.put("success", Boolean.TRUE);
         response.put("messagge", String.format("%s eliminada con exito", nombreEntidad));
         response.put("data", dto);
