@@ -27,6 +27,8 @@ public class GenericoDtoController <E, S extends GenericoDAO<E>> {
         service.deleteById(id);
     }
 
+    void delete(E entidad){service.delete(entidad);}
+
     protected Map<String , Object> obtenerValidaciones(BindingResult result){
         Map<String, Object> validaciones = new HashMap<>();
         result.getFieldErrors().forEach(

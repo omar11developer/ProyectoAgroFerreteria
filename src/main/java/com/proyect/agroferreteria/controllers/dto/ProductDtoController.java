@@ -3,6 +3,7 @@ package com.proyect.agroferreteria.controllers.dto;
 import com.proyect.agroferreteria.models.dto.ProductoDTO;
 import com.proyect.agroferreteria.models.entity.Category;
 import com.proyect.agroferreteria.models.entity.Product;
+import com.proyect.agroferreteria.models.entity.Supplier;
 import com.proyect.agroferreteria.models.mapper.mapstruct.ProductoMapper;
 import com.proyect.agroferreteria.services.contracts.CategoryDAO;
 import com.proyect.agroferreteria.services.contracts.ProductDAO;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -49,6 +51,22 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         response.put("succes", Boolean.TRUE);
         response.put("data", productoDTOS);
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarPoroductopordID(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        Optional<Product> product = super.obtenerPorId(id);
+        if(product.isEmpty()){
+            response.put("success", Boolean.FALSE);
+            response.put("mensaje", String.format("No se encontro un %s con el id %d", nombreEntidad, id));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        Product productFind = product.get();
+        ProductoDTO dto = mapper.mapProducto(productFind);
+        response.put("success", Boolean.TRUE);
+        response.put("data", dto);
+        return ResponseEntity.ok(response);
+
     }
     @GetMapping("/searchByCategory/{categoria}")
     public ResponseEntity<?> buscarProductoPorCategoria(@PathVariable String categoria){
@@ -112,5 +130,67 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editarProducto(@Valid @RequestBody Product product, @PathVariable Long id, BindingResult result){
+        Map<String, Object> response = new HashMap<>();
+        Optional<Product> productoLocal = super.obtenerPorId(id);
+        Boolean existSupplier = supplierDAO.existsByName(product.getSupplier().getName());
+        Boolean existCategory = categoryDAO.existeTypeProductName(product.getCategory().getName());
+        Product productUpdate;
+        if(result.hasErrors()){
+            response.put("success", Boolean.FALSE);
+            response.put("messagge", super.obtenerValidaciones(result));
+            return ResponseEntity.badRequest().body(response);
+        }
+        if (!productoLocal.isEmpty()){
+            productUpdate = productoLocal.get();
+            productUpdate.setName(product.getName());
+            productUpdate.setUnitPrice(product.getUnitPrice());
+            productUpdate.setUnitWeight(product.getUnitWeight());
+            if (existCategory){
+                Category category = categoryDAO.getByName(product.getCategory().getName());
+                productUpdate.setCategory(category);
+            }else{
+                response.put("success", Boolean.FALSE);
+                response.put("messagge", "No existe relacion entre la categoria y el producto");
+                return ResponseEntity.badRequest().body(response);
+            }
+            if (existSupplier){
+                Supplier supplier = supplierDAO.findByName(product.getSupplier().getName());
+                productUpdate.setSupplier(supplier);
+            }else{
+                response.put("success", Boolean.FALSE);
+                response.put("messagge", "No existe relacion entre la proovedor y el producto");
+                return ResponseEntity.badRequest().body(response);
+            }
+            Product productSave = super.altaEntidad(productUpdate);
+            ProductoDTO dto = mapper.mapProducto(productSave);
+            response.put("success", Boolean.TRUE);
+            response.put("data", dto);
+            return ResponseEntity.ok(response);
 
+        }else{
+            response.put("success", Boolean.FALSE);
+            response.put("messagge", String.format("El %s  que deseas editar no existe con el id %d", nombreEntidad, id));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+    }
+
+   /* @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarProductoPorId(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        Optional<Product> product = super.obtenerPorId(id);
+        if (product.isEmpty()){
+            response.put("success", Boolean.FALSE);
+            response.put("mensaje", String.format("No se encontro un %s con el id %d", nombreEntidad, id));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        super.eliminarPorId(id);
+        response.put("success", Boolean.TRUE);
+        response.put("messagge", "Producto eliminado con exito");
+        return ResponseEntity.ok(response);
+    }
+*/
 }

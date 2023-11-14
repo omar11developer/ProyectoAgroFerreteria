@@ -122,7 +122,9 @@ public class SupplierDtoController extends GenericoDtoController<Supplier, Suppl
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
-    @DeleteMapping("/{id}")
+
+
+    /*@DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
         Optional<Supplier> supplierLocal = super.obtenerPorId(id);
@@ -140,5 +142,5 @@ public class SupplierDtoController extends GenericoDtoController<Supplier, Suppl
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
-
+*/
 }

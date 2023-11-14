@@ -41,8 +41,7 @@ public class Inventories implements Serializable {
             fetch = FetchType.LAZY,
             optional = true,
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
+                    CascadeType.ALL
             }
     )
     @JoinColumn(name = "id_Product")

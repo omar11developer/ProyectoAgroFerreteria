@@ -7,4 +7,6 @@ public interface GenericoDAO <E>{
     E save(E entidad);
     Iterable<E> findAll();
     void deleteById(Long id);
+
+    void delete(E entity);
 }

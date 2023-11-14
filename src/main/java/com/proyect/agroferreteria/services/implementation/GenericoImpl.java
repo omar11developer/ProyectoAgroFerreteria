@@ -37,4 +37,10 @@ public class GenericoImpl <E, R extends CrudRepository<E, Long>> implements Gene
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public void delete(E entity) {
+        repository.delete(entity);
+    }
 }
