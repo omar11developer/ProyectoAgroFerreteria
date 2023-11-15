@@ -19,10 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/inventario")
@@ -44,7 +43,7 @@ public class InventarioDtoController extends GenericoDtoController<Inventories, 
         Map<String, Object> response= new HashMap<>();
         List<Inventories> inventories = super.obtenerTodos();
         if(inventories.isEmpty()){
-            response.put("succes", Boolean.FALSE);
+            response.put("success", Boolean.FALSE);
             response.put("message", String.format("No se encontraron %ss cargados", nombreEntidad));
             return ResponseEntity.badRequest().body(response);
         }
@@ -56,6 +55,21 @@ public class InventarioDtoController extends GenericoDtoController<Inventories, 
         response.put("data", inventorieDTOS);
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/orderbyDate")
+    public ResponseEntity<?> ordenarPorFecha(@PathVariable String date){
+          Map<String, Object> response = new HashMap<>();
+          List<Inventories> inventories = (List<Inventories>) service.orderByDate();
+          if (inventories.isEmpty()){
+              response.put("success", Boolean.FALSE);
+              response.put("message", String.format("No se encontraron %ss cargados", nombreEntidad));
+              return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+          }
+          List<InventorieDTO> dtos = inventories.stream().map(mapper::mapInventario).collect(Collectors.toList());
+          response.put("success", Boolean.TRUE);
+          response.put("data", dtos);
+          return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/save")
     public ResponseEntity<?> guardarInventarioCompleto(@Valid @RequestBody Inventories inventories, BindingResult result){
           Map<String, Object> response = new HashMap<>();

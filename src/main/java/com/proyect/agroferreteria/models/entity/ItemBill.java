@@ -45,7 +45,7 @@ public class ItemBill implements Serializable {
             }
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
-    @JoinColumn(name = "itemBills")
+    @JoinColumn(name = "id_Bill")
     private Bill bill;
 
 
