@@ -56,7 +56,7 @@ public class InventarioDtoController extends GenericoDtoController<Inventories, 
         response.put("data", inventorieDTOS);
         return ResponseEntity.ok(response);
     }
-    @PostMapping("/")
+    @PostMapping("/save")
     public ResponseEntity<?> guardarInventarioCompleto(@Valid @RequestBody Inventories inventories, BindingResult result){
           Map<String, Object> response = new HashMap<>();
           if(inventories.getProduct().getName() == null || inventories.getProduct().getCategory().getName() == null || inventories.getProduct().getSupplier().getName() == null){
@@ -99,7 +99,50 @@ public class InventarioDtoController extends GenericoDtoController<Inventories, 
         return ResponseEntity.ok(response);
 
     }
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<?> editarInventario(@Valid @RequestBody Inventories inventories, @PathVariable Long id, BindingResult result){
+          Map<String, Object> response = new HashMap<>();
+          Optional<Inventories> inventoriLocal = super.obtenerPorId(id);
+          if(inventoriLocal.isEmpty()){
+              response.put("success", Boolean.FALSE);
+              response.put("message", String.format("No se encontro el %s con el id %d", nombreEntidad, id));
+              return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+          }
+          if(result.hasErrors()){
+              response.put("success", Boolean.FALSE);
+              response.put("messagge", super.obtenerValidaciones(result));
+              return ResponseEntity.badRequest().body(response);
+          }
+          Inventories inventoryUpdate = inventoriLocal.get();
+          inventoryUpdate.setSalePrice(inventories.getSalePrice());
+          inventoryUpdate.setStock(inventories.getStock());
+          inventoryUpdate.getProduct().setName(inventories.getProduct().getName());
+          inventoryUpdate.getProduct().setUnitPrice(inventories.getProduct().getUnitPrice());
+          inventoryUpdate.getProduct().setUnitWeight(inventories.getProduct().getUnitWeight());
+          boolean existeCategoria = categoryDAO.existeTypeProductName(inventories.getProduct().getCategory().getName());
+          if (!existeCategoria){
+              response.put("success", Boolean.FALSE);
+              response.put("message", String.format("No se encontro una categoria con el nombre %s", inventories.getProduct().getCategory().getName()));
+              return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+          }
 
+          Category category = categoryDAO.getByName(inventories.getProduct().getCategory().getName());
+          inventoryUpdate.getProduct().setCategory(category);
+          boolean existeSupplier = supplierDAO.existsByName(inventories.getProduct().getSupplier().getName());
+          if(!existeSupplier){
+              response.put("success", Boolean.FALSE);
+              response.put("message", String.format("No se encontro un proveedor con el nombre %s", inventories.getProduct().getSupplier().getName()));
+              return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+          }
+          Supplier supplier = supplierDAO.findByName(inventories.getProduct().getSupplier().getName());
+          inventoryUpdate.getProduct().setSupplier(supplier);
+          Inventories inventorySave = super.altaEntidad(inventoryUpdate);
+          InventorieDTO dto = mapper.mapInventario(inventorySave);
+          response.put("success", Boolean.TRUE);
+          response.put("data", dto);
+          return ResponseEntity.ok(response);
+
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarInvetario(@PathVariable Long id){
