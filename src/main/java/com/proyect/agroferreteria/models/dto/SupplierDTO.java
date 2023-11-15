@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.dto;
 
+import com.proyect.agroferreteria.models.entity.Product;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -25,5 +26,7 @@ public class SupplierDTO {
     @NotEmpty(message = "Debe ingresar el numero de telefono")
     @Positive(message = "No se permite numeros negativos")
     private Integer phone;
+
+
 
 }

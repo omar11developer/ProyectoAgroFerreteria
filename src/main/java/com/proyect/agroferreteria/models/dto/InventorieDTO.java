@@ -32,4 +32,5 @@ public class InventorieDTO {
 
     @JsonIgnoreProperties({"hibernateLazyInitializer","Inventories"})
     private Product product;
+
 }

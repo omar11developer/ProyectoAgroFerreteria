@@ -99,7 +99,9 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         response.put("data", productoDTOS);
         return ResponseEntity.ok(response);
     }
-    @PostMapping("/")
+
+   /*
+   @PostMapping("/")
     public ResponseEntity<?> saveProduct(@Valid @RequestBody Product product, BindingResult result){
         Map<String, Object> response = new HashMap<>();
         boolean productLocal = service.existeByNameProduct(product.getName());
@@ -130,6 +132,8 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
+
+    */
     @PutMapping("/{id}")
     public ResponseEntity<?> editarProducto(@Valid @RequestBody Product product, @PathVariable Long id, BindingResult result){
         Map<String, Object> response = new HashMap<>();

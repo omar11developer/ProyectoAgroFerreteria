@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -33,7 +34,7 @@ public class Category implements Serializable {
             mappedBy = "category",
             fetch = FetchType.LAZY
     )
-    @JsonIgnoreProperties({"hibernateLazyInitializer","category"})
+    @JsonIgnore
     private Set<Product> products = new HashSet<>();
 
 

@@ -39,7 +39,7 @@ public class Supplier implements Serializable {
     @OneToMany(
             mappedBy = "supplier",
             fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer","suppliers"})
+    @JsonIgnoreProperties({"suppliers"})
     private Set<Product> products;
 
 

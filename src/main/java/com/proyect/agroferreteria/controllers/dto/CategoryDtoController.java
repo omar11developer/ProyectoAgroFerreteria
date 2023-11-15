@@ -4,6 +4,7 @@ import com.proyect.agroferreteria.models.dto.CategoryDTO;
 import com.proyect.agroferreteria.models.entity.Category;
 import com.proyect.agroferreteria.models.mapper.mapstruct.CategoryMapper;
 import com.proyect.agroferreteria.services.contracts.CategoryDAO;
+import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -29,6 +30,7 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         super(service, "Category");
     }
 
+    @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
     @GetMapping("/")
     public ResponseEntity<?> obtenerCategorias(){
         Map<String, Object> mensaje = new HashMap<>();
@@ -46,6 +48,7 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         mensaje.put("data", categoryDTOS);
         return ResponseEntity.ok(mensaje);
     }
+    @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorID(@PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
@@ -63,6 +66,7 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
+    @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
     @GetMapping("/searchByName/{name}")
     public ResponseEntity<?> buscarPorNombre(@PathVariable String name){
         Map<String, Object> response = new HashMap<>();
@@ -79,7 +83,7 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         return ResponseEntity.ok(response);
 
     }
-
+    @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
     @PostMapping("/")
     public ResponseEntity<?> saveCategory(@Valid @RequestBody Category category, BindingResult result){
         Map<String, Object> response = new HashMap<>();
@@ -101,6 +105,7 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         response.put("data", dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
     @PutMapping("/{id}")
     public ResponseEntity<?> editarCategoria(@Valid @RequestBody Category category, BindingResult result, @PathVariable Long id ){
         Map<String, Object> response = new HashMap<>();
@@ -125,6 +130,7 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         response.put("data", dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    /*
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
@@ -142,6 +148,6 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
-
+    */
 
 }
