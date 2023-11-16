@@ -2,62 +2,47 @@ package com.proyect.agroferreteria.services.implementation;
 
 import com.proyect.agroferreteria.models.entity.Client;
 import com.proyect.agroferreteria.repository.ClientRepository;
-import com.proyect.agroferreteria.services.contracts.ClientService;
+import com.proyect.agroferreteria.services.contracts.ClientDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
-public class ClientImpl implements ClientService {
-
-    private final ClientRepository clienteRepository;
-
+public class ClientImpl extends GenericoImpl<Client, ClientRepository> implements ClientDAO {
     @Autowired
-    public ClientImpl(ClientRepository clientRepository) {
-        this.clienteRepository = clientRepository;
+    public ClientImpl(ClientRepository repository) {
+        super(repository);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Client> findAll() {
-        return (List<Client>) clienteRepository.findAll();
+    public Optional<Client> buscarCliente(String name) {
+        return repository.findByName(name);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Client findById(Long id) {
-        return clienteRepository.findById(id).orElse(null);
+    public Optional<Client> findByIdentification(String identificacion) {
+        return repository.findByIdentification(identificacion);
     }
 
     @Override
-    @Transactional
-    public Client save(Client cliente) {
-        return clienteRepository.save(cliente);
+    public Optional<Client> findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 
     @Override
-    @Transactional
-    public void delete(Long id) {
-        clienteRepository.deleteById(id);
+    public boolean existsByIdentificationAndNotCurrentId(String identification, Long id) {
+        return repository.existsByIdentificationAndNotCurrentId(identification, id);
     }
 
     @Override
-    public boolean existsByIdentification(String identification) {
-        return clienteRepository.existsByIdentification(identification);
+    public boolean existsByEmailAndNotCurrentId(String email, Long clientId) {
+        return repository.existsByEmailAndNotCurrentId(email,clientId);
     }
+
+
     @Override
     public boolean existsByEmail(String email) {
-        if (!isValidEmail(email)) {
-            return false; // El formato del correo electrónico no es válido
-        }
-        return clienteRepository.existsByEmail(email);
+        return repository.existsByEmail(email);
     }
-
-    private boolean isValidEmail(String email) {
-        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        return email.matches(regex);
-    }
-
 }

@@ -1,7 +1,7 @@
 package com.proyect.agroferreteria.controllers;
 
 import com.proyect.agroferreteria.models.entity.Client;
-import com.proyect.agroferreteria.services.contracts.ClientService;
+import com.proyect.agroferreteria.services.contracts.ClientDAO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -15,23 +15,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @Deprecated
 @RestController
-@RequestMapping("/ferreteria")
+@RequestMapping("/clientes")
 @ConditionalOnProperty(prefix = "app", name = "controller.enable-dto", havingValue = "false")
 public class ClienteRestController {
     @Autowired
-    private ClientService clienteService;
+    private ClientDAO clienteService;
 
     @GetMapping("/clientes")
     public List<Client> index() {
-        return clienteService.findAll();
+        return (List<Client>) clienteService.findAll();
     }
 
     @GetMapping("/clientes/{id}")//busca por Id de cliente
     public ResponseEntity<?> buscarporid(@PathVariable Long id) {
-        Client client = null;
+        Optional<Client> client = null;
         Map<String, Object> response = new HashMap<>();
 
         try {
@@ -45,7 +46,7 @@ public class ClienteRestController {
             response.put("Mensaje:", "el ID del cliente: ".concat(id.toString().concat(" No existe en la base de datos, por favor ingresa un ID valido!!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Client>(client, HttpStatus.OK);
+        return new ResponseEntity<Client>(client.get(), HttpStatus.OK);
     }
 
 
@@ -73,11 +74,11 @@ public class ClienteRestController {
 
         try {
             // Validar si ya existe un cliente con la misma identificación
-            if (clienteService.existsByIdentification(cliente.getIdentification())) {
+         /*   if (clienteService.existsByIdentification(cliente.getIdentification())) {
                 response.put("Mensaje", "Error: Ya existe un cliente con esta identificación.");
                 return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
             }
-
+*/
             clienteNew = clienteService.save(cliente);
         } catch (DataAccessException e) {
             response.put("Mensaje", "Error al realizar el insert en la base de datos");
@@ -102,7 +103,8 @@ public class ClienteRestController {
     public ResponseEntity<?> update(@Valid @RequestBody Client client, BindingResult result ,
                                     @PathVariable Long id) {
 
-        Client clienteActual = clienteService.findById(id);
+        Optional<Client> clienteExist = clienteService.findById(id);
+        Client clienteActual = clienteExist.get();
         Client clienteUpdate = null;
 
         Map<String, Object> response = new HashMap<>();
@@ -117,7 +119,7 @@ public class ClienteRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
 
-        if (clienteActual == null) {
+        if (clienteExist == null) {
             response.put("Mensaje:", "Error: no se pudo editar el cliente ya que el ID: ".concat(id.toString().concat(" No existe en la base de datos, por favor ingresa un ID valido!!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
@@ -141,7 +143,7 @@ public class ClienteRestController {
     @DeleteMapping("/clientes/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
-        Client client = clienteService.findById(id);
+        Optional<Client> client = clienteService.findById(id);
 
         if (client == null) {
             response.put("mensaje", "El cliente con ID " + id + " no existe");
@@ -149,7 +151,7 @@ public class ClienteRestController {
         }
 
         try {
-            clienteService.delete(id);
+
             response.put("mensaje", "Cliente eliminado con éxito");
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (DataIntegrityViolationException e) {

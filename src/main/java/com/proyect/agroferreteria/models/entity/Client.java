@@ -28,14 +28,13 @@ public class Client implements Serializable {
     private Long idClient;
     @NotEmpty(message = "no puede quedar vacio")
     @Size(min = 3,max = 50,message = " debe contener al menos 3 letras")
-    @Column(nullable = false)
     private String name;
     @NotEmpty(message = "no puede quedar vacio")
     private String lastName;
     @NotEmpty(message = "no puede quedar vacio y debe ser un único")
     @Column(nullable = false,unique = true)
     private String identification;
-@NotEmpty(message = "es requerido")
+    @NotEmpty(message = "es requerido")
     private String adress;
     @NotEmpty(message = "puede quedar vacio y debe ser un único")
     @Email(message = "Por favor ingresa un correo valido!")
