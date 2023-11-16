@@ -121,7 +121,7 @@ public class ClienteDtoController extends GenericoDtoController<Client, ClientDA
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
-    @DeleteMapping("/")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarCliente(@PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
         Optional<Client> client = super.obtenerPorId(id);
