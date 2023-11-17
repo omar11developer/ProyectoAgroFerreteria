@@ -5,6 +5,7 @@ import com.proyect.agroferreteria.repository.ClientRepository;
 import com.proyect.agroferreteria.services.contracts.ClientDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -44,5 +45,11 @@ public class ClientImpl extends GenericoImpl<Client, ClientRepository> implement
     @Override
     public boolean existsByEmail(String email) {
         return repository.existsByEmail(email);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Client> buscarPorNombreIdentificacionEmail(String nombre) {
+        return repository.buscarPorNombreIdentificacionEmail(nombre);
     }
 }

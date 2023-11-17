@@ -71,9 +71,9 @@ INSERT INTO clients(id_client,name,adress,email,identification,last_name,phone)V
 INSERT INTO clients(id_client,name,adress,email,identification,last_name,phone)VALUES(null,"Pablo","San Salvador","pablocalles@gmail.com","1234532","Calles","7438-8385");
 
 /*Insertar datos en factura */
-INSERT INTO bills(id_bill,id_client,create_at,payment_method,description,observation) VALUES(null,1,NOW(),"efectivo",null,null);
+INSERT INTO bills(id_bill,id_client,create_at,description,observation) VALUES(null,1,NOW(),null,null);
 
 /*Insertar datos en item_factura*/
-INSERT INTO item_bills(id_item_bill,id_inventories,id_bill,cantidad)VALUES(null,1,1,2);
+INSERT INTO item_bills(id_item_bill,id_inventories,id_bill,cantidad,name_payment_method)VALUES(null,1,1,2,"Efectivo");
 
 

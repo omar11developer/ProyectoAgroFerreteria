@@ -1,10 +1,10 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,9 +36,7 @@ public class Bill implements Serializable {
     @Column(name = "create_At",nullable = false)
     private Date creatAt;
 
-    @NotEmpty(message = "Este campo no puede quedar vacio")
-    @Size(min = 10, max = 50)
-    private String paymentMethod;
+
 
     @ManyToOne(
             fetch = FetchType.LAZY,optional = true,
@@ -55,7 +53,7 @@ public class Bill implements Serializable {
             fetch = FetchType.LAZY,
             mappedBy = "bill"
     )
-    @JsonIgnoreProperties({"bills"})
+    @JsonIgnore
     private Set<ItemBill> itemBills;
     @PrePersist
     public void prePersist(){
@@ -64,12 +62,6 @@ public class Bill implements Serializable {
 
 
 
-    public Bill(Long idBill, String description, String observation, String paymentMethod) {
-        this.idBill = idBill;
-        this.description = description;
-        this.observation = observation;
-        this.paymentMethod = paymentMethod;
-    }
 
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class BillImpl extends GenericoImpl<Bill, BillRepository> implements BillDAO {
-
+    @Autowired
     public BillImpl(BillRepository repository) {
         super(repository);
     }

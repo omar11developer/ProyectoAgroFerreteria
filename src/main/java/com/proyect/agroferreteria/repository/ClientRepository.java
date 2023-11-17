@@ -20,5 +20,9 @@ public interface ClientRepository extends CrudRepository<Client, Long> {
     Optional<Client> findByName(String name);
     Optional<Client> findByIdentification(String identificacion);
     Optional<Client> findByEmail(String email);
+
+    @Query("select c from Client c where c.name like %?1%")
+    Optional<Client> buscarPorNombreIdentificacionEmail(String nombre);
+
 }
 

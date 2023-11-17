@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -47,7 +48,7 @@ public class Client implements Serializable {
             fetch = FetchType.LAZY,
             mappedBy = "client"
     )
-    @JsonIgnoreProperties({"clients"})
+    @JsonIgnore
     private Set<Bill> bill;
 
 

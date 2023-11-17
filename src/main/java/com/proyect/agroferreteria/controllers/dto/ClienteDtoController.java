@@ -55,6 +55,20 @@ public class ClienteDtoController extends GenericoDtoController<Client, ClientDA
         response.put("data",dto);
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/search/{nombre}")
+    public ResponseEntity<?> buscarPorNombre(@PathVariable String nombre){
+        Map<String, Object> response = new HashMap<>();
+        Optional<Client> clients = service.buscarPorNombreIdentificacionEmail(nombre);
+        if(clients.isEmpty()){
+            response.put("success", Boolean.FALSE);
+            response.put("message", String.format("No se ecnontraron %s", nombreEntidad));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        ClientDTO dtos = mapper.mapClient(clients.get());
+        response.put("success", Boolean.TRUE);
+        response.put("data", dtos);
+        return ResponseEntity.ok(response);
+    }
     @PostMapping("/saveClient")
     public ResponseEntity<?> gaurdarCliente(@Valid @RequestBody Client client, BindingResult result){
         Map<String, Object> response = new HashMap<>();
@@ -134,7 +148,7 @@ public class ClienteDtoController extends GenericoDtoController<Client, ClientDA
         ClientDTO dtoEliminado = mapper.mapClient(client.get());
         response.put("success", Boolean.TRUE);
         response.put("data", dtoEliminado);
-        response.put("message", "Ciente eliminado con Exito");
+        response.put("message", "Cliente eliminado con Exito");
         return ResponseEntity.ok(response);
 
     }

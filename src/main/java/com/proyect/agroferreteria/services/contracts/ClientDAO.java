@@ -14,5 +14,7 @@ public interface ClientDAO extends GenericoDAO<Client> {
     boolean existsByEmailAndNotCurrentId(@Param("email") String email, @Param("clientId") Long clientId);
 
     boolean existsByEmail(String email);
+    Optional<Client> buscarPorNombreIdentificacionEmail(String nombre);
+
 }
 

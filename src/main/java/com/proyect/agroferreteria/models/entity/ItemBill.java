@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -48,11 +49,30 @@ public class ItemBill implements Serializable {
     @JoinColumn(name = "id_Bill")
     private Bill bill;
 
+    //@NotEmpty(message = "Este campo no puede quedar vacio")
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "namePaymentMethod", column = @Column(name = "name_payment_method")),
+            @AttributeOverride(name = "firstPayment", column = @Column(name = "first_payment")),
+            @AttributeOverride(name = "secondPayment", column = @Column(name = "second_payment")),
+            @AttributeOverride(name = "thirdPayment", column = @Column(name = "third_payment")),
+            @AttributeOverride(name = "fourthPayment", column = @Column(name = "fourth_payment")),
+    })
+    private PaymentMethod paymentMethod;
 
-    public ItemBill(Long idItemBill, Integer cantidad) {
-        this.idItemBill = idItemBill;
-        this.cantidad = cantidad;
+    @Positive(message = "Este campo tiene que ser positivo")
+    @Column(name = "price_total")
+    private Double priceTotal;
+
+
+    public void crearPrecioFinal(){
+        Integer cantidadProductos = cantidad;
+        Double priceProducto = inventories.getSalePrice();
+        priceTotal = cantidadProductos * priceProducto;
     }
+
+
+
 
 
 
