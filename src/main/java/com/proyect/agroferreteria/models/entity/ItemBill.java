@@ -60,7 +60,7 @@ public class ItemBill implements Serializable {
     })
     private PaymentMethod paymentMethod;
 
-    @Positive(message = "Este campo tiene que ser positivo")
+   // @Positive(message = "Este campo tiene que ser positivo")
     @Column(name = "price_total")
     private Double priceTotal;
 
@@ -71,8 +71,26 @@ public class ItemBill implements Serializable {
         priceTotal = cantidadProductos * priceProducto;
     }
 
+    public void caluclarMonto(){
+        paymentMethod.setMonto(priceTotal/4);
+    }
 
-
+    public void calcularPagos(){
+        Double debe = paymentMethod.getDebe();
+            Double primerPago = paymentMethod.getFirstPayment();
+            Double segundoPago = paymentMethod.getSecondPayment() + primerPago;
+            Double tercerPago = paymentMethod.getThirdPayment() + segundoPago;
+            Double cuartoPAgo = paymentMethod.getFourthPayment() + tercerPago;
+            if(primerPago <= debe){
+                  paymentMethod.setDebe(debe-primerPago);
+            } else if (segundoPago <= debe) {
+                paymentMethod.setDebe(debe-segundoPago);
+            } else if (tercerPago <= debe) {
+                paymentMethod.setDebe(debe-tercerPago);
+            } else if (cuartoPAgo <= debe) {
+                paymentMethod.setDebe(debe-cuartoPAgo);
+            }
+    }
 
 
 

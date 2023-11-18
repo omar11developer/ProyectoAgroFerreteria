@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.sound.midi.Soundbank;
+
 @Embeddable
 @Data
 @AllArgsConstructor
@@ -15,9 +17,13 @@ import lombok.ToString;
 public class PaymentMethod {
     @NotEmpty(message = "Este campo no puede quedar vacio")
     private String namePaymentMethod;
+    private Double debe;
     private Double firstPayment;
     private Double secondPayment;
     private Double thirdPayment;
     private Double fourthPayment;
+    private Double monto;
+    private Boolean pagado = false;
+
 
 }
