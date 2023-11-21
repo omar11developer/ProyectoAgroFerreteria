@@ -10,7 +10,7 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface InventoriesMapper {
     @Mappings({
-            @Mapping(source = "id_Inventory", target = "id_Inventario"),
+            @Mapping(source = "id", target = "id_Inventario"),
             @Mapping(source = "createAtOrder", target = "fecha_de_ingreso"),
             @Mapping(source = "salePrice", target = "precio_de_venta")
     })

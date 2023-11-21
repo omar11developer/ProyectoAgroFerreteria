@@ -116,13 +116,13 @@ public class ClienteDtoController extends GenericoDtoController<Client, ClientDA
         clientUpdate.setPhone(client.getPhone());
         clientUpdate.setLastName(client.getLastName());
         clientUpdate.setIdentification(client.getIdentification());
-        boolean existIdentificacion = service.existsByIdentificationAndNotCurrentId(client.getIdentification(), clientUpdate.getIdClient());
+        boolean existIdentificacion = service.existsByIdentificationAndNotCurrentId(client.getIdentification(), clientUpdate.getId());
         if (existIdentificacion){
                 response.put("success", Boolean.FALSE);
                 response.put("message", String.format("El %s con el DNI %s  ya existe ",nombreEntidad, client.getIdentification()));
                 return ResponseEntity.badRequest().body(response);
         }
-        boolean existEmail = service.existsByEmailAndNotCurrentId(client.getEmail(), clientUpdate.getIdClient());
+        boolean existEmail = service.existsByEmailAndNotCurrentId(client.getEmail(), clientUpdate.getId());
         if (existEmail){
             response.put("success", Boolean.FALSE);
             response.put("message", String.format("El %s con el email %s  ya existe ",nombreEntidad, client.getEmail()));

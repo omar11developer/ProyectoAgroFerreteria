@@ -9,7 +9,7 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
     @Mappings({
-            @Mapping(source = "idClient", target = "id_Client"),
+            @Mapping(source = "id", target = "id_Client"),
             @Mapping(source = "lastName", target = "last_name")
     })
     ClientDTO mapClient(Client client);

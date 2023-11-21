@@ -10,10 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 //Creando la clase provedor
 @Entity
@@ -38,9 +35,12 @@ public class Supplier implements Serializable {
     private Integer phone;
     @OneToMany(
             mappedBy = "supplier",
-            fetch = FetchType.LAZY)
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST,
+            orphanRemoval = true
+    )
     @JsonIgnoreProperties({"suppliers"})
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 
 
     public Supplier(String name, String city, String address, Integer phone) {

@@ -31,8 +31,10 @@ public class Category implements Serializable {
 
 
     @OneToMany(
-            mappedBy = "category",
-            fetch = FetchType.LAZY
+            mappedBy = "category", //Mapea la entidad
+            fetch = FetchType.LAZY, // Tipo de busqueda y respuesta que ara a la base de datos
+            cascade = CascadeType.PERSIST, //Que persista la entidad
+            orphanRemoval = true //Eliminar una entidad relacionada de la coleccion de entidades
     )
     @JsonIgnore
     private Set<Product> products = new HashSet<>();

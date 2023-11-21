@@ -64,16 +64,16 @@ INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (12,NOW(),
 
 
 /*Insertando datos en cliente*/
-INSERT INTO clients(id_client,name,adress,email,identification,last_name,phone)VALUES(null,"Omar","Bo El Calvario","omarmenjivar@gmail.com","1234567","Menjivar","7458-8785");
-INSERT INTO clients(id_client,name,adress,email,identification,last_name,phone)VALUES(null,"Juan","San Salvador","juanperez@gmail.com","1234569","Perez","7458-8798");
-INSERT INTO clients(id_client,name,adress,email,identification,last_name,phone)VALUES(null,"Jesus","Chalatenango","jesushenriquez@gmail.com","1234547","Henriquez","7453-8785");
-INSERT INTO clients(id_client,name,adress,email,identification,last_name,phone)VALUES(null,"Xenia","Totolco","ceniarivas@gmail.com","1234342","Rivas","7458-34785");
-INSERT INTO clients(id_client,name,adress,email,identification,last_name,phone)VALUES(null,"Pablo","San Salvador","pablocalles@gmail.com","1234532","Calles","7438-8385");
+INSERT INTO clients(id,name,adress,email,identification,last_name,phone)VALUES(null,"Omar","Bo El Calvario","omarmenjivar@gmail.com","1234567","Menjivar","7458-8785");
+INSERT INTO clients(id,name,adress,email,identification,last_name,phone)VALUES(null,"Juan","San Salvador","juanperez@gmail.com","1234569","Perez","7458-8798");
+INSERT INTO clients(id,name,adress,email,identification,last_name,phone)VALUES(null,"Jesus","Chalatenango","jesushenriquez@gmail.com","1234547","Henriquez","7453-8785");
+INSERT INTO clients(id,name,adress,email,identification,last_name,phone)VALUES(null,"Xenia","Totolco","ceniarivas@gmail.com","1234342","Rivas","7458-34785");
+INSERT INTO clients(id,name,adress,email,identification,last_name,phone)VALUES(null,"Pablo","San Salvador","pablocalles@gmail.com","1234532","Calles","7438-8385");
 
 /*Insertar datos en factura */
-INSERT INTO bills(id_bill,id_client,create_at,description,observation) VALUES(null,1,NOW(),null,null);
+INSERT INTO bills(id,client_id,create_at,description,observation) VALUES(null,1,NOW(),null,null);
 
 /*Insertar datos en item_factura*/
-INSERT INTO item_bills(id_item_bill,id_inventories,id_bill,cantidad,name_payment_method)VALUES(null,1,1,2,"Efectivo");
+INSERT INTO item_bills(id_item_bill,inventories_id,bill_id,cantidad,name_payment_method)VALUES(null,1,1,2,"Efectivo");
 
 

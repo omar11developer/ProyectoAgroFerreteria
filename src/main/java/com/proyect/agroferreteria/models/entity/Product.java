@@ -39,31 +39,37 @@ public class Product implements Serializable {
 
 
     @OneToMany(
-            mappedBy = "product", fetch = FetchType.LAZY
+            mappedBy = "product", fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.ALL
+            },
+            orphanRemoval = true
+
     )
     @JsonIgnore
     private Set<Inventories> inventories = new HashSet<>();
 
 
     @ManyToOne(
-            optional = true,
+            fetch = FetchType.LAZY
+    /*        optional = true,
             fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
-            }
+            }*/
     )
     @JoinColumn(name = "id_category")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
     private Category category;
 
     @ManyToOne(
-            optional = true,
-            fetch = FetchType.LAZY,
-            cascade = {
+        //    optional = true,
+            fetch = FetchType.LAZY
+          /*  cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
-            }
+            }*/
     )
     @JoinColumn(name = "id_Supplier")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})

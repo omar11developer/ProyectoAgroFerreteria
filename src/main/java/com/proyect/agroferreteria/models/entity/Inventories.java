@@ -1,8 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,7 +20,7 @@ import java.util.*;
 public class Inventories implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_Inventory;
+    private Long id;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "date_Entry")
@@ -38,28 +36,30 @@ public class Inventories implements Serializable {
     private Integer stock;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
-            optional = true,
+            fetch = FetchType.LAZY
+            ,optional = true,
             cascade = {
                     CascadeType.ALL
             }
     )
-    @JoinColumn(name = "id_Product")
+    @JoinColumn(name = "id_product")
     @JsonIgnoreProperties({"hibernateLazyInitializer","Inventories"})
     private Product product;
 
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "inventories"
+            //mappedBy = "inventories",
+           cascade = {
+                    CascadeType.PERSIST
+           }
+           //cascade = CascadeType.MERGE
+            //orphanRemoval = true
     )
-    @JsonIgnore
-    private Set<ItemBill> itemBill;
+    @JsonIgnoreProperties({"Inventories"})
+    @JoinColumn(name = "inventories_id")
+    private Set<ItemBill> itemBill = new HashSet<>();
 
-    public Inventories(Date createAtOrder, Double salePrice, Integer stock) {
-        this.createAtOrder = createAtOrder;
-        this.salePrice = salePrice;
-        this.stock = stock;
-    }
+
 
     @PrePersist
     public void prePersist(){

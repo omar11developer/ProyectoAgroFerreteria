@@ -1,17 +1,14 @@
 package com.proyect.agroferreteria.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "item_Bills")
@@ -23,31 +20,36 @@ public class ItemBill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_Item_Bill")
-    private Long idItemBill;
+    private Long id;
     @NotNull
     private Integer cantidad;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY,optional = true,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST
-            }
-    )
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
-    @JoinColumn(name = "id_Inventories")
-    private Inventories inventories;
+ /*   @ManyToOne(
+            fetch = FetchType.LAZY
 
-    @ManyToOne(
-            fetch = FetchType.LAZY, optional = true,
+
+
+          *//*,cascade = {
+                    CascadeType.PERSIST
+            }*//*
+    )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
+    @JoinColumn(name = "inventories_id")
+    private Inventories inventories;
+*/
+/*    @ManyToOne(
+            fetch = FetchType.LAZY
+
+
+      *//*      , optional = true,
             cascade = {
                     CascadeType.MERGE,
                     CascadeType.PERSIST
-            }
+            }*//*
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
-    @JoinColumn(name = "id_Bill")
-    private Bill bill;
+    @JoinColumn(name = "id_bill")
+    private Bill bill;*/
 
     //@NotEmpty(message = "Este campo no puede quedar vacio")
     @Embedded
@@ -65,17 +67,17 @@ public class ItemBill implements Serializable {
     private Double priceTotal;
 
 
-    public void crearPrecioFinal(){
-        Integer cantidadProductos = cantidad;
-        Double priceProducto = inventories.getSalePrice();
-        priceTotal = cantidadProductos * priceProducto;
-    }
+
 
     public void caluclarMonto(){
         paymentMethod.setMonto(priceTotal/4);
     }
 
-    public void calcularPagos(){
+    public void calcularPagos(){/* public void crearPrecioFinal(){
+        Integer cantidadProductos = cantidad;
+        Double priceProducto = inventories.getSalePrice();
+        priceTotal = cantidadProductos * priceProducto;
+    }*/
         Double debe = paymentMethod.getDebe();
             Double primerPago = paymentMethod.getFirstPayment();
             Double segundoPago = paymentMethod.getSecondPayment() + primerPago;

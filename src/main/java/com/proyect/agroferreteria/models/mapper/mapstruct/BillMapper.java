@@ -10,7 +10,7 @@ import org.mapstruct.Mappings;
 public interface BillMapper {
     @Mappings(
             {
-                    @Mapping(source = "idBill",target = "id_Factura"),
+                    @Mapping(source = "id",target = "id_Factura"),
                     @Mapping(source = "creatAt", target = "date_create")
             }
     )

@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface ClientRepository extends CrudRepository<Client, Long> {
 
-    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Client c WHERE c.identification = :identification and  c.idClient != :clientId")
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Client c WHERE c.identification = :identification and  c.id != :clientId")
     boolean existsByIdentificationAndNotCurrentId(@Param("identification") String identification, @Param("clientId") Long clientId);
-    @Query("select CASE when count(c) > 0 then true  else  false  end from Client  c where c.email = :email and c.idClient != :clientId")
+    @Query("select CASE when count(c) > 0 then true  else  false  end from Client  c where c.email = :email and c.id != :clientId")
     boolean existsByEmailAndNotCurrentId(@Param("email") String email, @Param("clientId") Long clientId);
 
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Client c WHERE c.email = :email")

@@ -9,7 +9,7 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface ItemBillMapper {
     @Mappings({
-            @Mapping(source = "idItemBill", target = "id_Item_Bill")
+            @Mapping(source = "id", target = "id_Item_Bill")
     })
     ItemBillDTO mapItemBill(ItemBill itemBill);
 }
