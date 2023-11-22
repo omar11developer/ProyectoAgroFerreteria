@@ -24,32 +24,37 @@ public class ItemBill implements Serializable {
     @NotNull
     private Integer cantidad;
 
- /*   @ManyToOne(
-            fetch = FetchType.LAZY
-
-
-
-          *//*,cascade = {
-                    CascadeType.PERSIST
-            }*//*
-    )
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
-    @JoinColumn(name = "inventories_id")
-    private Inventories inventories;
-*/
-/*    @ManyToOne(
-            fetch = FetchType.LAZY
-
-
-      *//*      , optional = true,
+    @ManyToOne(
+           fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST
-            }*//*
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+                    //CascadeType.REMOVE
+            }
+    )
+    @JoinColumn(
+            name = "inventories_id",
+            foreignKey = @ForeignKey(name = "FK_INVENTORIES_ID")
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
-    @JoinColumn(name = "id_bill")
-    private Bill bill;*/
+    private Inventories inventories;
+
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REMOVE
+            }
+    )
+    @JoinColumn(
+            name = "bill_id",
+            foreignKey = @ForeignKey(name = "FK_BILL_ID")
+    )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
+    private Bill bill;
+
+
 
     //@NotEmpty(message = "Este campo no puede quedar vacio")
     @Embedded

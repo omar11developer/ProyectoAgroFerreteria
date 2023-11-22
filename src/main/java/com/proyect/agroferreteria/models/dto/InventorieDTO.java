@@ -1,7 +1,9 @@
 package com.proyect.agroferreteria.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.proyect.agroferreteria.models.entity.ItemBill;
 import com.proyect.agroferreteria.models.entity.Product;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotEmpty;
@@ -11,6 +13,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -32,5 +36,8 @@ public class InventorieDTO {
 
     @JsonIgnoreProperties({"hibernateLazyInitializer","Inventories"})
     private Product product;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer","Inventories"})
+    private Set<ItemBill> itemBill = new HashSet<>();
 
 }

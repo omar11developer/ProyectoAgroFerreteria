@@ -26,6 +26,8 @@ public class ItemBillDTO {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
     private Bill bill;
 
+
+
     private PaymentMethod paymentMethod;
 
     //@Positive(message = "Este campo tiene que ser positivo")

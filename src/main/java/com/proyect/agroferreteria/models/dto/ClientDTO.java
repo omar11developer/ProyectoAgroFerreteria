@@ -1,5 +1,7 @@
 package com.proyect.agroferreteria.models.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.proyect.agroferreteria.models.entity.Bill;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -7,6 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -32,5 +37,7 @@ public class ClientDTO {
     @NotEmpty(message = "El campo nombre no puede quedar vacio")
     private String phone;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "clients"})
+    private Set<Bill> bill = new HashSet<>();
 
 }

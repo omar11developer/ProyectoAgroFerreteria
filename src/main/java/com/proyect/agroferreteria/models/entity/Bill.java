@@ -34,11 +34,11 @@ public class Bill implements Serializable {
 
     @ManyToOne(
             fetch = FetchType.LAZY
-           /* ,optional = true,
+            ,optional = true,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
-            }*/
+            }
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer", "bills"})
     //@JoinColumn(name = "id_client")
@@ -47,10 +47,11 @@ public class Bill implements Serializable {
     @OneToMany(
             fetch = FetchType.LAZY,
             //mappedBy = "bill",
-            cascade = CascadeType.ALL
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
             //orphanRemoval = true
     )
     @JoinColumn(name = "bill_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "bills"})
     private Set<ItemBill> itemBills = new HashSet<>();
     @PrePersist
     public void prePersist(){

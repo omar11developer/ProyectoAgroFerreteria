@@ -23,7 +23,6 @@ import java.util.Set;
 public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_category")
     private Long id;
 
     @NotNull
@@ -31,12 +30,13 @@ public class Category implements Serializable {
 
 
     @OneToMany(
-            mappedBy = "category", //Mapea la entidad
+           // mappedBy = "category", //Mapea la entidad
             fetch = FetchType.LAZY, // Tipo de busqueda y respuesta que ara a la base de datos
-            cascade = CascadeType.PERSIST, //Que persista la entidad
-            orphanRemoval = true //Eliminar una entidad relacionada de la coleccion de entidades
+           cascade = CascadeType.PERSIST //Que persista la entidad
+            //orphanRemoval = true //Eliminar una entidad relacionada de la coleccion de entidades*/
     )
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer","category"})
+    @JoinColumn(name = "category_id")
     private Set<Product> products = new HashSet<>();
 
 

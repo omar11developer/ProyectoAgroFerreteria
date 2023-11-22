@@ -1,5 +1,6 @@
 package com.proyect.agroferreteria.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -46,6 +47,7 @@ public class Client implements Serializable {
             cascade = {CascadeType.ALL}
             //orphanRemoval = true
     )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "clients"})
     //@JsonIgnore
     private Set<Bill> bill = new HashSet<>();
 

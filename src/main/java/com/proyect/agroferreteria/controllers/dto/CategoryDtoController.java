@@ -130,7 +130,7 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         response.put("data", dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-    /*
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
@@ -148,6 +148,6 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
-    */
+
 
 }

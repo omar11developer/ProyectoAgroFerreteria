@@ -1,6 +1,5 @@
 package com.proyect.agroferreteria.models.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -22,8 +21,8 @@ import java.util.*;
 public class Supplier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_Supplier")
-    private Long idSupplier;
+    //@Column(name = "id_Supplier")
+    private Long id;
 
     @NotNull
     private String name;
@@ -34,12 +33,14 @@ public class Supplier implements Serializable {
     @NotNull
     private Integer phone;
     @OneToMany(
-            mappedBy = "supplier",
+            //mappedBy = "supplier",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.PERSIST,
-            orphanRemoval = true
+        cascade = CascadeType.PERSIST
+        /*    cascade = CascadeType.PERSIST,
+            orphanRemoval = true*/
     )
-    @JsonIgnoreProperties({"suppliers"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer","suppliers"})
+    @JoinColumn(name = "supplier_id")
     private Set<Product> products = new HashSet<>();
 
 

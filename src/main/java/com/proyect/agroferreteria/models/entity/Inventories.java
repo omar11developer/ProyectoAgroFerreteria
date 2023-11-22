@@ -38,9 +38,7 @@ public class Inventories implements Serializable {
     @ManyToOne(
             fetch = FetchType.LAZY
             ,optional = true,
-            cascade = {
-                    CascadeType.ALL
-            }
+            cascade = CascadeType.ALL
     )
     @JoinColumn(name = "id_product")
     @JsonIgnoreProperties({"hibernateLazyInitializer","Inventories"})
@@ -50,12 +48,14 @@ public class Inventories implements Serializable {
             fetch = FetchType.LAZY,
             //mappedBy = "inventories",
            cascade = {
-                    CascadeType.PERSIST
+                    CascadeType.PERSIST,
+                   CascadeType.MERGE,
+                   CascadeType.REFRESH
            }
            //cascade = CascadeType.MERGE
             //orphanRemoval = true
     )
-    @JsonIgnoreProperties({"Inventories"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer","Inventories"})
     @JoinColumn(name = "inventories_id")
     private Set<ItemBill> itemBill = new HashSet<>();
 

@@ -23,7 +23,7 @@ public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
+    //@Column(name = "id_product")
     private Long id;
 
     @NotNull
@@ -39,11 +39,11 @@ public class Product implements Serializable {
 
 
     @OneToMany(
-            mappedBy = "product", fetch = FetchType.LAZY,
-            cascade = {
+            mappedBy = "product", fetch = FetchType.LAZY
+            /*cascade = {
                     CascadeType.ALL
-            },
-            orphanRemoval = true
+            },*/
+           // orphanRemoval = true
 
     )
     @JsonIgnore
@@ -51,7 +51,11 @@ public class Product implements Serializable {
 
 
     @ManyToOne(
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
     /*        optional = true,
             fetch = FetchType.LAZY,
             cascade = {
@@ -59,29 +63,28 @@ public class Product implements Serializable {
                     CascadeType.MERGE
             }*/
     )
-    @JoinColumn(name = "id_category")
+    @JoinColumn(
+            name = "category_id",
+            foreignKey = @ForeignKey (name = "FK_CATEGORY_ID"))
     @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
     private Category category;
 
     @ManyToOne(
-        //    optional = true,
-            fetch = FetchType.LAZY
+           optional = true,
+            //fetch = FetchType.LAZY,
+          cascade = {CascadeType.PERSIST}
           /*  cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             }*/
     )
-    @JoinColumn(name = "id_Supplier")
+    @JoinColumn(
+            name = "supplier_id",
+            foreignKey = @ForeignKey(name = "FK_SUPPLIER_ID"))
     @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
     private Supplier supplier;
 
 
-    public Product(String name, Double unitPrice, String unitWeight) {
-        this.name = name;
-        this.unitPrice = unitPrice;
-        this.unitWeight = unitWeight;
-
-    }
 
 
 }
