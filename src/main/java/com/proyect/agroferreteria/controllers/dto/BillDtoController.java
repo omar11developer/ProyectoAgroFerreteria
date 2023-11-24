@@ -46,47 +46,45 @@ public class BillDtoController extends GenericoDtoController<Bill, BillDAO> {
         response.put("data", bills);
         return ResponseEntity.ok(response);
     }
-    @PostMapping("/")
-    public ResponseEntity<?> saveBill(@Valid @RequestBody Bill bill, BindingResult result){
+    @PostMapping("/clienteFactura/{idCliente}/")
+    public ResponseEntity<?> saveBill(@Valid @RequestBody BillDTO bill, @PathVariable Long idCliente,BindingResult result){
         Map<String, Object> response = new HashMap<>();
-        Optional<Client> oClient = clientDAO.buscarCliente(bill.getClient().getName());
-        if(result.hasErrors()){
-            response.put("success", Boolean.FALSE);
-            response.put("messagge", super.obtenerValidaciones(result));
-            return ResponseEntity.badRequest().body(response);
-        }
+        Optional<Client> oClient = clientDAO.findById(idCliente);
         if(oClient.isEmpty()){
             response.put("success", Boolean.FALSE);
-            response.put("message", String.format("El Cliente que deseas agregar no existe"));
+            response.put("message", "El cliente de esta factura no existe");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        if(result.hasErrors()){
+            response.put("success", Boolean.FALSE);
+            response.put("message", super.obtenerValidaciones(result));
             return ResponseEntity.badRequest().body(response);
         }
         bill.setClient(oClient.get());
-        Bill save = super.altaEntidad(bill);
-        BillDTO dto = mapper.mapBill(save);
+        Bill billSave = super.altaEntidad(mapper.mapBill(bill));
+        BillDTO dto = mapper.mapBill(billSave);
         response.put("success", Boolean.TRUE);
         response.put("data", dto);
         return ResponseEntity.ok(response);
 
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<?> editarFactura(@PathVariable long id, @RequestBody Bill bill){
+    @PutMapping("/clienteFactura/{idCliente}/editarFactura/{id}")
+    public ResponseEntity<?> editarFactura(@PathVariable long id, @PathVariable Long idCliente, @RequestBody BillDTO bill){
         Map<String, Object> response = new HashMap<>();
         Optional<Bill> oBill = super.obtenerPorId(id);
+        Optional<Client> oCLiente = clientDAO.findById(idCliente);
         if(oBill.isEmpty()){
             response.put("success", Boolean.FALSE);
             response.put("message", String.format("La %s que deseas editar no existe", nombreEntidad));
+            return ResponseEntity.badRequest().body(response);
+        } else if (oCLiente.isEmpty()) {
+            response.put("success", Boolean.FALSE);
+            response.put("message", String.format("El cliente con la factura #%d que deseas editar no existe",id));
             return ResponseEntity.badRequest().body(response);
         }
         Bill billUpdate = oBill.get();
         billUpdate.setDescription(bill.getDescription());
         billUpdate.setObservation(bill.getObservation());
-        Optional<Client> client = clientDAO.buscarCliente(bill.getClient().getName());
-        if(client.isEmpty()){
-            response.put("success", Boolean.FALSE);
-            response.put("message", String.format("El cliente que edito no existe para poder editar"));
-            return ResponseEntity.badRequest().body(response);
-        }
-        billUpdate.setClient(client.get());
         super.altaEntidad(billUpdate);
         BillDTO dto = mapper.mapBill(billUpdate);
         response.put("success", Boolean.TRUE);
@@ -95,10 +93,16 @@ public class BillDtoController extends GenericoDtoController<Bill, BillDAO> {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarPorID(@PathVariable Long id){
+    @DeleteMapping("/clienteFactura/{idCliente}/{id}")
+    public ResponseEntity<?> eliminarPorID(@PathVariable Long id, @PathVariable Long idCliente){
         Map<String, Object> response = new HashMap<>();
         Optional<Bill> bill = super.obtenerPorId(id);
+        Optional<Client> client = clientDAO.findById(idCliente);
+        if(client.isEmpty()){
+            response.put("success", Boolean.FALSE);
+            response.put("message", String.format("No se encontro un cliente con la %s con el id %d", nombreEntidad, idCliente));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
         if(bill.isEmpty()){
             response.put("success", Boolean.FALSE);
             response.put("message", String.format("No se encontro %s con el id %d", nombreEntidad, id));

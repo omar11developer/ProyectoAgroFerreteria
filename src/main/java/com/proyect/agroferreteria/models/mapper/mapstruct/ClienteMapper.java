@@ -13,4 +13,10 @@ public interface ClienteMapper {
             @Mapping(source = "lastName", target = "last_name")
     })
     ClientDTO mapClient(Client client);
+
+    @Mappings({
+            @Mapping(source = "id_Client", target = "id"),
+            @Mapping(source = "last_name", target = "lastName")
+    })
+    Client mapDtoClient(ClientDTO clientDTO);
 }

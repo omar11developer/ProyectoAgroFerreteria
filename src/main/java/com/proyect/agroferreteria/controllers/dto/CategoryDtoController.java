@@ -84,9 +84,9 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         return ResponseEntity.ok(response);
 
     }
-    @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
+
     @PostMapping("/guardarCategory/")
-    public ResponseEntity<?> saveCategory(@Valid @RequestBody @ApiParam(name = "nombre de la categoria", required = true) CategoryDTO category, BindingResult result){
+    public ResponseEntity<?> saveCategory(@Valid @RequestBody CategoryDTO category, BindingResult result){
         Map<String, Object> response = new HashMap<>();
         CategoryDTO dto = null;
         Category categoriaLocal = service.getByName(category.getName());

@@ -37,7 +37,7 @@ public class ClientDTO {
     @NotEmpty(message = "El campo nombre no puede quedar vacio")
     private String phone;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer","clients"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<Bill> bill = new HashSet<>();
 
 }

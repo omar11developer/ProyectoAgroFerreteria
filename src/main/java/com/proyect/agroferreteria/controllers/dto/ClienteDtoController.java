@@ -31,6 +31,7 @@ public class ClienteDtoController extends GenericoDtoController<Client, ClientDA
     public ResponseEntity<?> obtenerClientes(){
         Map<String, Object> response = new HashMap<>();
         List<Client> clients = super.obtenerTodos();
+
         if(clients.isEmpty()){
             response.put("success", Boolean.FALSE);
             response.put("message", String.format("No se encontro %ss cargadas", nombreEntidad));
@@ -70,7 +71,7 @@ public class ClienteDtoController extends GenericoDtoController<Client, ClientDA
         return ResponseEntity.ok(response);
     }
     @PostMapping("/saveClient")
-    public ResponseEntity<?> gaurdarCliente(@Valid @RequestBody Client client, BindingResult result){
+    public ResponseEntity<?> gaurdarCliente(@Valid @RequestBody ClientDTO client, BindingResult result){
         Map<String, Object> response = new HashMap<>();
         Optional<Client> exitCliente = service.findByIdentification(client.getIdentification());
         Optional<Client> exiEmail = service.findByEmail(client.getEmail());
@@ -89,14 +90,14 @@ public class ClienteDtoController extends GenericoDtoController<Client, ClientDA
             response.put("message", String.format("El email %s ya existe ", client.getEmail()));
             return ResponseEntity.badRequest().body(response);
         }
-        Client clientSave = super.altaEntidad(client);
+        Client clientSave = super.altaEntidad(mapper.mapDtoClient(client));
         ClientDTO dto = mapper.mapClient(clientSave);
         response.put("success", Boolean.TRUE);
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
     @PutMapping("/editCliente/{id}")
-    public ResponseEntity<?> editarCliente(@Valid @RequestBody Client client, BindingResult result, @PathVariable Long id){
+    public ResponseEntity<?> editarCliente(@Valid @RequestBody ClientDTO client, BindingResult result, @PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
         Optional<Client> clientLocal = super.obtenerPorId(id);
         if(clientLocal.isEmpty()){
@@ -114,7 +115,7 @@ public class ClienteDtoController extends GenericoDtoController<Client, ClientDA
         clientUpdate.setEmail(client.getEmail());
         clientUpdate.setAdress(client.getAdress());
         clientUpdate.setPhone(client.getPhone());
-        clientUpdate.setLastName(client.getLastName());
+        clientUpdate.setLastName(client.getLast_name());
         clientUpdate.setIdentification(client.getIdentification());
         boolean existIdentificacion = service.existsByIdentificationAndNotCurrentId(client.getIdentification(), clientUpdate.getId());
         if (existIdentificacion){

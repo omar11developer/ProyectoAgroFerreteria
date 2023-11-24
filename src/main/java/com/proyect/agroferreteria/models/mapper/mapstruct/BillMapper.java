@@ -15,4 +15,10 @@ public interface BillMapper {
             }
     )
     BillDTO mapBill(Bill bill);
+
+    @Mappings({
+            @Mapping(source = "id_Factura", target = "id"),
+            @Mapping(source = "date_create", target = "creatAt"),
+    })
+    Bill mapBill(BillDTO billDTO);
 }

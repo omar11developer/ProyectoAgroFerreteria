@@ -36,11 +36,10 @@ public class Bill implements Serializable {
             fetch = FetchType.LAZY
             ,optional = true,
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
+                    CascadeType.ALL
             }
     )
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "bills"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "bill"})
     //@JoinColumn(name = "id_client")
     private Client client;
 
@@ -51,7 +50,7 @@ public class Bill implements Serializable {
             //orphanRemoval = true
     )
     @JoinColumn(name = "bill_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "bills"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "itemBills"})
     private Set<ItemBill> itemBills = new HashSet<>();
     @PrePersist
     public void prePersist(){
