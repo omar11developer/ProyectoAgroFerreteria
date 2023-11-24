@@ -23,16 +23,19 @@ public class ProductoDTO {
     private String name;
 
     @NotNull
-    @NotEmpty(message = "Debe ingresar un valor")
     @Positive(message = "El precio no pueder ser negativo")
     private Double unit_Price;
 
-    @Positive(message ="La unidad de peso no pueder ser negativo" )
+
     private String unit_Weight;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
+    private Double sale_price;
+
+    private Integer stock;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer","products"})
     private Category category;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer","city","address","phone","products"})
     private Supplier supplier;
 }

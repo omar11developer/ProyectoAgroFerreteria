@@ -12,4 +12,8 @@ public interface CategoryMapper {
             @Mapping(source = "id", target = "id_Category")
     })
     CategoryDTO mapCategory(Category category);
+    @Mappings({
+            @Mapping(source = "id_Category", target = "id")
+    })
+    Category mapDTOCategory(CategoryDTO category);
 }

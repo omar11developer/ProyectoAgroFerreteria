@@ -12,4 +12,8 @@ public interface SupplierMapper {
             @Mapping(source = "id", target = "id_Supplier")
     })
     SupplierDTO mapSupplier(Supplier supplier);
+    @Mappings({
+            @Mapping(source = "id_Supplier", target = "id")
+    })
+    Supplier mapDtoSupplier(SupplierDTO supplier);
 }

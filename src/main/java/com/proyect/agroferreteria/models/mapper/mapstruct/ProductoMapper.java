@@ -13,7 +13,15 @@ public interface ProductoMapper {
             @Mapping(source = "unitPrice", target = "unit_Price"),
             @Mapping(source = "unitWeight", target = "unit_Weight"),
             @Mapping(source = "supplier", target = "supplier"),
-            @Mapping(source = "category", target = "category")
+            @Mapping(source = "category", target = "category"),
+            @Mapping(source = "salePrice", target = "sale_price")
     })
     ProductoDTO mapProducto(Product product);
+    @Mappings({
+            @Mapping(source = "id_Producto", target = "id"),
+            @Mapping(source = "unit_Price", target = "unitPrice"),
+            @Mapping(source = "unit_Weight", target = "unitWeight"),
+            @Mapping(source = "sale_price", target = "salePrice")
+    })
+    Product mapDtoProducto(ProductoDTO productoDTO);
 }

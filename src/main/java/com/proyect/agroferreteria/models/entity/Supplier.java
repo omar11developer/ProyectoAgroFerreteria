@@ -2,7 +2,7 @@ package com.proyect.agroferreteria.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +30,11 @@ public class Supplier implements Serializable {
     private String city;
 
     private String address;
-    @NotNull
-    private Integer phone;
+
+    @NotEmpty(message = "El campo no debe ir vacio")
+    @Size(min = 8, max = 8, message = "El minimo y maximo es de 8 numeros")
+    private String phone;
+
     @OneToMany(
             //mappedBy = "supplier",
             fetch = FetchType.LAZY,
@@ -44,12 +47,6 @@ public class Supplier implements Serializable {
     private Set<Product> products = new HashSet<>();
 
 
-    public Supplier(String name, String city, String address, Integer phone) {
-        this.name = name;
-        this.city = city;
-        this.address = address;
-        this.phone = phone;
-    }
 
 
 }

@@ -8,6 +8,7 @@ import com.proyect.agroferreteria.models.mapper.mapstruct.ProductoMapper;
 import com.proyect.agroferreteria.services.contracts.CategoryDAO;
 import com.proyect.agroferreteria.services.contracts.ProductDAO;
 import com.proyect.agroferreteria.services.contracts.SupplierDAO;
+import io.swagger.annotations.Api;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/productos")
 @ConditionalOnProperty(prefix = "app", name = "controller.enable-dto", havingValue = "true")
+@Api(value = "Acciones relacionadas con Productos", tags = "Acciones sobre Producto")
 public class ProductDtoController extends GenericoDtoController<Product, ProductDAO>{
     @Autowired
     private ProductoMapper mapper;
@@ -35,6 +37,7 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         this.categoryDAO = categoryDAO;
         this.supplierDAO = supplierDAO;
     }
+
     @GetMapping("/")
     public ResponseEntity<?> obtenerProductos(){
         Map<String, Object> response = new HashMap<>();
@@ -52,7 +55,7 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         response.put("data", productoDTOS);
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/{id}")
+    @GetMapping("/detalleProducto/{id}")
     public ResponseEntity<?> buscarPoroductopordID(@PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
         Optional<Product> product = super.obtenerPorId(id);
@@ -100,9 +103,9 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         return ResponseEntity.ok(response);
     }
 
-   /*
-   @PostMapping("/")
-    public ResponseEntity<?> saveProduct(@Valid @RequestBody Product product, BindingResult result){
+
+   @PostMapping("/guardarProducto/")
+    public ResponseEntity<?> saveProduct(@Valid @RequestBody ProductoDTO product, BindingResult result){
         Map<String, Object> response = new HashMap<>();
         boolean productLocal = service.existeByNameProduct(product.getName());
         boolean categoryLocal = categoryDAO.existeTypeProductName(product.getCategory().getName());
@@ -126,16 +129,16 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         }
         product.setSupplier(supplierDAO.findByName(product.getSupplier().getName()));
         product.setCategory(categoryDAO.getByName(product.getCategory().getName()));
-        Product productSave = super.altaEntidad(product);
+        Product productSave = super.altaEntidad(mapper.mapDtoProducto(product));
         ProductoDTO dto = mapper.mapProducto(productSave);
         response.put("success", Boolean.TRUE);
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
 
-    */
-    @PutMapping("/{id}")
-    public ResponseEntity<?> editarProducto(@Valid @RequestBody Product product, @PathVariable Long id, BindingResult result){
+
+    @PutMapping("/editarProducto/{id}")
+    public ResponseEntity<?> editarProducto(@Valid @RequestBody ProductoDTO product, @PathVariable Long id, BindingResult result){
         Map<String, Object> response = new HashMap<>();
         Optional<Product> productoLocal = super.obtenerPorId(id);
         Boolean existSupplier = supplierDAO.existsByName(product.getSupplier().getName());
@@ -149,8 +152,8 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         if (!productoLocal.isEmpty()){
             productUpdate = productoLocal.get();
             productUpdate.setName(product.getName());
-            productUpdate.setUnitPrice(product.getUnitPrice());
-            productUpdate.setUnitWeight(product.getUnitWeight());
+            productUpdate.setUnitPrice(product.getUnit_Price());
+            productUpdate.setUnitWeight(product.getUnit_Weight());
             if (existCategory){
                 Category category = categoryDAO.getByName(product.getCategory().getName());
                 productUpdate.setCategory(category);
@@ -181,7 +184,7 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
 
     }
 
-   /* @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarProductoPorId(@PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
         Optional<Product> product = super.obtenerPorId(id);
@@ -196,5 +199,5 @@ public class ProductDtoController extends GenericoDtoController<Product, Product
         response.put("messagge", "Producto eliminado con exito");
         return ResponseEntity.ok(response);
     }
-*/
+
 }

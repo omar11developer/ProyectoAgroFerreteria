@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "item_Bills")
@@ -24,20 +25,24 @@ public class ItemBill implements Serializable {
     @NotNull
     private Integer cantidad;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_creation")
+    private Date createAtOrder;
+
     @ManyToOne(
            fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
-                    CascadeType.MERGE
-                    //CascadeType.REMOVE
+                    CascadeType.MERGE,
+                    CascadeType.REMOVE
             }
     )
     @JoinColumn(
-            name = "inventories_id",
-            foreignKey = @ForeignKey(name = "FK_INVENTORIES_ID")
+            name = "product_id",
+            foreignKey = @ForeignKey(name = "FK_PRODUCT_ID")
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
-    private Inventories inventories;
+    private Product product;
 
     @ManyToOne(
             fetch = FetchType.LAZY,
@@ -99,6 +104,9 @@ public class ItemBill implements Serializable {
             }
     }
 
-
+    @PrePersist
+    public void prePersist(){
+        createAtOrder =new Date();
+    }
 
 }

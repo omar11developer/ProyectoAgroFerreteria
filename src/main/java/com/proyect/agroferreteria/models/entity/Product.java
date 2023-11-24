@@ -3,6 +3,7 @@ package com.proyect.agroferreteria.models.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,25 +31,42 @@ public class Product implements Serializable {
     private String name;
 
     @NotNull
+    @Min(0)
     @Column(name = "unit_price")
     private Double unitPrice;
 
 
     @Column(name = "unit_Weight")
     private String unitWeight;
+    @NotNull
+    @Min(0)
+    @Column(name = "sale_price")
+    private Double salePrice;
 
 
+
+    @NotNull
+    private Integer stock;
+
+/*
     @OneToMany(
             mappedBy = "product", fetch = FetchType.LAZY
-            /*cascade = {
+            *//*cascade = {
                     CascadeType.ALL
-            },*/
+            },*//*
            // orphanRemoval = true
 
     )
     @JsonIgnore
-    private Set<Inventories> inventories = new HashSet<>();
-
+    private Set<Inventories> inventories = new HashSet<>();*/
+    @OneToMany(
+            //mappedBy = "product",
+            fetch = FetchType.LAZY,
+            cascade =  {CascadeType.PERSIST,CascadeType.MERGE}
+    )
+    @JoinColumn(name = "product_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
+    private Set<ItemBill> itemBills = new HashSet<>();
 
     @ManyToOne(
             fetch = FetchType.LAZY,

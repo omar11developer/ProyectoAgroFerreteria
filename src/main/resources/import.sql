@@ -22,45 +22,27 @@ insert into category(name) value ('Electricidad');
 insert into category(name) value ('Fontaneria');
 insert into category(name) value ('Construccion');
 /*Insertando datos a la tabla productos*/
-insert into products(name, unit_price, unit_Weight,category_id,supplier_id) values ('Varilla lisa',15,'3/4',3,3);
-insert into products(name, unit_price, unit_Weight,category_id,supplier_id) values ('Varilla lisa',15,'3/4',3,3);
-insert into products(name,unit_price,unit_Weight, category_id,supplier_id)values ('Chorro Crom',5,'1/4',6,2);
-insert into products(name,unit_price,unit_Weight,  category_id,supplier_id) values ('Chorro Crom',5,'1',6,2);
-insert into products(name,unit_price,unit_Weight, category_id,supplier_id) values ('Valvula palanca',5,'1/4',6,2);
-insert into products(name,unit_price,unit_Weight,  category_id,supplier_id) values ('Valvula palanca',5,'3/4',6,2);
-insert into products(name,unit_price,unit_Weight,  category_id,supplier_id) values ('Valvula palanca',5,'1',6,2);
-insert into products(name,unit_price,unit_Weight, category_id,supplier_id) values ('Valvula palanca',5,'2',6,2);
-insert into products(name,unit_price,unit_Weight,  category_id,supplier_id) values ('Varilla corrugada',15,'3/8',3,1);
-insert into products(name,unit_price,unit_Weight, category_id,supplier_id) values ('Varilla corrugada',15,'5/8',3,1);
-insert into products(name,unit_price,unit_Weight,  category_id,supplier_id) values ('Valvula pvac',5,'1/4',6,2);
-insert into products(name,unit_price,unit_Weight,category_id,supplier_id) values ('Valvula pvac',6,'1',6,2);
-insert into products(name,unit_price,unit_Weight,category_id,supplier_id) values ('Regadera redonda',12,'',6,2);
-insert into products(name,unit_price,unit_Weight,category_id,supplier_id) values ('Glifosato aleman',20,'',1,4);
-insert into products(name,unit_price,unit_Weight,category_id,supplier_id) values ('Paraquat Aleman',20,'',1,4);
-insert into products(name,unit_price,unit_Weight,category_id,supplier_id) values ('Semilla de maiz',4,'1 libra',1,4);
-insert into products(name,unit_price,unit_Weight,category_id,supplier_id) values ('Pala para arena',8,'',4,4);
-insert into products(name,unit_price,unit_Weight,category_id,supplier_id) values ('Martillo',8,'',4,1);
-insert into products(name,unit_price,unit_Weight,category_id,supplier_id) values ('juego de alicates',8,'',4,1);
+insert into products(name, unit_price, unit_Weight,category_id,supplier_id,sale_price,stock) values ('Varilla lisa',15,'3/4',3,3,25,30);
+insert into products(name, unit_price, unit_Weight,category_id,supplier_id,sale_price,stock) values ('Varilla lisa',15,'3/4',3,3,25,30);
+insert into products(name,unit_price,unit_Weight, category_id,supplier_id,sale_price,stock)values ('Chorro Crom',5,'1/4',6,2,25,30);
+insert into products(name,unit_price,unit_Weight,  category_id,supplier_id,sale_price,stock) values ('Chorro Crom',5,'1',6,2,25,30);
+insert into products(name,unit_price,unit_Weight, category_id,supplier_id,sale_price,stock) values ('Valvula palanca',5,'1/4',6,2,25,30);
+insert into products(name,unit_price,unit_Weight,  category_id,supplier_id,sale_price,stock) values ('Valvula palanca',5,'3/4',6,2,25,30);
+insert into products(name,unit_price,unit_Weight,  category_id,supplier_id,sale_price,stock) values ('Valvula palanca',5,'1',6,2,25,30);
+insert into products(name,unit_price,unit_Weight, category_id,supplier_id,sale_price,stock) values ('Valvula palanca',5,'2',6,2,25,30);
+insert into products(name,unit_price,unit_Weight,  category_id,supplier_id,sale_price,stock) values ('Varilla corrugada',15,'3/8',3,1,25,30);
+insert into products(name,unit_price,unit_Weight, category_id,supplier_id,sale_price,stock) values ('Varilla corrugada',15,'5/8',3,1,25,30);
+insert into products(name,unit_price,unit_Weight,  category_id,supplier_id,sale_price,stock) values ('Valvula pvac',5,'1/4',6,2,25,30);
+insert into products(name,unit_price,unit_Weight,category_id,supplier_id,sale_price,stock) values ('Valvula pvac',6,'1',6,2,25,30);
+insert into products(name,unit_price,unit_Weight,category_id,supplier_id,sale_price,stock) values ('Regadera redonda',12,'',6,2,25,30);
+insert into products(name,unit_price,unit_Weight,category_id,supplier_id,sale_price,stock) values ('Glifosato aleman',20,'',1,4,25,30);
+insert into products(name,unit_price,unit_Weight,category_id,supplier_id,sale_price,stock) values ('Paraquat Aleman',20,'',1,4,25,30);
+insert into products(name,unit_price,unit_Weight,category_id,supplier_id,sale_price,stock) values ('Semilla de maiz',4,'1 libra',1,4,25,30);
+insert into products(name,unit_price,unit_Weight,category_id,supplier_id,sale_price,stock) values ('Pala para arena',8,'',4,4,25,30);
+insert into products(name,unit_price,unit_Weight,category_id,supplier_id,sale_price,stock) values ('Martillo',8,'',4,1,25,30);
+insert into products(name,unit_price,unit_Weight,category_id,supplier_id,sale_price,stock) values ('juego de alicates',8,'',4,1,25,30);
 
-/*Insertando datos a la tabla inventario*/
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (20,NOW(),1,20);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (20,NOW(),2,25);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (8,NOW(),3,10);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (8,NOW(),4,5);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (8,NOW(),5,56);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (8,NOW(),6,10);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (8,NOW(),7,2);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (8,NOW(),8,5);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (19,NOW(),9,16);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (18,NOW(),10,20);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (7,NOW(),11,25);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (9,NOW(),12,25);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (12,NOW(),13,25);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (26,NOW(),14,25);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (25,NOW(),15,25);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (8,NOW(),16,25);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (12,NOW(),17,25);
-INSERT INTO inventories(sale_price,date_entry,id_product,stock)VALUES (12,NOW(),18,25);
+
 
 
 /*Insertando datos en cliente*/
@@ -74,6 +56,6 @@ INSERT INTO clients(id,name,adress,email,identification,last_name,phone)VALUES(n
 INSERT INTO bills(id,client_id,create_at,description,observation) VALUES(null,1,NOW(),null,null);
 
 /*Insertar datos en item_factura*/
-INSERT INTO item_bills(id_item_bill,inventories_id,bill_id,cantidad,name_payment_method)VALUES(null,1,1,2,"Efectivo");
+INSERT INTO item_bills(id_item_bill,bill_id,cantidad,name_payment_method,product_id)VALUES(null,1,2,"Efectivo",1);
 
 

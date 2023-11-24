@@ -5,6 +5,7 @@ import com.proyect.agroferreteria.models.entity.Category;
 import com.proyect.agroferreteria.models.mapper.mapstruct.CategoryMapper;
 import com.proyect.agroferreteria.services.contracts.CategoryDAO;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -49,8 +50,8 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         return ResponseEntity.ok(mensaje);
     }
     @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
-    @GetMapping("/{id}")
-    public ResponseEntity<?> buscarPorID(@PathVariable Long id){
+    @GetMapping("/detalle/{id}")
+    public ResponseEntity<?> buscarPorID(@PathVariable @ApiParam(name = "id de la categoria", required = true) Long id){
         Map<String, Object> response = new HashMap<>();
         Optional<Category> oCayegory = super.obtenerPorId(id);
         CategoryDTO dto = null;
@@ -67,8 +68,8 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         return ResponseEntity.ok(response);
     }
     @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
-    @GetMapping("/searchByName/{name}")
-    public ResponseEntity<?> buscarPorNombre(@PathVariable String name){
+    @GetMapping("/buscarlikeNombre/")
+    public ResponseEntity<?> buscarPorNombre(@RequestParam @ApiParam(name = "nombre de la categoria") String name){
         Map<String, Object> response = new HashMap<>();
         Category oCategory = service.getByName(name);
         CategoryDTO dto = null;
@@ -84,8 +85,8 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
 
     }
     @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
-    @PostMapping("/")
-    public ResponseEntity<?> saveCategory(@Valid @RequestBody Category category, BindingResult result){
+    @PostMapping("/guardarCategory/")
+    public ResponseEntity<?> saveCategory(@Valid @RequestBody @ApiParam(name = "nombre de la categoria", required = true) CategoryDTO category, BindingResult result){
         Map<String, Object> response = new HashMap<>();
         CategoryDTO dto = null;
         Category categoriaLocal = service.getByName(category.getName());
@@ -99,15 +100,15 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
             response.put("validacion", String.format("La %s que desea crear ya existe", nombreEntidad));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-        Category oCategory = super.altaEntidad((Category) category);
+        Category oCategory = super.altaEntidad(mapper.mapDTOCategory(category));
         dto= mapper.mapCategory(oCategory);
         response.put("succes", Boolean.TRUE);
         response.put("data", dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
-    @PutMapping("/{id}")
-    public ResponseEntity<?> editarCategoria(@Valid @RequestBody Category category, BindingResult result, @PathVariable Long id ){
+    @PutMapping("/editCategory/{id}")
+    public ResponseEntity<?> editarCategoria(@Valid @RequestBody CategoryDTO category, BindingResult result, @PathVariable Long id ){
         Map<String, Object> response = new HashMap<>();
         CategoryDTO dto = null;
         Optional<Category> oCategoria = super.obtenerPorId(id);

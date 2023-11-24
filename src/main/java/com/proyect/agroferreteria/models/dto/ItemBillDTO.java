@@ -2,14 +2,15 @@ package com.proyect.agroferreteria.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.proyect.agroferreteria.models.entity.Bill;
-import com.proyect.agroferreteria.models.entity.Inventories;
 import com.proyect.agroferreteria.models.entity.PaymentMethod;
+import com.proyect.agroferreteria.models.entity.Product;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -20,8 +21,10 @@ public class ItemBillDTO {
     @NotEmpty
     private Integer cantidad;
 
+    private Date date_create;
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
-    private Inventories inventories;
+    private Product product;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "item_Bills"})
     private Bill bill;

@@ -1,18 +1,13 @@
 package com.proyect.agroferreteria.controllers.dto;
 
 import com.proyect.agroferreteria.models.dto.ItemBillDTO;
-import com.proyect.agroferreteria.models.entity.Bill;
-import com.proyect.agroferreteria.models.entity.Inventories;
 import com.proyect.agroferreteria.models.entity.ItemBill;
 import com.proyect.agroferreteria.models.mapper.mapstruct.ItemBillMapper;
 import com.proyect.agroferreteria.services.contracts.BillDAO;
-import com.proyect.agroferreteria.services.contracts.InventoriesDAO;
 import com.proyect.agroferreteria.services.contracts.ItemBillDAO;
 import jakarta.validation.Valid;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +24,11 @@ import java.util.stream.Collectors;
 public class ItemBillDtoController extends GenericoDtoController<ItemBill, ItemBillDAO>{
     @Autowired
     private ItemBillMapper mapper;
-    private final InventoriesDAO inventoriesDAO;
+
     private final BillDAO billDAO;
-    public ItemBillDtoController(ItemBillDAO service, InventoriesDAO inventoriesDAO, BillDAO billDAO) {
+    public ItemBillDtoController(ItemBillDAO service, BillDAO billDAO) {
         super(service, "Factura item");
-        this.inventoriesDAO = inventoriesDAO;
+
         this.billDAO = billDAO;
     }
     @GetMapping("/")

@@ -44,7 +44,7 @@ public class SupplierDtoController extends GenericoDtoController<Supplier, Suppl
         response.put("data", supplierDTOS);
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/{id}")
+    @GetMapping("/detalle/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id){
         Map<String, Object> response= new HashMap<>();
         Optional<Supplier> supplier = super.obtenerPorId(id);
@@ -60,7 +60,7 @@ public class SupplierDtoController extends GenericoDtoController<Supplier, Suppl
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/searchByName/{name}")
+    @GetMapping("/buscarlikeNombre/{name}")
     public ResponseEntity<?> buscarPorNombre(@PathVariable String name){
         Map<String, Object> response = new HashMap<>();
         List<Supplier> suppliers = (List<Supplier>) service.searchByNameLikeIgnoreCase(name);
@@ -77,8 +77,8 @@ public class SupplierDtoController extends GenericoDtoController<Supplier, Suppl
         response.put("data", supplierDTOS);
         return ResponseEntity.ok(response);
     }
-    @PostMapping("/")
-    public ResponseEntity<?> guardarProveedor(@Valid @RequestBody Supplier supplier, BindingResult result){
+    @PostMapping("/guardarProveedor/")
+    public ResponseEntity<?> guardarProveedor(@Valid @RequestBody SupplierDTO supplier, BindingResult result){
         Map<String, Object> response = new HashMap<>();
         boolean supplierLocal = service.existsByName(supplier.getName());
         if(result.hasErrors()){
@@ -90,15 +90,15 @@ public class SupplierDtoController extends GenericoDtoController<Supplier, Suppl
             response.put("messagge", String.format("El %s que desea guardar ya existe", nombreEntidad));
             return ResponseEntity.badRequest().body(response);
         }
-        Supplier oSupplier = super.altaEntidad(supplier);
+        Supplier oSupplier = super.altaEntidad(mapper.mapDtoSupplier(supplier));
         SupplierDTO dto = mapper.mapSupplier(oSupplier);
         response.put("success", Boolean.TRUE);
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> editarProveedor(@Valid @RequestBody Supplier supplier, @PathVariable Long id, BindingResult result){
+    @PutMapping("/editProveedor/{id}")
+    public ResponseEntity<?> editarProveedor(@Valid @RequestBody SupplierDTO supplier, @PathVariable Long id, BindingResult result){
         Map<String, Object> response = new HashMap<>();
         Optional<Supplier> supplierLocal = super.obtenerPorId(id);
         Supplier supplierUpdate;

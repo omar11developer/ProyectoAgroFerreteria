@@ -47,7 +47,7 @@ public class Client implements Serializable {
             cascade = {CascadeType.ALL}
             //orphanRemoval = true
     )
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "clients"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer","clients"})
     //@JsonIgnore
     private Set<Bill> bill = new HashSet<>();
 

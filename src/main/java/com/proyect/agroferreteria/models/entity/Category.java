@@ -2,6 +2,7 @@ package com.proyect.agroferreteria.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,10 +31,9 @@ public class Category implements Serializable {
 
 
     @OneToMany(
-           // mappedBy = "category", //Mapea la entidad
-            fetch = FetchType.LAZY, // Tipo de busqueda y respuesta que ara a la base de datos
-           cascade = CascadeType.PERSIST //Que persista la entidad
-            //orphanRemoval = true //Eliminar una entidad relacionada de la coleccion de entidades*/
+
+            fetch = FetchType.LAZY,
+           cascade = CascadeType.PERSIST
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer","category"})
     @JoinColumn(name = "category_id")
