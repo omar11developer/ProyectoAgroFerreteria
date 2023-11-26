@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -124,7 +125,7 @@ public class SupplierDtoController extends GenericoDtoController<Supplier, Suppl
     }
 
 
-    @DeleteMapping("/{id}")
+  /*  @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
         Optional<Supplier> supplierLocal = super.obtenerPorId(id);
@@ -141,6 +142,14 @@ public class SupplierDtoController extends GenericoDtoController<Supplier, Suppl
         response.put("messagge", "Eliminado con éxito");
         response.put("data", dto);
         return ResponseEntity.ok(response);
+    }*/
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<?> validacionID(MethodArgumentTypeMismatchException ex){
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", Boolean.FALSE);
+        response.put("Message", "El parametro 'id' debe ser un numero");
+        return ResponseEntity.badRequest().body(response);
     }
 
 }

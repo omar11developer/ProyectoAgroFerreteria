@@ -68,6 +68,7 @@ public class Product implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
     private Set<ItemBill> itemBills = new HashSet<>();
 
+    @NotNull
     @ManyToOne(
             fetch = FetchType.LAZY,
             cascade = {

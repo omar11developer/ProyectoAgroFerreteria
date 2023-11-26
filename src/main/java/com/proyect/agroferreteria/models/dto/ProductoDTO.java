@@ -33,6 +33,7 @@ public class ProductoDTO {
 
     private Integer stock;
 
+    @NotNull
     @JsonIgnoreProperties({"hibernateLazyInitializer","products"})
     private Category category;
 
