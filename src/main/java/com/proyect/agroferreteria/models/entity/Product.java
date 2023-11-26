@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,23 +45,14 @@ public class Product implements Serializable {
     private Double salePrice;
 
 
-
     @NotNull
+    @Min(value = 1, message = "El stok debe de ser al menos de 1")
+    @Positive(message = "Este campo debe ser positivo")
     private Integer stock;
 
-/*
-    @OneToMany(
-            mappedBy = "product", fetch = FetchType.LAZY
-            *//*cascade = {
-                    CascadeType.ALL
-            },*//*
-           // orphanRemoval = true
 
-    )
-    @JsonIgnore
-    private Set<Inventories> inventories = new HashSet<>();*/
     @OneToMany(
-            //mappedBy = "product",
+
             fetch = FetchType.LAZY,
             cascade =  {CascadeType.PERSIST,CascadeType.MERGE}
     )
@@ -75,12 +67,6 @@ public class Product implements Serializable {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             }
-    /*        optional = true,
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }*/
     )
     @JoinColumn(
             name = "category_id",
@@ -90,20 +76,13 @@ public class Product implements Serializable {
 
     @ManyToOne(
            optional = true,
-            //fetch = FetchType.LAZY,
           cascade = {CascadeType.PERSIST}
-          /*  cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }*/
     )
     @JoinColumn(
             name = "supplier_id",
             foreignKey = @ForeignKey(name = "FK_SUPPLIER_ID"))
     @JsonIgnoreProperties({"hibernateLazyInitializer", "products"})
     private Supplier supplier;
-
-
 
 
 }

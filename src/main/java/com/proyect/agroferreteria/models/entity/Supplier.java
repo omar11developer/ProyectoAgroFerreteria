@@ -21,7 +21,6 @@ import java.util.*;
 public class Supplier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "id_Supplier")
     private Long id;
 
     @NotNull
@@ -36,11 +35,8 @@ public class Supplier implements Serializable {
     private String phone;
 
     @OneToMany(
-            //mappedBy = "supplier",
             fetch = FetchType.LAZY,
         cascade = CascadeType.PERSIST
-        /*    cascade = CascadeType.PERSIST,
-            orphanRemoval = true*/
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer","suppliers"})
     @JoinColumn(name = "supplier_id")
