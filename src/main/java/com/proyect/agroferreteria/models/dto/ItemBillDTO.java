@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.proyect.agroferreteria.models.entity.Bill;
 import com.proyect.agroferreteria.models.entity.PaymentMethod;
 import com.proyect.agroferreteria.models.entity.Product;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -17,8 +18,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class ItemBillDTO {
     private Long id_Item_Bill;
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Este campo no puede ir vacio")
+    @Min(value = 1,message = "Al menos debe ser mayor a 1")
     private Integer cantidad;
 
     private Date date_create;

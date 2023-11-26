@@ -42,13 +42,12 @@ public class Client implements Serializable {
     private String phone;
 
     @OneToMany(
-            fetch = FetchType.EAGER,
-            mappedBy = "client",
-            cascade = {CascadeType.ALL}
-            //orphanRemoval = true
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL},
+            mappedBy = "client"
     )
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    //@JsonIgnore
+   //@JoinColumn(name = "client_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "clients"})
     private Set<Bill> bill = new HashSet<>();
 
 

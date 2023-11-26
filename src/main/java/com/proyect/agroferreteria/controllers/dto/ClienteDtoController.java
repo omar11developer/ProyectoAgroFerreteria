@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -145,13 +146,28 @@ public class ClienteDtoController extends GenericoDtoController<Client, ClientDA
             response.put("message", String.format("El id #%d no existe", id));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-        super.eliminarPorId(id);
+        if(!client.get().getBill().isEmpty()){
+            super.eliminarPorId(id);
+        }else{
+            response.put("success", Boolean.TRUE);
+            response.put("message", "No se puede eliminar Este cliene tiene facturas relacioandas");
+            return ResponseEntity.ok(response);
+        }
+
         ClientDTO dtoEliminado = mapper.mapClient(client.get());
         response.put("success", Boolean.TRUE);
         response.put("data", dtoEliminado);
         response.put("message", "Cliente eliminado con Exito");
         return ResponseEntity.ok(response);
 
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<?> validacionID(MethodArgumentTypeMismatchException ex){
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", Boolean.FALSE);
+        response.put("Message", "El parametro 'id' debe ser un numero");
+        return ResponseEntity.badRequest().body(response);
     }
 
 

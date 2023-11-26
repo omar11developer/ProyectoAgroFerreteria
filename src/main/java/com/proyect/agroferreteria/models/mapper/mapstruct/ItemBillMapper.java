@@ -13,4 +13,9 @@ public interface ItemBillMapper {
             @Mapping(source = "createAtOrder", target = "date_create")
     })
     ItemBillDTO mapItemBill(ItemBill itemBill);
+    @Mappings({
+            @Mapping(source = "id_Item_Bill", target = "id"),
+            @Mapping(source = "date_create", target = "createAtOrder")
+    })
+    ItemBill mapItemBill(ItemBillDTO itemBillDTO);
 }

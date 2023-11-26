@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,20 @@ public class BillDtoController extends GenericoDtoController<Bill, BillDAO> {
         List<BillDTO> dtos = bills.stream().map(mapper::mapBill).collect(Collectors.toList());
         response.put("success", Boolean.TRUE);
         response.put("data", bills);
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/detalleFactura/{id}")
+    public ResponseEntity<?> detalleFactura(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        Optional<Bill> oBill = super.obtenerPorId(id);
+        if(oBill.isEmpty()){
+            response.put("success", Boolean.FALSE);
+            response.put("message", "La factura no existe");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        BillDTO dto = mapper.mapBill(oBill.get());
+        response.put("success", Boolean.TRUE);
+        response.put("data", dto);
         return ResponseEntity.ok(response);
     }
     @PostMapping("/clienteFactura/{idCliente}/")
@@ -93,7 +108,7 @@ public class BillDtoController extends GenericoDtoController<Bill, BillDAO> {
     }
 
 
-    @DeleteMapping("/clienteFactura/{idCliente}/{id}")
+    /*@DeleteMapping("/clienteFactura/{idCliente}/{id}")
     public ResponseEntity<?> eliminarPorID(@PathVariable Long id, @PathVariable Long idCliente){
         Map<String, Object> response = new HashMap<>();
         Optional<Bill> bill = super.obtenerPorId(id);
@@ -114,6 +129,12 @@ public class BillDtoController extends GenericoDtoController<Bill, BillDAO> {
         response.put("data", dto);
         response.put("message", "Se elimino la factura correctamente");
         return ResponseEntity.ok(response);
+    }*/
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<?> validacionID(MethodArgumentTypeMismatchException ex){
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", Boolean.FALSE);
+        response.put("Message", "El parametro 'id' debe ser un numero");
+        return ResponseEntity.badRequest().body(response);
     }
-
 }

@@ -2,6 +2,7 @@ package com.proyect.agroferreteria.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,8 @@ public class ItemBill implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_Item_Bill")
     private Long id;
-    @NotNull
+    @NotNull(message = "Este campo no puede ir vacio")
+    @Min(value = 1,message = "Al menos debe ser mayor a 1")
     private Integer cantidad;
 
     @Temporal(TemporalType.DATE)
@@ -32,9 +34,7 @@ public class ItemBill implements Serializable {
     @ManyToOne(
            fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.REMOVE
+                    CascadeType.PERSIST
             }
     )
     @JoinColumn(
@@ -47,9 +47,7 @@ public class ItemBill implements Serializable {
     @ManyToOne(
             fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.REMOVE
+                    CascadeType.ALL
             }
     )
     @JoinColumn(
@@ -64,11 +62,7 @@ public class ItemBill implements Serializable {
     //@NotEmpty(message = "Este campo no puede quedar vacio")
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "namePaymentMethod", column = @Column(name = "name_payment_method")),
-            @AttributeOverride(name = "firstPayment", column = @Column(name = "first_payment")),
-            @AttributeOverride(name = "secondPayment", column = @Column(name = "second_payment")),
-            @AttributeOverride(name = "thirdPayment", column = @Column(name = "third_payment")),
-            @AttributeOverride(name = "fourthPayment", column = @Column(name = "fourth_payment")),
+            @AttributeOverride(name = "namePaymentMethod", column = @Column(name = "name_payment_method"))
     })
     private PaymentMethod paymentMethod;
 
@@ -77,32 +71,6 @@ public class ItemBill implements Serializable {
     private Double priceTotal;
 
 
-
-
-    public void caluclarMonto(){
-        paymentMethod.setMonto(priceTotal/4);
-    }
-
-    public void calcularPagos(){/* public void crearPrecioFinal(){
-        Integer cantidadProductos = cantidad;
-        Double priceProducto = inventories.getSalePrice();
-        priceTotal = cantidadProductos * priceProducto;
-    }*/
-        Double debe = paymentMethod.getDebe();
-            Double primerPago = paymentMethod.getFirstPayment();
-            Double segundoPago = paymentMethod.getSecondPayment() + primerPago;
-            Double tercerPago = paymentMethod.getThirdPayment() + segundoPago;
-            Double cuartoPAgo = paymentMethod.getFourthPayment() + tercerPago;
-            if(primerPago <= debe){
-                  paymentMethod.setDebe(debe-primerPago);
-            } else if (segundoPago <= debe) {
-                paymentMethod.setDebe(debe-segundoPago);
-            } else if (tercerPago <= debe) {
-                paymentMethod.setDebe(debe-tercerPago);
-            } else if (cuartoPAgo <= debe) {
-                paymentMethod.setDebe(debe-cuartoPAgo);
-            }
-    }
 
     @PrePersist
     public void prePersist(){
