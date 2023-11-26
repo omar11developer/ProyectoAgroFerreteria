@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-//Creando la clase Tipos de producto
 @Entity
 @Table(name = "category")
 @Data
@@ -28,7 +27,6 @@ public class Category implements Serializable {
 
     @NotNull
     private String name;
-
 
     @OneToMany(
 

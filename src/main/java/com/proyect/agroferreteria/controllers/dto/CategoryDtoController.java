@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +51,7 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         return ResponseEntity.ok(mensaje);
     }
     @ApiOperation(value = "Obtener todos los elementos", notes ="Este endpoint obtiene todo los elementos de Categoria")
+
     @GetMapping("/detalle/{id}")
     public ResponseEntity<?> buscarPorID(@PathVariable @ApiParam(name = "id de la categoria", required = true) Long id){
         Map<String, Object> response = new HashMap<>();
@@ -132,7 +134,7 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
         Optional<Category> category = super.obtenerPorId(id);
@@ -149,6 +151,13 @@ public class CategoryDtoController extends GenericoDtoController<Category, Categ
         response.put("data", dto);
         return ResponseEntity.ok(response);
     }
-
+*/
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<?> validacionID(MethodArgumentTypeMismatchException ex){
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", Boolean.FALSE);
+        response.put("Message", "El parametro 'id' debe ser un numero");
+        return ResponseEntity.badRequest().body(response);
+    }
 
 }
